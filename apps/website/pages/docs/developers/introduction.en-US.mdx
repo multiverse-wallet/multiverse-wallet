@@ -1,0 +1,32 @@
+# Introduction
+
+More detailed explanation and examples coming soon!
+
+Check out the Storybook (via the link in the navbar) so see live examples of `@xrpl-components/react` in action.
+
+```js
+import { XRPLContextProvider, AccountBalance } from '@xrpl-components/react/components';
+
+export default function App() {
+  return (
+    <XRPLContextProvider server="wss://s1.ripple.com">
+      <AccountBalance account="rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn">
+        {({ isLoading, value, currency, error }) => {
+          if (isLoading) {
+            return <div>Loading account balance...</div>;
+          }
+          if (error) {
+            return <div>Error: {error.message}</div>;
+          }
+          return (
+            <div>
+              <AccountBalance.Currency>{currency}</AccountBalance.Currency>{' '}
+              <AccountBalance.Value>{value}</AccountBalance.Value>
+            </div>
+          );
+        }}
+      </AccountBalance>
+    </XRPLContextProvider>
+  );
+}
+```

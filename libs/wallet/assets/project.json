@@ -1,0 +1,8 @@
+{
+  "root": "libs/wallet/assets",
+  "sourceRoot": "libs/wallet/assets/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {},
+  "tags": []
+}

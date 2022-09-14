@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/components/button/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/components/button/**/*.js",
+          "libs/shared/components/button/**/*.jsx",
+          "libs/shared/components/button/**/*.ts",
+          "libs/shared/components/button/**/*.tsx",
+          "libs/shared/components/button/**/*.spec.ts",
+          "libs/shared/components/button/**/*.spec.tsx",
+          "libs/shared/components/button/**/*.spec.js",
+          "libs/shared/components/button/**/*.spec.jsx",
+          "libs/shared/components/button/**/*.d.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/components/button/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/shared/components/button"]
+    }
+  },
+  "tags": []
+}
