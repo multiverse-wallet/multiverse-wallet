@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.BUILD }}
-          release_name: Multiverse Wallet 
+          release_name: Multiverse Wallet Browser Extension
           draft: false
           prerelease: false
           body: |
