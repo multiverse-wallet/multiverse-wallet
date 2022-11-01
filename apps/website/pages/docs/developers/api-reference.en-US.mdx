@@ -1,0 +1,214 @@
+import Connect from "../../../components/Connect";
+import Disconnect from "../../../components/Disconnect";
+import IsActive from "../../../components/IsActive";
+import ExampleComponent from "../../../components/ExampleComponent";
+import IsConnected from "../../../components/IsConnected";
+import GetAccount from "../../../components/GetAccount";
+import GetNetwork from "../../../components/GetNetwork";
+import AccountChanged from "../../../components/AccountChanged";
+import NetworkChanged from "../../../components/NetworkChanged";
+import TransactionStatusChanged from "../../../components/TransactionStatusChanged";
+import RequestTransaction from "../../../components/RequestTransaction";
+import Callout from "nextra-theme-docs/callout";
+
+# API Reference
+
+<Callout>
+  The examples included below require that Multiverse Wallet is installed to
+  achieve the full effect.
+</Callout>
+
+## Methods
+
+### `isActive`
+
+```js
+multiverse.isActive(timeoutMs: number = 1000): Promise<boolean>
+```
+
+Returns a boolean indicating whether the Multiverse Wallet is active and available. Use this method to check that the Multiverse Wallet browser extension has been installed.
+
+<ExampleComponent>
+  <IsActive />
+</ExampleComponent>
+
+### `isConnected`
+
+```js
+multiverse.isConnected(): Promise<boolean>
+```
+
+Returns a boolean indicating whether the site is connected to the currently selected account in Multiverse Wallet.
+
+<Callout>
+  **Please Note** the permissions model of Multiverse Wallet requires that users
+  approve a site connection before further methods (such as
+  `requestTransaction`) can be called. The `isConnected` method can be used to
+  determine whether a preexisting connection exists and the `connect` method can
+  be used to initiate a new connection.
+</Callout>
+
+<ExampleComponent>
+  <IsConnected />
+</ExampleComponent>
+
+### `connect`
+
+```js
+multiverse.connect(): Promise<boolean>
+```
+
+Makes a request to connect the site to Multiverse Wallet. If no connection exists this will result in a popup to approve the connection. It returns a boolean indicating whether a connection was requested, it returns false if there is already a connection for the site.
+
+<Callout>
+  **Please note** that if this method returns false there is already a
+  preexisting connection for one or more of the accounts in the users Multiverse
+  Wallet. We do not allow new connections to be requested in this case. If the
+  user wishes to change the allowed accounts for the connection they must first
+  disconnect from the site. This behaviour may be changed in future based on
+  feedback.
+</Callout>
+
+<ExampleComponent>
+  <Connect />
+</ExampleComponent>
+
+### `disconnect`
+
+```js
+multiverse.disconnect(): Promise<void>
+```
+
+Disconnects the site from Multiverse Wallet. This removes the connection to this site for all accounts.
+
+<ExampleComponent>
+  <Disconnect />
+</ExampleComponent>
+
+### `getAccount`
+
+```js
+multiverse.getAccount(): Promise<Account | undefined>
+```
+
+Returns the currently selected account if it is connected or undefined if the currently selected account in Multiverse Wallet is not connected.
+
+```js
+interface Account {
+  id: string;
+  name: string;
+  address: string;
+  derivationPath?: string;
+}
+```
+
+<ExampleComponent>
+  <GetAccount />
+</ExampleComponent>
+
+### `getNetwork`
+
+```js
+multiverse.getNetwork(): Promise<Network | undefined>
+```
+
+Returns the currently selected network.
+
+```js
+interface Network {
+  id: string;
+  name: string;
+  server: string;
+  options?: NetworkOptions;
+}
+
+interface NetworkOptions {
+  supportsNFTokenMethods: boolean;
+}
+```
+
+<ExampleComponent>
+  <GetNetwork />
+</ExampleComponent>
+
+### `requestTransaction`
+
+```js
+multiverse.requestTransaction(transaction: any): Promise<string>
+```
+
+Makes a request to Multiverse Wallet to approve, sign and submit a transaction. It returns the transaction ID that can be used to check the status of the transaction using the `getTransaction` method. Alternatively, you can subscribe to the `transactionStatusChanged` event to be notified of changes to the transaction status. 
+
+<Callout>
+  **Please note** the transaction approval process is asynchronous. Once a transaction has been requested the user will be prompted to check the details and approve the transaction. As there are a number of potential outcomes, including user cancellation, timeout or an error during submission to the XRPL, it is important that your application can handle the various transaction statuses that may occur. See below for a list of possible transaction status strings.
+</Callout>
+
+<ExampleComponent>
+  <RequestTransaction />
+</ExampleComponent>
+
+### `getTransaction`
+
+```js
+multiverse.getTransaction(id: string): Promise<Transaction>
+```
+
+Retrieves a single transaction by transaction ID. This can be used to check the status of a previously requested transaction. The status can be one of:
+
+- `"pending"` indicating the transaction has not yet been approved or cancelled by the user.
+- `"cancelled"` indicating the user has cancelled the transaction or it has timed out.
+- `"submitted"` indicating the user has signed and submitted the transaction to the XRPL.
+- `"failed"` indicating that the XRPL has rejected the transaction.
+- `"validated"` indicating that the transaction has been result has been found in a validated ledger. The `txJson` shows the raw transaction result and can be used to check the result and finality of the transaction. See https://xrpl.org/look-up-transaction-results.html for more information on checking transaction results.
+
+<Callout>
+  **Please note** only transactions submitted by the connected site can be
+  retrieved by the `getTransaction` method.
+</Callout>
+
+```js
+interface Transaction {
+  id: string;
+  txJson: any;
+  txHash?: string;
+  status: "pending" | "cancelled" | "submitted" | "failed" | "validated";
+}
+```
+
+## Events
+
+### `accountChanged`
+
+```js
+multiverse.on("accountChanged", (account: Account) => {
+  // Update the displayed account details etc...
+});
+```
+
+<ExampleComponent>
+  <AccountChanged />
+</ExampleComponent>
+
+### `networkChanged`
+
+```js
+multiverse.on("networkChanged", (network: Network) => {
+  // Update the displayed network details etc...
+});
+```
+
+<ExampleComponent>
+  <NetworkChanged />
+</ExampleComponent>
+
+### `transactionStatusChanged`
+
+```js
+multiverse.on("transactionStatusChanged", (transaction: Transaction) => {
+  // Handle update to previously submitted transactions...
+});
+```
+
+<ExampleComponent>
+  <TransactionStatusChanged />
+</ExampleComponent>

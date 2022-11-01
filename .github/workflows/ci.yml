@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test_browser_extension:
+    runs-on: ubuntu-latest
+    name: Build and test the Multiverse Wallet browser extension
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Export Build Date
+        run: echo "BUILD_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Install node and yarn based on the volta config in our package.json
+        uses: volta-cli/action@v1
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build the browser extension
+        run: yarn build-extension
+
+      - run: mkdir -p ./tmp/browser-extension
+
+      - name: Zip the contents of ./dist/apps/wallet-unpacked to ./tmp/wallet-unpacked
+        run: npx ts-node --project=tools/tsconfig.tools.json tools/utils/zip-unpacked-browser-extension.ts
+
+      - name: Store the zip file as an artifact for the run
+        uses: actions/upload-artifact@v2
+        with:
+          name: multiverse-wallet
+          path: ./tmp/multiverse-wallet.zip
+
+      - name: Create release
+        uses: actions/create-release@v1
+        if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.BUILD_DATE }}
+          release_name: Multiverse Wallet 
+          draft: false
+          prerelease: true
+          body: |
+            Multiverse Wallet - Development Build - ${{ env.BUILD_DATE }}

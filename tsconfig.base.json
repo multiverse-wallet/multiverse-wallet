@@ -1,0 +1,97 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@multiverse-wallet/multiverse": [
+        "libs/multiverse/src/index.ts"
+      ],
+      "@multiverse-wallet/multiverse-wallet": [
+        "libs/multiverse-wallet/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/api": [
+        "libs/shared/api/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/button": [
+        "libs/shared/components/button/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/checkbox": [
+        "libs/shared/components/checkbox/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/copy-value": [
+        "libs/shared/components/copy-value/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/modal-dialog": [
+        "libs/shared/components/modal-dialog/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/select": [
+        "libs/shared/components/select/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/spinner": [
+        "libs/shared/components/spinner/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/table": [
+        "libs/shared/components/table/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/components/text-field": [
+        "libs/shared/components/text-field/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/hooks": [
+        "libs/shared/hooks/src/index.ts"
+      ],
+      "@multiverse-wallet/shared/utils": [
+        "libs/shared/utils/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/components": [
+        "libs/wallet/components/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/home/feature-account-creation": [
+        "libs/wallet/home/feature-account-creation/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/home/feature-manage-account": [
+        "libs/wallet/home/feature-manage-account/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/hooks": [
+        "libs/wallet/hooks/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/popup/feature-connect": [
+        "libs/wallet/popup/feature-connect/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/popup/feature-select-action": [
+        "libs/wallet/popup/feature-select-action/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/popup/feature-send-payment": [
+        "libs/wallet/popup/feature-send-payment/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/popup/feature-transaction": [
+        "libs/wallet/popup/feature-transaction/src/index.ts"
+      ],
+      "@multiverse-wallet/wallet/utils": [
+        "libs/wallet/utils/src/index.ts"
+      ]
+    },
+    "types": [
+      "node",
+      "chrome"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

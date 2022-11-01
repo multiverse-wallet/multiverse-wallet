@@ -1,0 +1,7 @@
+{
+  "cli": "nx",
+  "id": "sort-json-configs",
+  "type": "object",
+  "properties": {},
+  "required": []
+}

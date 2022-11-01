@@ -1,0 +1,24 @@
+{
+  "root": "libs/shared/components/table",
+  "sourceRoot": "libs/shared/components/table/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/components/table/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/components/table"],
+      "options": {
+        "jestConfig": "libs/shared/components/table/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
