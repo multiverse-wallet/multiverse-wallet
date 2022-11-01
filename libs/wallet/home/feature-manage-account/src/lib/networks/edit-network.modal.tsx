@@ -12,7 +12,6 @@ import { TextField } from "@multiverse-wallet/shared/components/text-field";
 import Joi from "joi";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { PlusIcon, SaveIcon } from "@heroicons/react/solid";
 import { Checkbox } from "@multiverse-wallet/shared/components/checkbox";
 import { INetwork } from "@xrpl-components/react/hooks/xrpl";
 import { CreateNetworkRequest, Network } from "@multiverse-wallet/multiverse";

@@ -4,33 +4,26 @@ import { AccountBalance as XRPLAccountBalance } from "@xrpl-components/react/com
 import { Account } from "@multiverse-wallet/multiverse";
 
 export interface AccountBalanceProps {
-  account: Account;
+  account?: Account;
+  address?: string;
 }
 
-export function AccountBalance({ account }: AccountBalanceProps) {
+export function AccountBalance({ account, address }: AccountBalanceProps) {
   return (
-    <div>
-      <XRPLAccountBalance account={account.address}>
-        {({ isLoading, value, currency, errorMessage }: any) => {
-          return (
-            <div>
-              {isLoading ? (
-                <>-</>
-              ) : (
-                // Apply a negative margin at the top to compensate for the monospace font
-                <div className="inline">
-                  <XRPLAccountBalance.Value>{value}</XRPLAccountBalance.Value>
-                  <span className="ml-1">
-                    <XRPLAccountBalance.Currency unicodeSymbol={false}>
-                        {currency}
-                    </XRPLAccountBalance.Currency>
-                  </span>
-                </div>
-              )}
-            </div>
-          );
-        }}
-      </XRPLAccountBalance>
-    </div>
+    <XRPLAccountBalance account={account?.address || (address as string)}>
+      {({ isLoading, value, currency, errorMessage }: any) => {
+        return isLoading ? (
+          <>-</>
+        ) : (
+          // Apply a negative margin at the top to compensate for the monospace font
+          <>
+            <XRPLAccountBalance.Value>{value}</XRPLAccountBalance.Value>
+            <XRPLAccountBalance.Currency unicodeSymbol={false}>
+              {currency}
+            </XRPLAccountBalance.Currency>
+          </>
+        );
+      }}
+    </XRPLAccountBalance>
   );
 }

@@ -1,35 +1,46 @@
-import { EXTENSION_ORIGIN, RPCRequest } from "@multiverse-wallet/multiverse";
-import { API } from "@multiverse-wallet/shared/api";
+import {
+  APIEvents,
+  MULTIVERSE_EVENT,
+  MULTIVERSE_RPC_REQUEST,
+  MULTIVERSE_RPC_RESPONSE,
+  RPCRequest,
+} from "@multiverse-wallet/multiverse";
+import { API, EXTENSION_ORIGIN } from "./api";
 
 const IS_RUNNING_IN_CHROME_EXTENSION = !!chrome?.runtime;
 
 export class Background {
   private api = new API();
-
   constructor() {
     if (IS_RUNNING_IN_CHROME_EXTENSION) {
       chrome?.runtime?.onConnect?.addListener((port: chrome.runtime.Port) => {
-        console.log(
-          `connection opened from ${port.sender?.origin}`,
-        );
         port.onMessage.addListener(
           (req: RPCRequest<any>, port: chrome.runtime.Port) => {
             console.log(
-              `received rpc request from ${port.sender?.origin}`,
+              `background received rpc request from ${port.sender?.origin}`,
               req
             );
-            req.origin = port.sender?.origin!;
+            req.origin = port.sender?.origin as string;
             try {
               this.api.call(req).then(({ result, error }) => {
-                console.log(`sent rpc response to ${port.sender?.origin}`, {
+                console.log(
+                  `background sent rpc response to ${port.sender?.origin}`,
+                  {
+                    id: req.id,
+                    result,
+                    error,
+                  }
+                );
+                port.postMessage({
+                  type: MULTIVERSE_RPC_RESPONSE,
                   id: req.id,
                   result,
                   error,
                 });
-                port.postMessage({ id: req.id, result, error });
               });
             } catch (e: any) {
               port.postMessage({
+                type: MULTIVERSE_RPC_RESPONSE,
                 id: req.id,
                 result: undefined,
                 error: e.message,
@@ -37,17 +48,12 @@ export class Background {
             }
           }
         );
-        let currentPort: chrome.runtime.Port | null = port;
-        // Setup update notifications
-        this.api.onUpdate(() => {
-          currentPort?.postMessage({
-            type: "MULTIVERSE_UPDATE",
-            result: null,
-            error: null,
-          });
-        });
+        let currentPort: chrome.runtime.Port | undefined = port;
+        registerPortEventListeners(this.api, (event) =>
+          currentPort?.postMessage(event)
+        );
         port.onDisconnect.addListener(() => {
-          currentPort = null;
+          currentPort = undefined;
         });
       });
     } else {
@@ -57,22 +63,18 @@ export class Background {
           if (event.source != window) {
             return;
           }
-          if (event?.data?.type === "MULTIVERSE") {
-            console.log(
-              `received rpc request from window`,
-              event?.data?.request
-            );
+          if (event?.data?.type === MULTIVERSE_RPC_REQUEST) {
+            console.log(`received rpc request from window`, event);
             event.data.request.origin = EXTENSION_ORIGIN;
             try {
-              this.api.call(event?.data?.request).then(({ result, error }) => {
+              this.api.call(event?.data?.request).then((response) => {
                 console.log(`sent rpc response to window`, {
                   id: event?.data?.request?.id,
-                  result,
-                  error,
+                  response,
                 });
                 window.dispatchEvent(
                   new CustomEvent(event?.data?.request?.id, {
-                    detail: { result, error },
+                    detail: response,
                   })
                 );
               });
@@ -87,10 +89,37 @@ export class Background {
         },
         false
       );
-      // Setup update notifications
-      this.api.onUpdate(() => {
-        window.dispatchEvent(new CustomEvent("MULTIVERSE_UPDATE"));
-      });
+      registerWindowEventListeners(this.api);
     }
   }
+}
+
+function registerWindowEventListeners(api: API) {
+  Object.values(APIEvents).forEach((apiEventName) => {
+    api.on(apiEventName, () => {
+      window.dispatchEvent(
+        new CustomEvent(MULTIVERSE_EVENT, {
+          detail: {
+            type: apiEventName,
+          },
+        })
+      );
+    });
+  });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function registerPortEventListeners(api: API, cb: (event: any) => void) {
+  Object.values(APIEvents).forEach((apiEventName) => {
+    api.on(apiEventName, (data, allowedOrigins) => {
+      cb({
+        type: MULTIVERSE_EVENT,
+        event: {
+          type: apiEventName,
+          data,
+          allowedOrigins,
+        },
+      });
+    });
+  });
 }

@@ -5,36 +5,3 @@ import Link from 'next/link'
 
 ## Installation
 
-In the same location where you already have `react` and `react-dom` installed, install the `@xrpl-components/react` package using your package manager of choice, for example:
-
-With npm:
-
-```plaintext
-npm install @xrpl-components/react
-```
-
-Or yarn:
-
-```plaintext
-yarn add @xrpl-components/react
-```
-
-## Importing from `@xrpl-components/react`
-
-The library has a couple of entrypoints, `components` and `hooks`, which you will use to import the symbols you will need.
-
-As you might you guess, `@xrpl-components/react/components` is the path used to import any headless components which are available, and `@xrpl-components/react/hooks` is the path used to import any hooks.
-
-```jsx
-import {
-  /* ... Headless components imported here... */
-} from '@xrpl-components/react/components';
-
-import {
-  /* ... Hooks imported here... */
-} from '@xrpl-components/react/hooks';
-```
-
-<Callout emoji="⚠️">
-  You will not import directly from `@xrpl-components/react`, only from one of its named entrypoints.
-</Callout>

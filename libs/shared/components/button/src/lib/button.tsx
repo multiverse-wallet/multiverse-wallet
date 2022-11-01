@@ -3,7 +3,7 @@ import { useButton } from '@react-aria/button';
 import { PressEvents } from '@react-types/shared';
 
 export interface ButtonProps {
-  children: JSX.Element | string;
+  children: any;
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   /**
    * Colour/action-type variant for the button
@@ -40,7 +40,7 @@ export const Button = (props: ButtonProps) => {
   switch (props.variant) {
     case 'primary':
       variantColorClasses =
-        'rounded-full shadow hover:shadow-lg bg-gradient-to-br from-purple-500 to-orange-500 border-none text-white focus:outline-none focus:border-teal-500 focus:rounded-full -outline-teal active:bg-teal-600';
+        'rounded-full shadow hover:shadow-lg bg-gradient-to-br from-gray-600 to-gray-700 border-none text-white focus:outline-none focus:border-teal-500 focus:rounded-full -outline-teal active:bg-teal-600';
       break;
     case 'secondary':
       variantColorClasses =

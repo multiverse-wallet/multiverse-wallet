@@ -54,7 +54,6 @@ function build(project: string) {
     ],
     {
       env: {
-        NODE_ENV: 'production',
         INLINE_RUNTIME_CHUNK: 'false',
         GENERATE_SOURCEMAP: 'false',
       },

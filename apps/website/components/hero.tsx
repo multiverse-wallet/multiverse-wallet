@@ -1,12 +1,6 @@
 import { ChevronRightIcon, DownloadIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from "@multiverse-wallet/shared/components/button";
-import dynamic from 'next/dynamic'
-
-const ConnectWalletButton = dynamic(() => import('./ConnectWalletButton').then(i => i.ConnectWalletButton), {
-  ssr: false,
-})
 
 export default function Hero() {
   return (
@@ -32,7 +26,7 @@ export default function Hero() {
               <p>
                 <Link href="/docs/getting-started">
                   <a href="/docs/getting-started" className="no-underline">
-                    <span className="inline-flex bg-gradient-to-br from-purple-500 to-orange-500 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
+                    <span className="inline-flex bg-gradient-to-br from-gray-600 to-gray-700 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
                       <span>Download</span>
                       <DownloadIcon
                         className="h-5 w-5"
@@ -45,7 +39,6 @@ export default function Hero() {
               </p>
             </div>
           </div>
-          <ConnectWalletButton />
         </div>
 
         <div className="relative">

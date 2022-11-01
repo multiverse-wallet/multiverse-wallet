@@ -6,15 +6,10 @@ import {
   SelectedAccountCurrencies,
   Tabs,
 } from "@multiverse-wallet/wallet/components";
-import { Link, Route, useNavigate } from "react-router-dom";
 import { useSupportsNFTokenMethods } from "@multiverse-wallet/wallet/hooks";
 
 export function SelectAction() {
-  const navigate = useNavigate();
   const supportsNFTokenMethods = useSupportsNFTokenMethods();
-  function navigateToRoot() {
-    navigate("/");
-  }
   const defaultTabs = [
     {
       name: "Assets",
@@ -44,7 +39,7 @@ export function SelectAction() {
   }, [supportsNFTokenMethods]);
 
   return (
-    <div className="flex-grow flex flex-col">
+    <div className="flex flex-col overflow-hidden">
       <SelectedAccountBalance />
       <SelectedAccountActions />
       <Tabs tabs={tabs} />

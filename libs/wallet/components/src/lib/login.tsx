@@ -67,7 +67,7 @@ export function Login({ hasPrivateMessageBar }: LoginProps) {
                             aria-invalid={errors["password"] ? "true" : "false"}
                             aria-describedby="password-error"
                             autoFocus={true}
-                            infoText="All of your identities are encrypted locally on your device and your password is never shared with, or stored on, our servers."
+                            infoText="All of your data is stored locally on your device and your password is never shared with, or stored on our servers."
                             isDisabled={isSubmitting}
                             validationState={
                               errors["password"] ? "invalid" : undefined

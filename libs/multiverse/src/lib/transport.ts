@@ -1,11 +1,15 @@
+import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
-import { RPCRequestMethod } from "./types";
-
-export const EXTENSION_ORIGIN = "chrome-extension://meffidapinofigdlekbgllkbdfgnihgd";
+import {
+  MULTIVERSE_EVENT,
+  MULTIVERSE_RPC_REQUEST,
+  MULTIVERSE_RPC_RESPONSE,
+  PublicRPCRequestMethod,
+} from "./types";
 
 export interface RPCRequest<T> {
   id: string;
-  method: RPCRequestMethod;
+  method: string;
   data: T;
   origin: string;
 }
@@ -15,8 +19,6 @@ export interface RPCResponse<T> {
   error?: string;
 }
 
-export const MULTIVERSE_EVENT_TYPE = "MULTIVERSE";
-
 export interface RPCTransportOptions {
   timeoutMs: number;
 }
@@ -25,16 +27,23 @@ export const defaultRPCTransportOptions: RPCTransportOptions = {
   timeoutMs: 10_000,
 };
 
-export interface ITransport {
-  makeRPCCall<Req, Res>(
+export interface ITransport extends EventEmitter {
+  makeRPC<Req, Res>(
     request: Partial<RPCRequest<Req>>,
     options: RPCTransportOptions
   ): Promise<Res>;
-  subscribe(eventName: string, cb: (data: any) => void): () => void;
 }
 
-export class WindowTransport implements ITransport {
-  async makeRPCCall<Req, Res>(
+export class WindowTransport extends EventEmitter implements ITransport {
+  constructor() {
+    super();
+    if (typeof window !== "undefined") {
+      window.addEventListener(MULTIVERSE_EVENT, (event: any) => {
+        this.emit(event.detail.type, event.detail.data);
+      });
+    }
+  }
+  async makeRPC<Req, Res>(
     request: Partial<RPCRequest<Req>>,
     options: RPCTransportOptions = defaultRPCTransportOptions
   ): Promise<Res> {
@@ -42,8 +51,19 @@ export class WindowTransport implements ITransport {
       request.id = request.id || uuid();
       let hasResolved = false;
       const handleResponse = (event: Event) => {
+        console.log("window transport received", event);
         hasResolved = true;
-        const { result, error } = (event as CustomEvent).detail;
+        const { type, result, error } = (event as CustomEvent).detail;
+        switch (type) {
+          case MULTIVERSE_RPC_RESPONSE:
+            if (error) {
+              reject(new Error(error));
+            } else {
+              resolve(result);
+            }
+            window.removeEventListener(request.id!, handleResponse);
+            break;
+        }
         if (error) {
           reject(error);
         } else {
@@ -54,10 +74,10 @@ export class WindowTransport implements ITransport {
       window.addEventListener(request.id, handleResponse);
       window.postMessage(
         {
-          type: "MULTIVERSE",
+          type: MULTIVERSE_RPC_REQUEST,
           request,
         },
-        "*"
+        undefined
       );
       setTimeout(() => {
         if (hasResolved) return;
@@ -66,24 +86,36 @@ export class WindowTransport implements ITransport {
       }, options.timeoutMs);
     });
   }
-  subscribe(eventName: string, cb: (data: any) => void): () => void {
-    window.addEventListener(eventName, cb);
-    return () => window.removeEventListener(eventName, cb);
-  }
 }
 
-export class BrowserRuntimeTransport implements ITransport {
+export class BrowserRuntimeTransport
+  extends EventEmitter
+  implements ITransport
+{
   private requests: { [x: string]: any } = {};
-  private port = chrome?.runtime?.connect({ name: EXTENSION_ORIGIN });
+  private port = chrome?.runtime?.connect({ name: "browser" });
   constructor() {
-    this.port.onMessage.addListener(({ id, result, error }) => {
-      if (!!id && !!this.requests[id]) {
-        this.requests[id]?.resolve({ result, error });
-        delete this.requests[id];
+    super();
+    this.port.onMessage.addListener((message: any) => {
+      console.log("browser transport received", message);
+      const { type, id, result, error, event } = message;
+      switch (type) {
+        case MULTIVERSE_EVENT:
+          this.emit(event?.type, event);
+          break;
+        case MULTIVERSE_RPC_RESPONSE:
+          if (!!id && !!this.requests[id]) {
+            this.requests[id]?.resolve({ result, error });
+            delete this.requests[id];
+          }
+          break;
       }
     });
+    this.port.onDisconnect.addListener(() => {
+      this.port = chrome?.runtime?.connect();
+    });
   }
-  async makeRPCCall<Req, Res>(
+  async makeRPC<Req, Res>(
     request: Partial<RPCRequest<Req>>,
     options: RPCTransportOptions = defaultRPCTransportOptions
   ): Promise<Res> {
@@ -94,7 +126,7 @@ export class BrowserRuntimeTransport implements ITransport {
         resolve: ({ result, error }: any) => {
           hasResolved = true;
           if (error) {
-            reject(error);
+            reject(new Error(error));
           } else {
             resolve(result);
           }
@@ -110,14 +142,5 @@ export class BrowserRuntimeTransport implements ITransport {
       );
     }, options.timeoutMs);
     return p;
-  }
-  subscribe(eventName: string, cb: (data: any) => void): () => void {
-    const handler = (data: any) => {
-      if (data.type === eventName) {
-        cb(data);
-      }
-    };
-    this.port.onMessage.addListener(handler);
-    return () => this.port.onMessage.removeListener(handler);
   }
 }

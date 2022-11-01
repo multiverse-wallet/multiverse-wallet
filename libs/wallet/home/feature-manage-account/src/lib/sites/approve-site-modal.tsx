@@ -1,20 +1,15 @@
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useAccounts, useWalletState } from "@multiverse-wallet/wallet/hooks";
 import { Button } from "@multiverse-wallet/shared/components/button";
 import {
   ModalDialogBody,
   ModalDialogFooter,
-  ModalDialogHeader,
   ModalTitleProps,
 } from "@multiverse-wallet/shared/components/modal-dialog";
 import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import { delay } from "@multiverse-wallet/shared/utils";
-import Joi from "joi";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SiteConnectionRequest } from "@multiverse-wallet/multiverse";
-import { AccountBalance } from "libs/wallet/components/src/lib/account-balance";
+import { AccountBalance } from "@multiverse-wallet/wallet/components";
 
 interface ApproveSiteModalProps {
   connectionRequest: SiteConnectionRequest;
@@ -48,6 +43,7 @@ export function ApproveSiteModal({
         origin: connectionRequest.origin!,
         allowedAccounts: accounts,
       });
+      await api.closePopup();
       closeModal();
     } catch (e) {
       console.log(e);
@@ -136,7 +132,14 @@ export function ApproveSiteModal({
             )}
           </Button>
         </span>
-        <Button variant="cancel" size="medium" onPress={closeModal}>
+        <Button
+          variant="cancel"
+          size="medium"
+          onPress={() => {
+            api.closePopup();
+            closeModal();
+          }}
+        >
           Cancel
         </Button>
       </ModalDialogFooter>

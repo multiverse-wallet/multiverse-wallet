@@ -1,32 +1,27 @@
 # Introduction
 
-More detailed explanation and examples coming soon!
+## Basic Usage
 
-Check out the Storybook (via the link in the navbar) so see live examples of `@xrpl-components/react` in action.
+To start developing applications that utilise Multiverse, install the `@multiverse/multiverse` package using your package manager of choice, for example:
+
+With npm:
+
+```
+npm -i @multiverse/multiverse
+```
+
+Or yarn:
+
+```
+yarn add @multiverse/multiverse
+```
+
+And then import in your project with:
 
 ```js
-import { XRPLContextProvider, AccountBalance } from '@xrpl-components/react/components';
-
-export default function App() {
-  return (
-    <XRPLContextProvider server="wss://s1.ripple.com">
-      <AccountBalance account="rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn">
-        {({ isLoading, value, currency, error }) => {
-          if (isLoading) {
-            return <div>Loading account balance...</div>;
-          }
-          if (error) {
-            return <div>Error: {error.message}</div>;
-          }
-          return (
-            <div>
-              <AccountBalance.Currency>{currency}</AccountBalance.Currency>{' '}
-              <AccountBalance.Value>{value}</AccountBalance.Value>
-            </div>
-          );
-        }}
-      </AccountBalance>
-    </XRPLContextProvider>
-  );
-}
+import multiverse from "@multiverse/multiverse";
 ```
+
+The default export of the package exposes an instance of the public API. This can be used to interact with the Multiverse Wallet in order to retrieve account details and request transactions.
+
+See the API Reference for a full list of methods and examples.

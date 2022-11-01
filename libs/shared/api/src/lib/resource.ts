@@ -1,25 +1,19 @@
-import { API } from "./api";
 import { getFromStorage, setInStorage } from "./storage";
 
-export class Resource<T> {
-  public state?: T;
-  constructor(
-    public storageKey: string,
-    public defaultState: T,
-  ) {
-    this.loadFromStorage();
+export class State<T> {
+  constructor(public storageKey: string, public defaultState: T) {}
+  async save(state: T): Promise<T> {
+    await setInStorage(this.storageKey, state);
+    return state
   }
-  async saveToStorage() {
-    await setInStorage(this.storageKey, this.state);
+  async fetch(): Promise<T> {
+    return await getFromStorage<T>(this.storageKey).catch(() => {
+      return this.defaultState;
+    });
   }
-  async loadFromStorage() {
-    console.log(`loading state from storage at key ${this.storageKey} for`, this);
-    this.state = await getFromStorage<T>(this.storageKey).catch(
-      () => {
-        console.log(`no state found, initializing from default state for`, this);
-        return this.defaultState
-      }
-    );
-    await this.saveToStorage();
+  async fetchAndUpdate(updateFn: (t: T) => Promise<T>) {
+    const existing = await this.fetch();
+    const updated = await updateFn(existing);
+    return await this.save(updated);
   }
 }

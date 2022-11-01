@@ -4,6 +4,7 @@ import React from 'react';
 export interface SpinnerProps {
   size: 'small' | 'medium' | 'large';
   variant: 'light' | 'dark';
+  className?: string;
 }
 
 export const Spinner = (props: SpinnerProps) => {
@@ -32,7 +33,7 @@ export const Spinner = (props: SpinnerProps) => {
 
   return (
     <svg
-      className={`animate-spin ${variantClassName} ${sizeClassName}`}
+      className={`animate-spin ${variantClassName} ${sizeClassName} ${props.className || ''}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

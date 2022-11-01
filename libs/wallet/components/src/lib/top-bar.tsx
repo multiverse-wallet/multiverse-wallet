@@ -1,10 +1,10 @@
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
-import { Button } from '@multiverse-wallet/shared/components/button';
-import React from 'react';
-import { SelectNetwork } from './select-network';
-import { SelectAccount } from './select-account';
-import { LockClosedIcon } from '@heroicons/react/solid';
-import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
+import { useWalletState } from "@multiverse-wallet/wallet/hooks";
+import { Button } from "@multiverse-wallet/shared/components/button";
+import React from "react";
+import { SelectNetwork } from "./select-network";
+import { SelectAccount } from "./select-account";
+import { LockClosedIcon } from "@heroicons/react/solid";
+import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
 
 export function TopBar() {
   const { api } = useWalletState();
@@ -23,20 +23,22 @@ export function TopBar() {
         </div>
       )}
       <div className="p-4 w-full z-10">
-        <div className="flex items-center justify-between space-x-2">
-          <div className="flex-grow">
-            <Button variant="light" size="small" onPress={() => api.lock()}>
-              <>
-                <LockClosedIcon className="w-4 h-4 mr-1" />
-                Lock
-              </>
-            </Button>
-          </div>
+        <div className="grid grid-cols-3 items-center space-x-2">
           <div>
-            <SelectNetwork />
+            <SelectNetwork align="left" />
           </div>
-          <div>
-            <SelectAccount showIcon={true} />
+          <div className="flex justify-center">
+            <img
+              className="mx-auto"
+              src="/assets/logo.png"
+              width="70"
+              alt="Multiverse Wallet"
+            />
+          </div>
+          <div className="">
+            <div className="float-right">
+              <SelectAccount showIcon={true} />
+            </div>
           </div>
         </div>
       </div>

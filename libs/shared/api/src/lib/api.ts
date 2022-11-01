@@ -3,10 +3,18 @@ import { Vault } from "./vault";
 import { AccountsResource } from "./accounts";
 import { NetworksResource } from "./networks";
 import { SitesResource } from "./sites";
-import { EXTENSION_ORIGIN, RPCRequest, RPCResponse } from "@multiverse-wallet/multiverse";
-import { ExtensionOriginOnly } from "./decorators";
+import { RPCRequest, RPCRequestMethod, RPCResponse } from "@multiverse-wallet/multiverse";
+import {
+  isPublicMethod,
+  isWhitelistedMethod,
+  PublicMethod,
+  WhitelistedMethod,
+} from "./decorators";
+import { LogResource } from "./log";
+import { TransactionsResource } from "./transactions";
+import { SettingsResource } from "./settings";
 
-export const MULTIVERSE_EVENT_TYPE = "MULTIVERSE";
+export const EXTENSION_ORIGIN = `chrome-extension://${chrome?.runtime?.id || ''}`;
 
 export class API extends EventEmitter {
   public rpcMethodRegistry = new Map<
@@ -18,10 +26,29 @@ export class API extends EventEmitter {
   public sites = new SitesResource(this);
   public networks = new NetworksResource(this);
   public extension = new ExtensionAPI(this);
-
+  public log = new LogResource(this);
+  public transactions = new TransactionsResource(this);
+  public settings = new SettingsResource(this);
+  
   constructor() {
     super();
     this.rpcMethodRegistry.set("ping", this.ping);
+  }
+
+  override emit(
+    eventName: string | symbol,
+    data?: any,
+    filterAllowedOrigins?: string[]
+  ) {
+    this.accounts.getAllowedOrigins().then((allowedOrigins: string[]) => {
+      if (filterAllowedOrigins) {
+        allowedOrigins = allowedOrigins.filter((o) =>
+          filterAllowedOrigins.includes(o)
+        );
+      }
+      super.emit(eventName, data, allowedOrigins);
+    });
+    return true;
   }
 
   async call(req: RPCRequest<any>): Promise<RPCResponse<any>> {
@@ -31,44 +58,39 @@ export class API extends EventEmitter {
         error: `method ${req.method} not implemented`,
       };
     }
-    if (!this.checkPermissions(req)) {
+    if (chrome.runtime && req.origin !== EXTENSION_ORIGIN && !isPublicMethod(req.method)) {
+      return {
+        error: `method ${req.method} not public`,
+      };
+    }
+    if (isWhitelistedMethod(req.method)) {
+      return rpcMethod(req);
+    }
+    if (!(await this.checkPermissions(req))) {
       return {
         error: `site with origin ${req.origin} calling ${req.method} has insufficient permissions, please reconnect and request further permissions (id:${req.id})`,
       };
     }
+    if (req.origin !== EXTENSION_ORIGIN) {
+      await this.log.pushApiLogs(req.method, req.origin);
+    }
     return rpcMethod(req);
   }
 
+  @PublicMethod()
+  @WhitelistedMethod()
   async ping(): Promise<RPCResponse<boolean>> {
     return { result: true };
   }
 
-  checkPermissions(req: RPCRequest<any>): boolean {
-    // Contains a whitelist of methods to allow prior to
-    // connecting the site, i.e. the required methods
-    // that need to be called to allow a request.
-    const whitelistedMethods = [
-      "ping",
-      "createSiteConnectionRequest",
-      "openPopup",
-    ];
-    if (whitelistedMethods.includes(req.method)) {
-      return true;
-    }
+  async checkPermissions(req: RPCRequest<any>): Promise<boolean> {
     if (req.origin === EXTENSION_ORIGIN) {
       // Allow all requests from the extension.
       return true;
     }
+    const allowedOrigins = await this.accounts.getAllowedOrigins()!;
     // Check there is an entry for the origin and method.
-    return this.sites.containsOrigin(req.origin);
-  }
-
-  notifyUpdate() {
-    this.emit("update");
-  }
-
-  onUpdate(cb: () => void) {
-    this.on("update", () => cb());
+    return allowedOrigins.includes(req.origin);
   }
 }
 
@@ -80,20 +102,30 @@ export interface OpenPopupRequest {
 
 export class ExtensionAPI {
   constructor(private api: API) {
-    api.rpcMethodRegistry.set("openPopup", (r) => this.openPopup(r));
+    api.rpcMethodRegistry.set(RPCRequestMethod.openPopup, (r) => this.openPopup(r));
+    api.rpcMethodRegistry.set(RPCRequestMethod.closePopup, () => this.closePopup());
   }
   async openPopup(
     req: RPCRequest<OpenPopupRequest>
   ): Promise<RPCResponse<boolean>> {
-    chrome.windows
+    await chrome.windows
       .create({
         type: "popup",
         url: `index.html/#${req.data.path}?requestId=${req.id}`,
         height: req.data.height || 600,
-        width: req.data.width || 500,
-      })
-      .then((window: any) => {
+        width: req.data.width || 400,
       });
     return { result: true };
+  }
+  async closePopup() {
+    if (chrome.windows) {
+      const currentWindow = await chrome.windows.getCurrent()
+      if (currentWindow.type === "popup") {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        chrome.windows.remove(currentWindow.id!)
+        return { result: true }
+      }
+    }
+    return { result: false }
   }
 }

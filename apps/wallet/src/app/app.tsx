@@ -20,6 +20,7 @@ import { navigateExtension } from "@multiverse-wallet/wallet/utils";
 import { SelectAction } from "libs/wallet/popup/feature-select-action/src";
 import { Connect } from "libs/wallet/popup/feature-connect/src";
 import { SendPayment } from "@multiverse-wallet/wallet/popup/feature-send-payment";
+import { Transaction } from "@multiverse-wallet/wallet/popup/feature-transaction";
 
 function LockExtension() {
   const { api } = useWalletState();
@@ -32,7 +33,7 @@ function LockExtension() {
 }
 
 const PrivateMessageBar = () => (
-  <div className="relative bg-gradient-to-r from-orange-400 to-purple-500">
+  <div className="relative bg-gradient-to-r from-gray-600 to-gray-700">
     <div className="max-w-screen-xl mx-auto py-3 px-8">
       <div className="text-center px-16">
         <p className="font-medium text-white text-xs flex flex-row items-center justify-center">
@@ -64,8 +65,8 @@ const PrivateMessageBar = () => (
 export default function App() {
   const isLocked = useIsLocked();
   const isInitialized = useIsInitialized();
-  const hasCompletedSetup = useHasCompletedSetup();
-  if (!isInitialized) {
+  const { hasCompletedSetup, isLoading } = useHasCompletedSetup();
+  if (!isInitialized || isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <Spinner size="large" variant="dark" />
@@ -80,10 +81,10 @@ export default function App() {
         <Route
           path="/popup/*"
           element={
-            <div className="flex justify-center" style={{ height: "600px" }}>
+            <div className="flex justify-center text-sm" style={{ height: "600px" }}>
               <div
                 style={{ width: "400px" }}
-                className="shadow flex flex-col overflow-y-scroll"
+                className="flex flex-col"
               >
                 <Popup />
               </div>
@@ -125,8 +126,8 @@ export default function App() {
 function Popup() {
   const isLocked = useIsLocked();
   const isInitialized = useIsInitialized();
-  const hasCompletedSetup = useHasCompletedSetup();
-  if (!isInitialized) {
+  const { hasCompletedSetup, isLoading } = useHasCompletedSetup();
+  if (!isInitialized || isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <Spinner size="large" variant="dark" />
@@ -144,6 +145,7 @@ function Popup() {
     <Routes>
       <Route path="/connect" element={<Connect />} />
       <Route path="/send-payment" element={<SendPayment />} />
+      <Route path="/transaction/:transactionId" element={<Transaction />} />
       <Route path="/exchange" element={<>Exchange!</>} />
       <Route
         path="/*"
@@ -152,19 +154,7 @@ function Popup() {
             {!hasCompletedSetup && (
               <div>
                 <header className="pt-16 flex justify-center items-center">
-                  {/* DA Logo SVG */}
-                  <svg
-                    className="h-10 w-auto fill-current text-gray-800"
-                    viewBox="0 0 169.33 107.16"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g strokeWidth=".265">
-                      <path
-                        d="M97.209 16.798L106.36.968l60.935 105.542-83.113-.158s42.093-35.357 13.025-89.557zM.858.943v105.414l35.973-.052s51.153-.44 51.153-52.437C87.984.404 34.424.81 34.424.81z"
-                        strokeWidth=".1897082"
-                      />
-                    </g>
-                  </svg>
+                  <img src="/assets/logo.svg" width={200} height={200} />
                 </header>
                 <div className="px-8 pt-16 text-center pb-8 mt-6">
                   <div className="flex flex-col items-center justify-center h-32">
@@ -172,7 +162,7 @@ function Popup() {
                       className="text-3xl font-extrabold"
                       data-cy="welcome-title"
                     >
-                      Welcome to the DA Browser Extension
+                      Welcome to Multiverse
                     </h1>
                     <p className="mt-6 text-gray-600 text-base mb-12">
                       Everything you do here is running privately on your
@@ -201,8 +191,8 @@ function Popup() {
             {!isLocked && (
               <>
                 <TopBar />
-                <SelectedAccount />
-                <SelectAction />
+                  <SelectedAccount />
+                  <SelectAction />
               </>
             )}
           </>

@@ -5,8 +5,8 @@ import { ImportData } from './import-data';
 
 export function Security() {
   return (
-    <div className="py-6 px-8">
-      <header className="mb-12">
+    <div >
+      <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
             Security
@@ -24,13 +24,13 @@ export function Security() {
             <RevealMnemonic />
           </div>
 
-          <div>
+          {/* <div>
             <ExportData />
           </div>
 
           <div>
             <ImportData />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

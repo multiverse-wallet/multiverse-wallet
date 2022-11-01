@@ -20,14 +20,14 @@ export function SelectedAccountActions() {
             </>
           </Button>
         </Link>
-        <Link to="/popup/exchange">
+        {/* <Link to="/popup/exchange">
           <Button size="small" variant="primary" className="rounded-full">
             <>
               <SwitchVerticalIcon className="inline w-5 h-5 mr-1" />
               <span>Exchange</span>
             </>
           </Button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -11,3 +11,7 @@ export * from './lib/selected-account-activity';
 export * from './lib/selected-account-actions';
 export * from './lib/tabs';
 export * from './lib/address-input';
+export * from './lib/account-balance';
+export * from './lib/transaction-summary';
+export * from './lib/account-name';
+export * from './lib/approve-transaction-button';

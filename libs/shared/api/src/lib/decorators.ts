@@ -1,24 +1,35 @@
-import { EXTENSION_ORIGIN, RPCRequest } from "@multiverse-wallet/multiverse";
 import "reflect-metadata";
 
-export function OriginWhitelist(...origins: string[]) {
+const publicMethods: string[] = [];
+
+export function PublicMethod() {
   return function (
     target: any,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
-    const originalMethod = descriptor.value;
-    descriptor.value = function (req: RPCRequest<any>) {
-      console.log("middleware", req);
-      if (!origins.includes(req.origin)) {
-        return Promise.resolve({ error: "permission denied due to origin" });
-      }
-      return originalMethod.apply(this, [req]);
-    };
+    publicMethods.push(propertyKey);
     return descriptor;
   };
 }
 
-export function ExtensionOriginOnly() {
-  return OriginWhitelist(EXTENSION_ORIGIN);
+export function isPublicMethod(method: string): boolean {
+  return publicMethods.includes(method);
+}
+
+const whitelistedMethods: string[] = [];
+
+export function WhitelistedMethod() {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    whitelistedMethods.push(propertyKey);
+    return descriptor;
+  };
+}
+
+export function isWhitelistedMethod(method: string): boolean {
+  return whitelistedMethods.includes(method);
 }

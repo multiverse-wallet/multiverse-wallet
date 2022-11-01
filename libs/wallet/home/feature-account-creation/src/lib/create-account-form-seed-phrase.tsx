@@ -44,7 +44,7 @@ export function CreateAccountFormSeedPhrase(
             Your secret recovery phrase makes it easy to backup and restore your
             account.{' '}
             <span className="mt-3 text-gray-600 text-sm font-bold">
-              Store your phrase somewhere safe offline=.
+              Store your phrase somewhere safe offline.
             </span>
           </p>
         </div>

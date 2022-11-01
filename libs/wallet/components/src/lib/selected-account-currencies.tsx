@@ -36,7 +36,7 @@ export function SelectedAccountCurrencies() {
       {balances?.map(({ currency, value, issuer }) => (
         <div
           key={currency + issuer}
-          className="flex h-16 items-center hover:bg-purple-50 cursor-pointer"
+          className="flex h-16 items-center hover:bg-gray-50 cursor-pointer"
         >
           <div className="p-5 flex-grow flex flex-col text-md font-mono">
             <div>
@@ -51,7 +51,7 @@ export function SelectedAccountCurrencies() {
               )}
             </div>
           </div>
-          <div className="p-5 items-center text-purple-200">
+          <div className="p-5 items-center text-gray-200">
             <ChevronRightIcon className="w-8 h-8" />
           </div>
         </div>

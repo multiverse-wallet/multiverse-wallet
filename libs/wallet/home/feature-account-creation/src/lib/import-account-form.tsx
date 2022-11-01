@@ -1,35 +1,42 @@
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
-import { Button } from '@multiverse-wallet/shared/components/button';
-import { Spinner } from '@multiverse-wallet/shared/components/spinner';
-import { TextField } from '@multiverse-wallet/shared/components/text-field';
-import { delay } from '@multiverse-wallet/shared/utils';
-import Joi from 'joi';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useWalletState } from "@multiverse-wallet/wallet/hooks";
+import { Button } from "@multiverse-wallet/shared/components/button";
+import { Spinner } from "@multiverse-wallet/shared/components/spinner";
+import { TextField } from "@multiverse-wallet/shared/components/text-field";
+import { delay } from "@multiverse-wallet/shared/utils";
+import Joi from "joi";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export function ImportAccountForm() {
-  const api = useWalletState();
+  const { api } = useWalletState();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { handleSubmit, formState: { errors }, control, setError } = useForm({
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError,
+    clearErrors,
+  } = useForm({
     resolver: joiResolver(
       Joi.object({
         mnemonic: Joi.string().required(),
-        existingEncryptedData: Joi.string().optional(), // user may or may not have existing encrypted data
         password: Joi.string().required(),
-        confirmPassword: Joi.string().required().valid(Joi.ref('password')),
+        confirmPassword: Joi.string().required().valid(Joi.ref("password")),
       })
     ),
   });
 
-  async function onSubmit({
-    existingEncryptedData,
-    mnemonic,
-    password,
-  }: any) {
+  async function onSubmit({ mnemonic, password }: any) {
     try {
+      clearErrors();
       setIsSubmitting(true);
-
+      await api
+        .setupRecoveryPhrase({ password, secretRecoveryPhrase: mnemonic })
+        .catch((e) => setError("mnemonic", e));
+      navigate("/");
       /**
        * User has provided an encrypted mnemonic, but the data
        * cannot be decrypted
@@ -59,8 +66,8 @@ export function ImportAccountForm() {
       setIsSubmitting(false);
     } catch {
       setIsSubmitting(false);
-      setError('existingEncryptedData', {
-        type: 'failedParsing',
+      setError("existingEncryptedData", {
+        type: "failedParsing",
       });
     }
   }
@@ -92,16 +99,16 @@ export function ImportAccountForm() {
                           type="text"
                           placeholder=""
                           autoFocus={true}
-                          aria-invalid={errors['mnemonic'] ? 'true' : 'false'}
+                          aria-invalid={errors["mnemonic"] ? "true" : "false"}
                           aria-describedby="mnemonic-error"
                           validationState={
-                            errors['mnemonic'] ? 'invalid' : undefined
+                            errors["mnemonic"] ? "invalid" : undefined
                           }
                         />
                       );
                     }}
                   />
-                  {errors['mnemonic'] && (
+                  {errors["mnemonic"] && (
                     <p
                       className="mt-2 text-sm text-red-600"
                       id="mnemonic-error"
@@ -111,41 +118,6 @@ export function ImportAccountForm() {
                     </p>
                   )}
                 </div>
-
-                <div>
-                  <Controller
-                    control={control}
-                    name="existingEncryptedData"
-                    render={({ field }) => {
-                      return (
-                        <TextField
-                          field={field}
-                          label="(Optional) Existing Encrypted Data"
-                          type="text"
-                          placeholder=""
-                          autoFocus={false}
-                          aria-invalid={
-                            errors['existingEncryptedData'] ? 'true' : 'false'
-                          }
-                          aria-describedby="existing-encrypted-data-error"
-                          validationState={
-                            errors['existingEncryptedData'] ? 'invalid' : undefined
-                          }
-                          infoText="If you are migrating existing encrypted data, you can provide it now, or any time later within the Settings section of your account."
-                        />
-                      );
-                    }}
-                  />
-                  {errors['existingEncryptedData'] && (
-                    <p
-                      className="mt-2 text-sm text-red-600"
-                      id="existing-encrypted-data-error"
-                    >
-                      {JSON.stringify(errors['existingEncryptedData'])}
-                    </p>
-                  )}
-                </div>
-
                 <div>
                   <Controller
                     control={control}
@@ -159,16 +131,16 @@ export function ImportAccountForm() {
                           type="password"
                           placeholder=""
                           autoFocus={false}
-                          aria-invalid={errors['password'] ? 'true' : 'false'}
+                          aria-invalid={errors["password"] ? "true" : "false"}
                           aria-describedby="password-error"
                           validationState={
-                            errors['password'] ? 'invalid' : undefined
+                            errors["password"] ? "invalid" : undefined
                           }
                         />
                       );
                     }}
                   />
-                  {errors['password'] && (
+                  {errors["password"] && (
                     <p
                       className="mt-2 text-sm text-red-600"
                       id="password-error"
@@ -192,25 +164,27 @@ export function ImportAccountForm() {
                           type="password"
                           placeholder=""
                           aria-invalid={
-                            errors['confirmPassword'] ? 'true' : 'false'
+                            errors["confirmPassword"] ? "true" : "false"
                           }
                           aria-describedby="confirm-password-error"
                           validationState={
-                            errors['confirmPassword'] ? 'invalid' : undefined
+                            errors["confirmPassword"] ? "invalid" : undefined
                           }
                         />
                       );
                     }}
                   />
-                  {errors['confirmPassword'] && (
+                  {errors["confirmPassword"] && (
                     <p
                       className="mt-2 text-sm text-red-600"
                       id="confirm-password-error"
                     >
-                      {errors['confirmPassword']['type'] as any === 'any.required' &&
-                        'Please confirm the password in order to encrypt the account'}
-                      {errors['confirmPassword']['type'] as any === 'any.only' &&
-                        'This does not currently match your given password'}
+                      {(errors["confirmPassword"]["type"] as any) ===
+                        "any.required" &&
+                        "Please confirm the password in order to encrypt the account"}
+                      {(errors["confirmPassword"]["type"] as any) ===
+                        "any.only" &&
+                        "This does not currently match your given password"}
                     </p>
                   )}
                 </div>
@@ -225,7 +199,7 @@ export function ImportAccountForm() {
                 >
                   {isSubmitting ? (
                     <div className="flex flex-row">
-                      <span style={{ marginTop: '2px' }}>
+                      <span style={{ marginTop: "2px" }}>
                         <Spinner size="small" />
                       </span>
                       <span className="ml-4">Validating Data...</span>

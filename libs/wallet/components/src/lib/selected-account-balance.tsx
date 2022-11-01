@@ -13,12 +13,7 @@ export function SelectedAccountBalance() {
         {({ isLoading, value, currency }) => {
           return (
             <div
-              className="text-4xl p-4 h-20 flex items-center justify-center"
-              style={{
-                fontFamily: `"currency_symbols", "Space Mono", monospace`,
-                fontWeight: 400,
-              }}
-            >
+              className="text-4xl p-4 h-20 flex items-center justify-center font-extrabold">
               {isLoading ? (
                 <Spinner variant="dark" size="medium" />
               ) : (

@@ -10,7 +10,7 @@ export interface ContextProviderProps {
 export function ContextProvider({ children }: ContextProviderProps) {
   const {selectedNetwork } = useSelectedNetwork()
   return (
-    <XRPLContextProvider xrpl={xrpl} server={selectedNetwork?.server as string}>
+    <XRPLContextProvider xrpl={xrpl as any} server={selectedNetwork?.server as string}>
       {children}
     </XRPLContextProvider>
   );

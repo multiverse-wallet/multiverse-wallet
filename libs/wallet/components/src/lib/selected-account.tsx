@@ -14,7 +14,7 @@ export function AccountDetails() {
     <Menu as="div" className="relative w-auto">
       <div>
         <Menu.Button>
-          <DotsVerticalIcon className="w-7 h-7 p-1 mr-2 -ml-4 rounded-full hover:bg-orange-100" />
+          <DotsVerticalIcon className="w-7 h-7 p-1 mr-2 -ml-4 rounded-full hover:bg-slate-100" />
         </Menu.Button>
       </div>
 
@@ -30,7 +30,7 @@ export function AccountDetails() {
         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             <Menu.Item>
-              <div className="block px-4 py-2 text-sm text-gray-900 cursor-pointer">
+              <div className="block px-4 py-2 text-sm text-gray-900 cursor-pointer hover:bg-slate-50">
                 <a
                   target="_blank"
                   href={`https://xrpscan.com/account/${selectedAccount?.address}`}

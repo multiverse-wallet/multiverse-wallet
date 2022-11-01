@@ -1,6 +1,6 @@
 {
   "name": "Multiverse Wallet",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "manifest_version": 3,
   "description": "Multiverse Wallet",
   "icons": {
@@ -21,22 +21,14 @@
       "js": ["content.js"],
       "all_frames": true,
       "run_at": "document_start",
-      "matches": ["file://*/*", "http://*/*", "https://*/*"]
+      "matches": ["http://*/*", "https://*/*"]
     }
   ],
   "permissions": [
     "storage",
     "unlimitedStorage",
     "clipboardWrite",
-    "activeTab",
-    "webRequest",
-    "notifications",
-    "scripting"
+    "videoCapture"
   ],
-  "web_accessible_resources": [{
-    "resources": ["index.html"],
-    "matches": ["<all_urls>"],
-    "extension_ids": []
-  }],
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1ShCMfLqRk4DETsqR/FiDQH96a73wX6JmXt0MyMs9z/MokhgPOhu+UtyqZjQ3Bmt3tTQUqMyJGhg/cA9RtfMW5Z+/g+EOOEtdxVZOWFyDawncmZWFLiNPOjuyr3xa/+Y+i3MQkdg0+MqPd48P9KY3+vC/X4AYCYPsIMyjIYAp7O0yy9NdZhBwK+jkrko7Ol2VhY7Hoivp/dlhJ4FkLlFTKGER1VUvjpfPVT56HFqCK3FVFHb6KrsM7DIB+l6eK8SM2LBnoEBhxgXowbV/Dz4MJ1fiw27tYXay4HJSyWKK3fm4Tzkw4UqHruHd92DaeJZT4aOLYA44+a+J3dfea8KJQIDAQAB"
 }

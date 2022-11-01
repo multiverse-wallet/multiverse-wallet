@@ -30,7 +30,9 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
     <Menu as="div" className="relative">
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md bg-white shadow px-4 py-2 text-sm font-medium focus:outline-none">
-          {selectedNetwork?.name}
+          <div className="truncate w-20">
+            {selectedNetwork?.name}
+          </div>
           {connectionState === "connected" && (
             <CheckCircleIcon
               className="-mr-1 ml-2 h-5 w-5 text-green-400"

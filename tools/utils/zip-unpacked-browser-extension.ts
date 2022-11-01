@@ -54,20 +54,20 @@ const zip = new yazl.ZipFile();
 
 addDirectory(
   zip,
-  './dist/apps/browser-extension/unpacked',
-  'unpacked',
+  './dist/apps/wallet-unpacked',
+  'multiverse-wallet',
   async (error: any) => {
     if (error) {
       return console.error(error);
     }
 
-    await remove('./tmp/browser-extension/unpacked.zip');
+    await remove('./tmp/multiverse-wallet.zip');
 
-    await ensureDir('./tmp/browser-extension');
+    await ensureDir('./tmp/wallet-unpacked');
 
     zip.end();
     zip.outputStream.pipe(
-      createWriteStream('./tmp/browser-extension/unpacked.zip')
+      createWriteStream('./tmp/multiverse-wallet.zip')
     );
   }
 );

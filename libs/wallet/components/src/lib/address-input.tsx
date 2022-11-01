@@ -50,14 +50,14 @@ export interface AddressInputChildProps extends AriaTextFieldProps {
 }
 
 export function AddressInput(props: AddressInputProps) {
-  let {
+  const {
     defaultValue,
-    children,
     className,
     inputClassName,
     labelClassName,
     onChange: originalOriginChange,
   } = props;
+  let { children } = props;
   const { client } = useXRPLContext();
   const [addressInput, setAddressInput] = useState(defaultValue);
   const [classicAddress, setClassicAddress] = useState<string>();
@@ -65,7 +65,7 @@ export function AddressInput(props: AddressInputProps) {
   const [addressError, setAddressError] = useState<Error>();
   const wellKnownName = useWellKnownName(addressInput);
   const ref = useRef<HTMLInputElement>();
-  let onChange = (value: string) => {
+  const onChange = (value: string) => {
     setAddressInput(value);
   };
   useEffect(() => {
@@ -155,7 +155,12 @@ function AddressInputChildStyled({
   addressInput,
   setAddressInput,
 }: AddressInputChildProps) {
-  const { qrCodeValue, scan, isScanning, cancel: cancelQrScan } = useQRCodeScanner();
+  const {
+    qrCodeValue,
+    scan,
+    isScanning,
+    cancel: cancelQrScan,
+  } = useQRCodeScanner();
   const accountNotFound = error?.message == "Account not found.";
   useEffect(() => {
     qrCodeValue && setAddressInput(qrCodeValue);
@@ -171,7 +176,12 @@ function AddressInputChildStyled({
         <div className="flex flex-col border p-3 my-2 rounded-md items-center justify-center">
           <div className="text-sm">Place QR Code in view of camera</div>
           <QrcodeIcon className="text-gray-300 w-20 h-20" />
-          <a className="text-xs text-blue-400 underline cursor-pointer" onClick={() => cancelQrScan()}>Cancel</a>
+          <a
+            className="text-xs text-blue-400 underline cursor-pointer"
+            onClick={() => cancelQrScan()}
+          >
+            Cancel
+          </a>
         </div>
       )}
       <div
@@ -256,7 +266,7 @@ function useQRCodeScanner() {
   const [qrCodeValue, setQrCodeValue] = useState<string>();
   const [qrScanner, setQRScanner] = useState<QrScanner>();
   const [isScanning, setIsScanning] = useState(false);
-  const scan = () => {
+  const scan = async () => {
     const video = document.createElement("video");
     const qrScanner = new QrScanner(
       video,
@@ -265,7 +275,9 @@ function useQRCodeScanner() {
         setQRScanner(undefined);
         setIsScanning(false);
       },
-      (err) => {}
+      (err) => {
+        console.error(err);
+      }
     );
     setQRScanner(qrScanner);
     setIsScanning(true);

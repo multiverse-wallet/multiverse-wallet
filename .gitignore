@@ -105,3 +105,6 @@ dist
 
 # Mac OS system files
 .DS_Store
+
+# Temporary files
+tmp/

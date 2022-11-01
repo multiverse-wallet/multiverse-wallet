@@ -3,10 +3,10 @@ import { LinkIcon } from "@heroicons/react/solid";
 import { Site, SiteConnectionRequest } from "@multiverse-wallet/multiverse";
 import { Button } from "@multiverse-wallet/shared/components/button";
 import { ModalDialog } from "@multiverse-wallet/shared/components/modal-dialog";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
+import { useAccounts, useWalletState } from "@multiverse-wallet/wallet/hooks";
 import { OverlayContainer } from "@react-aria/overlays";
 import { useOverlayTriggerState } from "@react-stately/overlays";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ApproveSiteModal } from "./approve-site-modal";
 
 export interface SitesProps {
@@ -20,13 +20,25 @@ interface SiteTableRowWithModalProps {
 
 function SiteTableRowWithModal({ site }: SiteTableRowWithModalProps) {
   const { api } = useWalletState();
+  const accounts = useAccounts();
+  const allowedAccounts = useMemo(() => {
+    if (!site.allowedAccounts) {
+      return <>-</>;
+    }
+    return site.allowedAccounts
+      .map((accId) => {
+        return accounts?.find((a) => a.id === accId);
+      })
+      .filter(Boolean)
+      .map((acc) => acc?.name).join(", ");
+  }, [site, accounts]);
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
         {site.origin}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
-        {/* {site?.allowedAccounts?.join(", ")} */}
+        {allowedAccounts}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm leading-5 font-medium">
         <TrashIcon
@@ -84,8 +96,8 @@ export function SiteConnectionRequestWithModal({ request }: any) {
 
 export function Sites({ sites, connectionRequests }: SitesProps) {
   return (
-    <div className="py-6 px-8">
-      <header className="mb-12">
+    <div >
+      <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
             Connected Sites
@@ -114,9 +126,9 @@ export function Sites({ sites, connectionRequests }: SitesProps) {
       )}
 
       <div className="flex flex-col">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div>
+          <div>
+            <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
               {sites?.length < 1 && (
                 <div className="bg-white divide-y divide-gray-200 h-96">
                   <div className="flex flex-col items-center justify-center h-full">

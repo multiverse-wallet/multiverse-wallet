@@ -64,8 +64,8 @@ export function Networks({ networks }: NetworksProps) {
   const addNetworkOverlayState = useOverlayTriggerState({});
 
   return (
-    <div className="py-6 px-8">
-      <header className="mb-12">
+    <div >
+      <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
             Networks
@@ -113,9 +113,9 @@ export function Networks({ networks }: NetworksProps) {
       )}
 
       <div className="flex flex-col">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div>
+          <div>
+            <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
               {networks?.length < 1 && (
                 <div className="bg-white divide-y divide-gray-200 h-96">
                   <div className="flex flex-col items-center justify-center h-full">

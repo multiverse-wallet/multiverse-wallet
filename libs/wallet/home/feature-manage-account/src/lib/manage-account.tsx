@@ -1,5 +1,8 @@
 import {
+  CodeIcon,
   CogIcon,
+  CubeIcon,
+  GlobeAltIcon,
   LinkIcon,
   LockClosedIcon,
   ServerIcon,
@@ -10,10 +13,10 @@ import {
   useNetworks,
   useSiteConnectionRequests,
   useSites,
-  useWalletState,
+  useTransactions,
 } from "@multiverse-wallet/wallet/hooks";
-import React, { useEffect } from "react";
-import { Link, Route, Routes, useNavigate, useMatch } from "react-router-dom";
+import React from "react";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
 import { ManageAccounts } from "./account/account";
 import { Security } from "./security/security";
 import { Settings } from "./settings/settings";
@@ -23,6 +26,9 @@ import {
   SelectNetwork,
 } from "@multiverse-wallet/wallet/components";
 import { Sites } from "./sites/sites";
+import { APILogs } from "./api-logs/api-logs";
+import { Transactions } from "./transactions/transactions";
+import { TrustLines } from "./trust-lines/trust-lines";
 
 interface NavItemProps {
   linkTo: string;
@@ -39,7 +45,7 @@ function NavItem({ linkTo, title, icon }: NavItemProps) {
       className={`group rounded-md flex items-center text-sm leading-5 font-medium focus:outline-none ${
         !isSelected
           ? "py-4 px-7 hover:text-gray-900 hover:bg-gray-50 focus:text-gray-900 focus:bg-gray-50"
-          : "py-4 px-7 text-white bg-gradient-to-br from-orange-500 to-purple-500"
+          : "py-4 px-7 text-white bg-gradient-to-br from-gray-600 to-gray-700"
       }`}
     >
       {React.cloneElement(icon, {
@@ -55,14 +61,9 @@ export function ManageAccount() {
   const sites = useSites();
   const siteConnectionRequests = useSiteConnectionRequests();
   const networks = useNetworks();
-  const navigate = useNavigate();
+  const transactions = useTransactions();
   const topBarHeight = "64px";
   const privateMessageBarHeight = "42px";
-
-  // useEffect(() => {
-  //   // Ensure the hash-based URL is appropriate at this point
-  //   navigate("/admin/accounts");
-  // }, [history]);
 
   const navItems: NavItemProps[] = [
     {
@@ -78,6 +79,11 @@ export function ManageAccount() {
     {
       title: "Connected Sites",
       linkTo: "/admin/sites",
+      icon: <GlobeAltIcon className="w-5 h-5" />,
+    },
+    {
+      title: "Trust Lines",
+      linkTo: "/admin/trust-lines",
       icon: <LinkIcon className="w-5 h-5" />,
     },
     {
@@ -90,11 +96,21 @@ export function ManageAccount() {
       linkTo: "/admin/security",
       icon: <LockClosedIcon className="w-5 h-5" />,
     },
+    {
+      title: "Transactions",
+      linkTo: "/admin/transactions",
+      icon: <CubeIcon className="w-5 h-5" />,
+    },
+    {
+      title: "API Logs",
+      linkTo: "/admin/api-logs",
+      icon: <CodeIcon className="w-5 h-5" />,
+    },
   ];
 
   return (
     <div
-      className="h-screen overflow-hidden flex flex-col"
+      className="h-screen text-sm"
       style={{
         height: `calc(100vh - ${privateMessageBarHeight})`,
       }}
@@ -117,7 +133,7 @@ export function ManageAccount() {
         </div>
       </nav>
 
-      <div className="flex flex-row">
+      <div className="flex flex-row gap-4">
         <div
           className="flex flex-shrink-0"
           style={{
@@ -159,14 +175,13 @@ export function ManageAccount() {
         </div>
 
         <div
-          className="flex-1 flex flex-col"
+          className="flex-1 flex flex-col overflow-hidden"
           style={{
             height: `calc(100vh - ${topBarHeight} - ${privateMessageBarHeight})`,
           }}
         >
           <main
-            className="flex-1 overflow-y-auto focus:outline-none"
-            tabIndex={0}
+            className="p-4 overflow-y-scroll"
           >
             <Routes>
               <Route
@@ -181,8 +196,11 @@ export function ManageAccount() {
                 path="/admin/sites"
                 element={<Sites sites={sites || []} connectionRequests={siteConnectionRequests || []} />}
               />
+              <Route path="/admin/trust-lines" element={<TrustLines />} />
               <Route path="/admin/settings" element={<Settings />} />
               <Route path="/admin/security" element={<Security />} />
+              <Route path="/admin/transactions" element={<Transactions transactions={transactions || []} />} />
+              <Route path="/admin/api-logs" element={<APILogs />} />
             </Routes>
           </main>
         </div>

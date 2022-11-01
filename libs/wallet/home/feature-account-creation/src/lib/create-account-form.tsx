@@ -39,7 +39,7 @@ const Step = ({
         <div className="px-6 py-4 flex items-center text-sm leading-5 font-medium space-x-4">
           <div
             className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition ease-in-out duration-150 ${
-              state === "completed" ? "bg-gradient-to-br from-orange-500 to-purple-500 group-hover:bg-purple-700" : ""
+              state === "completed" ? "bg-gradient-to-br from-gray-600 to-gray-700 group-hover:bg-purple-700" : ""
             } ${
               state === "upcoming"
                 ? "border-2 border-gray-300 cursor-not-allowed"

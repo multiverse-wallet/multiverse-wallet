@@ -78,6 +78,9 @@
       "@multiverse-wallet/wallet/popup/feature-send-payment": [
         "libs/wallet/popup/feature-send-payment/src/index.ts"
       ],
+      "@multiverse-wallet/wallet/popup/feature-transaction": [
+        "libs/wallet/popup/feature-transaction/src/index.ts"
+      ],
       "@multiverse-wallet/wallet/utils": [
         "libs/wallet/utils/src/index.ts"
       ]
