@@ -69,7 +69,6 @@ export function SendPayment(props: SendPaymentProps) {
             Send Payment
           </Button>
         </div>
-      )}
     </>
   );
 }
