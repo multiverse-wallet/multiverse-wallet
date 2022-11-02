@@ -27,6 +27,8 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Build the browser extension
+        env:
+          MANIFEST_KEY: ${{ secrets.MANIFEST_KEY }}
         run: yarn build-extension
 
       - run: mkdir -p ./tmp/browser-extension
