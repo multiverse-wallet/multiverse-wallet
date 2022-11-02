@@ -35,7 +35,6 @@ export function SendPayment(props: SendPaymentProps) {
       TransactionType: "Payment",
       Account: selectedAccount?.address,
       Amount: formatAmount(amount),
-      DestinationTag: 123,
       Destination: address,
     };
     api.requestTransaction(tx).then((txId) => {
