@@ -15,3 +15,4 @@ export * from './lib/account-balance';
 export * from './lib/transaction-summary';
 export * from './lib/account-name';
 export * from './lib/approve-transaction-button';
+export * from './lib/amount-input';

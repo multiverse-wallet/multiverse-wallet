@@ -63,12 +63,14 @@ export class TransactionsResource {
       });
       return state;
     });
-    await this.api.extension.openPopup({
-      id: req.id,
-      origin: req.origin,
-      method: RPCRequestMethod.openPopup,
-      data: { path: `/popup/transaction/${id}` },
-    });
+    if (req.origin !== EXTENSION_ORIGIN) {
+      await this.api.extension.openPopup({
+        id: req.id,
+        origin: req.origin,
+        method: RPCRequestMethod.openPopup,
+        data: { path: `/popup/transaction/${id}` },
+      });
+    }
     return { result: id };
   }
   @PublicMethod()

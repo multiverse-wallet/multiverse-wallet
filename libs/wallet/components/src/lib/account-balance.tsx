@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
 import { AccountBalance as XRPLAccountBalance } from "@xrpl-components/react/components/account-balance";
 import { Account } from "@multiverse-wallet/multiverse";
 

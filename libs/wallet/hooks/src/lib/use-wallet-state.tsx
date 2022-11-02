@@ -11,6 +11,7 @@ import {
 } from "@multiverse-wallet/multiverse";
 import api from "@multiverse-wallet/multiverse";
 import { Background } from "@multiverse-wallet/shared/api";
+import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
 
 if (chrome?.runtime) {
   api.setTransport(new BrowserRuntimeTransport());
@@ -195,4 +196,29 @@ export function useSettings() {
     api.getSettings().then((settings) => setSettings(settings));
   }, [api, lastUpdate]);
   return settings;
+}
+
+export function useSelectedAccountBalances() {
+  const { selectedAccount } = useSelectedAccount();
+  const { client } = useXRPLContext();
+  const [balances, setBalances] = useState<
+    {
+      value: string;
+      currency: string;
+      issuer?: string | undefined;
+    }[]
+  >();
+  useEffect(() => {
+    if (!selectedAccount?.address) {
+      setBalances(undefined);
+      return;
+    }
+    client
+      ?.getBalances(selectedAccount?.address)
+      .then((balances) => {
+        setBalances(balances);
+      })
+      .catch(() => setBalances(undefined));
+  }, [client, selectedAccount]);
+  return balances;
 }

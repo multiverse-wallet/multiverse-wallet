@@ -58,7 +58,6 @@ export function AddressInput(props: AddressInputProps) {
     onChange: originalOriginChange,
   } = props;
   let { children } = props;
-  const { client } = useXRPLContext();
   const [addressInput, setAddressInput] = useState(defaultValue);
   const [classicAddress, setClassicAddress] = useState<string>();
   const [tag, setTag] = useState<number>();
@@ -75,14 +74,14 @@ export function AddressInput(props: AddressInputProps) {
       setAddressError(undefined);
       return;
     }
-    if (isValidClassicAddress(addressInput!)) {
+    if (isValidClassicAddress(addressInput)) {
       setClassicAddress(addressInput);
       setTag(undefined);
       setAddressError(undefined);
       return;
     }
-    if (isValidXAddress(addressInput!)) {
-      const { classicAddress, tag } = xAddressToClassicAddress(addressInput!);
+    if (isValidXAddress(addressInput)) {
+      const { classicAddress, tag } = xAddressToClassicAddress(addressInput);
       setClassicAddress(classicAddress);
       if (tag) {
         setTag(tag);
@@ -95,8 +94,8 @@ export function AddressInput(props: AddressInputProps) {
     setAddressError(new Error("Invalid Address"));
   }, [addressInput]);
   useEffect(() => {
-    originalOriginChange && originalOriginChange(classicAddress!);
-  }, [classicAddress]);
+    originalOriginChange && classicAddress && originalOriginChange(classicAddress);
+  }, [classicAddress, originalOriginChange]);
   const { inputProps, labelProps, descriptionProps, errorMessageProps } =
     useTextField(
       {
@@ -231,28 +230,26 @@ function AddressInputChildStyled({
         </div>
       )}
       {!!wellKnownName && (
-        <>
-          <div className="flex text-xs p-2">
-            {wellKnownName?.domain ? (
-              <div className="flex-grow flex items-center">
-                <a href={`//` + wellKnownName?.domain} target="_blank">
-                  <LinkIcon className="-mt-0.5 mr-1 w-4 h-4 inline" />
-                  {wellKnownName?.name}
-                </a>
-              </div>
-            ) : (
-              <div className="flex-grow flex items-center">
+        <div className="flex text-xs p-2">
+          {wellKnownName?.domain ? (
+            <div className="flex-grow flex items-center">
+              <a href={`//` + wellKnownName?.domain} target="_blank" rel="noreferrer">
+                <LinkIcon className="-mt-0.5 mr-1 w-4 h-4 inline" />
                 {wellKnownName?.name}
-              </div>
-            )}
-            {wellKnownName?.verified && (
-              <div className="text-blue-400 flex items-center">
-                <CheckCircleIcon className="mr-1 w-5 h-5 inline" />
-                Verified Account
-              </div>
-            )}
-          </div>
-        </>
+              </a>
+            </div>
+          ) : (
+            <div className="flex-grow flex items-center">
+              {wellKnownName?.name}
+            </div>
+          )}
+          {wellKnownName?.verified && (
+            <div className="text-blue-400 flex items-center">
+              <CheckCircleIcon className="mr-1 w-5 h-5 inline" />
+              Verified Account
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
