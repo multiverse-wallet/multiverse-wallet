@@ -1,6 +1,6 @@
-import { ChevronRightIcon, DownloadIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
-import Image from 'next/image';
+import { DownloadIcon } from "@heroicons/react/solid";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -28,14 +28,10 @@ export default function Hero() {
                   <a href="/docs/getting-started" className="no-underline">
                     <span className="inline-flex bg-gradient-to-br from-gray-600 to-gray-700 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
                       <span>Download</span>
-                      <DownloadIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
+                      <DownloadIcon className="h-5 w-5" aria-hidden="true" />
                     </span>
                   </a>
                 </Link>
-
               </p>
             </div>
           </div>
@@ -61,8 +57,11 @@ export default function Hero() {
             Proudly supported by:
           </h2>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="col-span-2 flex justify-center items-center font-extrabold italic text-4xl" style={{fontFamily:"'Work Sans', sans-serif"}}>
-              XRPL Grants
+            <div
+              className="col-span-2 flex justify-center items-center font-extrabold italic text-4xl"
+              style={{ fontFamily: "'Work Sans', sans-serif" }}
+            >
+              <a target="__blank" className="text-slate-700" href="https://xrplgrants.org/">XRPL Grants</a>
             </div>
           </div>
         </div>

@@ -13,9 +13,9 @@ const TITLE_WITH_TRANSLATIONS = {
 };
 
 const theme = {
-  projectLink: "https://github.com/decentralised-advertising/multiverse-wallet",
+  projectLink: "https://github.com/multiverse-wallet/multiverse-wallet",
   docsRepositoryBase:
-    "https://github.com/decentralised-advertising/multiverse-wallet/tree/main/apps/website/pages",
+    "https://github.com/multiverse-wallet/multiverse-wallet/tree/main/apps/website/pages",
   titleSuffix: " – Multiverse Wallet",
   search: true,
   unstable_flexsearch: true,
