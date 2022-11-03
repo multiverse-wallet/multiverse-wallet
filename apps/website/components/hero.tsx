@@ -10,7 +10,7 @@ export default function Hero() {
           <div className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24 sm:px-6">
             <div className="text-center">
               <p className="mb-12">
-                <span className="rounded bg-blue-500 text-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600 tracking-wide uppercase">
+                <span className="rounded bg-blue-500 text-blue-50 px-2.5 py-1 text-xs font-semibold tracking-wide uppercase">
                   Early Alpha Release
                 </span>
               </p>
