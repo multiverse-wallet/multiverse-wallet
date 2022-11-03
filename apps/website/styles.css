@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&display=swap');
+
+html {
+  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1, 'ss06' 1 !important;
+}
+
+[data-reach-skip-link] {
+  @apply sr-only;
+}
+
+[data-reach-skip-link]:focus {
+  @apply not-sr-only fixed ml-6 top-0 bg-white text-lg px-6 py-2 mt-2 outline-none focus:ring z-50;
+}
+
+.dark .invert-on-dark {
+  filter: invert(1) brightness(1.8);
+}
+
+body {
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+.nextra-container .nextra-sidebar ul li.active > a,
+.nextra-container .nextra-sidebar ul li.active > a:hover,
+.dark .nextra-container .nextra-sidebar ul li.active > a,
+.dark .nextra-container .nextra-sidebar ul li.active > a:hover {
+  color: #9a52ff !important;
+}

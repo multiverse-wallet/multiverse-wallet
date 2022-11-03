@@ -1,0 +1,25 @@
+{
+  "root": "libs/shared/components/modal-dialog",
+  "sourceRoot": "libs/shared/components/modal-dialog/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/components/modal-dialog/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/components/modal-dialog/jest.config.js",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/shared/components/modal-dialog"]
+    }
+  },
+  "tags": []
+}

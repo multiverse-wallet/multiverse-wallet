@@ -1,0 +1,32 @@
+{
+  "name": "Multiverse Wallet",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "description": "Multiverse Wallet",
+  "icons": {
+    "512": "assets/shared/logo_512.png"
+  },
+  "action": {
+    "default_icon": "assets/shared/logo_512.png",
+    "default_popup": "index.html/#/popup"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite"
+  ]
+}
