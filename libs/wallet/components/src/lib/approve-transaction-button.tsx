@@ -6,6 +6,7 @@ import { Spinner } from "@multiverse-wallet/shared/components/spinner";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import ReactTimeago from "react-timeago";
 import { useNavigate } from "react-router-dom";
+import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
 
 export interface ApproveTransactionButtonProps {
   transaction: Transaction;

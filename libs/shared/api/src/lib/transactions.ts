@@ -51,11 +51,13 @@ export class TransactionsResource {
   @PublicMethod()
   async requestTransaction(req: RPCRequest<any>) {
     const id = uuid();
+    const client = await this.getXRPLClient();
+    const filledTxJson = await client.autofill(req.data)
     await this.state.fetchAndUpdate(async (state) => {
       const ts = Date.now();
       state.transactions.unshift({
         id,
-        txJson: req.data,
+        txJson: filledTxJson,
         origin: req.origin,
         status: "pending",
         lastUpdate: ts,
@@ -105,8 +107,7 @@ export class TransactionsResource {
       // Fetch the current client.
       const client = await this.getXRPLClient();
       // Auto-fill the transaction fields.
-      const filledTxJson = await client.autofill(transaction.txJson);
-      const { tx_blob, hash } = wallet.sign(filledTxJson);
+      const { tx_blob, hash } = wallet.sign(transaction.txJson);
       // Set the tx hash
       transaction.txHash = hash;
       // Submit to the xrpl

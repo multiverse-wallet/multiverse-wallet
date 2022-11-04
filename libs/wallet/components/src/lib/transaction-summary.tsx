@@ -11,6 +11,9 @@ export interface TransactionSummaryProps {
 }
 
 export function TransactionSummary({ transaction }: TransactionSummaryProps) {
+  const transactionFee = useMemo(() => {
+    return (+transaction.txJson.Fee / 1e6).toFixed(6);
+  }, [transaction]);
   const tabs = useMemo(() => {
     const tabs = [
       {
@@ -34,11 +37,18 @@ export function TransactionSummary({ transaction }: TransactionSummaryProps) {
           ...tabs,
         ];
     }
-    return tabs
+    return tabs;
   }, [transaction]);
   return (
     <div className="-mt-5">
       <Tabs tabs={tabs} />
+      <div className="px-5 mb-3">
+        <div className="p-3 bg-gray-50 rounded-md">
+          <div className="text-xs text-gray-600">
+            Transaction Fee: {transactionFee} XRP
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
