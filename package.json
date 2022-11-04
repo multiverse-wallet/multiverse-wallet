@@ -127,5 +127,6 @@
     "webextension-polyfill": "^0.9.0",
     "xrpl": "^2.5.0-beta.1",
     "yazl": "^2.5.1"
-  }
+  },
+  "version": "0.0.2"
 }
