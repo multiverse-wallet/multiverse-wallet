@@ -20,6 +20,7 @@ export function SendPayment(props: SendPaymentProps) {
   const [isTransfer, setIsTransfer] = useState(false);
   const { api } = useWalletState();
   const [address, setAddress] = useState<string>();
+  const [tag, setTag] = useState<number>();
   const { selectedAccount } = useSelectedAccount();
   const [amount, setAmount] = useState<{
     value?: string;
@@ -36,6 +37,7 @@ export function SendPayment(props: SendPaymentProps) {
       Account: selectedAccount?.address,
       Amount: formatAmount(amount),
       Destination: address,
+      DestinationTag: tag! > 0 ? tag : undefined,
     };
     api.requestTransaction(tx).then((txId) => {
       navigate(`/popup/transaction/${txId}`);
@@ -52,23 +54,26 @@ export function SendPayment(props: SendPaymentProps) {
           </a>
         </Link>
       </div>
-      <div className="text-center text-lg py-3">Send Payment to</div>
-        <div className="px-3 pb-3 relative">
-          <AddressInput
-            defaultValue={address}
-            onChange={(address) => setAddress(address)}
-          />
-          <AmountInput onChange={setAmount} />
-          <Button
-            isDisabled={!isButtonEnabled}
-            onPress={() => requestTransaction()}
-            size="medium"
-            variant="primary"
-            className="w-full"
-          >
-            Send Payment
-          </Button>
-        </div>
+      <div className="text-center text-lg py-3">Send Payment</div>
+      <div className="p-5 relative">
+        <AddressInput
+          defaultValue={address}
+          onChange={({ address, tag }) => {
+            setAddress(address);
+            setTag(tag);
+          }}
+        />
+        <AmountInput onChange={setAmount} />
+        <Button
+          isDisabled={!isButtonEnabled}
+          onPress={() => requestTransaction()}
+          size="medium"
+          variant="primary"
+          className="w-full mt-3"
+        >
+          Send Payment
+        </Button>
+      </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { CubeIcon } from "@heroicons/react/solid";
 import { Transaction } from "@multiverse-wallet/multiverse";
 import { Button } from "@multiverse-wallet/shared/components/button";
@@ -22,6 +22,9 @@ function TransactionsTableRowWithModal({
 }: TransactionsPropsTableRowWithModalProps) {
   const transactionJsonOverlayState = useOverlayTriggerState({});
   const transactionRawResponseJsonOverlayState = useOverlayTriggerState({});
+  const txResult = useMemo(() => {
+    return transaction?.txJson?.meta?.TransactionResult || '-'
+  }, [transaction])
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
@@ -29,6 +32,9 @@ function TransactionsTableRowWithModal({
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
         {transaction.status}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
+        {txResult}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
         <TimeAgo date={transaction.createdAt} />
@@ -144,6 +150,9 @@ export function Transactions({ transactions }: TransactionsProps) {
                       </th>
                       <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Status
+                      </th>
+                      <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Transaction Result
                       </th>
                       <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Created

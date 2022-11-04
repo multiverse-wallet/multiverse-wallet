@@ -1,309 +1,97 @@
-import {
-  CheckCircleIcon,
-  CheckIcon,
-  ExclamationCircleIcon,
-  LinkIcon,
-  QrcodeIcon,
-  XIcon,
-} from "@heroicons/react/solid";
-import {
-  IWellKnownAccount,
-  useWellKnownName,
-} from "@multiverse-wallet/wallet/hooks";
-import { useTextField, AriaTextFieldProps } from "@react-aria/textfield";
-import { FocusableElement } from "@react-types/shared";
+import { AriaTextFieldProps } from "@react-aria/textfield";
 import { AccountBalance } from "@xrpl-components/react/components/account-balance";
-import { useXRPLContext, XRPLContext } from "@xrpl-components/react/hooks/xrpl";
-import React, { useEffect, useRef, useState } from "react";
 import {
-  xAddressToClassicAddress,
   isValidXAddress,
+  xAddressToClassicAddress,
   isValidClassicAddress,
 } from "xrpl";
-import QrScanner from "qr-scanner";
+import React, { useEffect, useMemo, useState } from "react";
 
-export interface AddressInputProps extends AriaTextFieldProps {
-  children?: (props: AddressInputChildProps) => JSX.Element;
-  defaultValue?: string;
+export interface AddressInputProps
+  extends Omit<AriaTextFieldProps, "onChange"> {
   className?: string;
-  inputClassName?: string;
-  labelClassName?: string;
   errorClassName?: string;
+  onChange: (value: {
+    address: string | undefined;
+    tag: number | undefined;
+  }) => void;
 }
 
-export interface AddressInputChildProps extends AriaTextFieldProps {
-  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
-  labelProps: React.DOMAttributes<FocusableElement>;
-  descriptionProps: React.DOMAttributes<FocusableElement>;
-  errorMessageProps: React.DOMAttributes<FocusableElement>;
-  ref: React.MutableRefObject<HTMLInputElement | undefined>;
-  isLoading: boolean;
-  wellKnownName?: IWellKnownAccount;
-  className?: string;
-  inputClassName?: string;
-  labelClassName?: string;
-  error: Error;
-  classicAddress?: string;
-  tag?: number;
-  addressInput?: string;
-  setAddressInput: (value: string) => void;
-}
+const defaultClassNames =
+  "p-2 rounded border shadow-sm dark:text-gray-100 dark:bg-gray-700 dark:border-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:ring-opacity-50 dark:placeholder-gray-500 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 placeholder-gray-400 py-3 px-4 block w-full transition ease-in-out duration-150 w-full";
+
+const defaultErrorClassNames = "m-1 text-red-600 text-sm";
 
 export function AddressInput(props: AddressInputProps) {
-  const {
-    defaultValue,
-    className,
-    inputClassName,
-    labelClassName,
-    onChange: originalOriginChange,
-  } = props;
-  let { children } = props;
-  const [addressInput, setAddressInput] = useState(defaultValue);
-  const [classicAddress, setClassicAddress] = useState<string>();
-  const [tag, setTag] = useState<number>();
-  const [addressError, setAddressError] = useState<Error>();
-  const wellKnownName = useWellKnownName(addressInput);
-  const ref = useRef<HTMLInputElement>();
-  const onChange = (value: string) => {
-    setAddressInput(value);
-  };
+  const [error, setError] = useState<string>();
+  const [value, setValue] = useState<string>();
+  const [address, setAddress] = useState<string>();
+  const [tag, setTag] = useState<number | undefined>();
+  const [showTagInput, setShowTagInput] = useState<boolean>(false);
+  const showTagField = useMemo(() => {
+    return !!tag || showTagInput;
+  }, [tag, showTagInput]);
   useEffect(() => {
-    if (!addressInput) {
-      setClassicAddress(undefined);
+    if (!value) {
+      setError(undefined);
+      setValue(undefined);
       setTag(undefined);
-      setAddressError(undefined);
       return;
     }
-    if (isValidClassicAddress(addressInput)) {
-      setClassicAddress(addressInput);
+    if (isValidXAddress(value)) {
+      const { classicAddress, tag } = xAddressToClassicAddress(value);
+      setAddress(classicAddress);
+      setTag(tag ? tag : undefined);
+      setError(undefined);
+      return;
+    }
+    if (isValidClassicAddress(value)) {
+      setAddress(value);
       setTag(undefined);
-      setAddressError(undefined);
+      setError(undefined);
       return;
     }
-    if (isValidXAddress(addressInput)) {
-      const { classicAddress, tag } = xAddressToClassicAddress(addressInput);
-      setClassicAddress(classicAddress);
-      if (tag) {
-        setTag(tag);
-      } else {
-        setTag(undefined);
-      }
-      setAddressError(undefined);
-      return;
-    }
-    setAddressError(new Error("Invalid Address"));
-  }, [addressInput]);
+    setError("Invalid address, must be either a classic address or X-Address");
+    setAddress(undefined);
+    setTag(undefined);
+  }, [error, value]);
   useEffect(() => {
-    originalOriginChange && classicAddress && originalOriginChange(classicAddress);
-  }, [classicAddress, originalOriginChange]);
-  const { inputProps, labelProps, descriptionProps, errorMessageProps } =
-    useTextField(
-      {
-        ...props,
-        onChange,
-        inputElementType: "input",
-      },
-      ref as any
-    );
-  if (!children) {
-    children = AddressInputChildStyled;
-  }
+    props.onChange({ address, tag });
+  }, [address, tag]);
   return (
-    <AccountBalance account={classicAddress || ""}>
-      {(accountBalanceProps) => {
-        return children!({
-          ...props,
-          ...accountBalanceProps,
-          error: addressInput
-            ? addressError || accountBalanceProps.error
-            : undefined,
-          wellKnownName,
-          inputProps,
-          labelProps,
-          descriptionProps,
-          errorMessageProps,
-          className,
-          inputClassName,
-          labelClassName,
-          ref,
-          classicAddress,
-          tag,
-          addressInput,
-          setAddressInput,
-        });
-      }}
-    </AccountBalance>
-  );
-}
-
-function AddressInputChildStyled({
-  labelProps,
-  inputProps,
-  ref,
-  label,
-  description,
-  error,
-  descriptionProps,
-  errorMessageProps,
-  className,
-  inputClassName,
-  labelClassName,
-  classicAddress,
-  tag,
-  wellKnownName,
-  addressInput,
-  setAddressInput,
-}: AddressInputChildProps) {
-  const {
-    qrCodeValue,
-    scan,
-    isScanning,
-    cancel: cancelQrScan,
-  } = useQRCodeScanner();
-  const accountNotFound = error?.message == "Account not found.";
-  useEffect(() => {
-    qrCodeValue && setAddressInput(qrCodeValue);
-  }, [qrCodeValue]);
-  return (
-    <div className={className}>
-      {label && (
-        <label className={labelClassName} {...labelProps}>
-          {label}
-        </label>
-      )}
-      {isScanning && (
-        <div className="flex flex-col border p-3 my-2 rounded-md items-center justify-center">
-          <div className="text-sm">Place QR Code in view of camera</div>
-          <QrcodeIcon className="text-gray-300 w-20 h-20" />
-          <a
-            className="text-xs text-blue-400 underline cursor-pointer"
-            onClick={() => cancelQrScan()}
-          >
-            Cancel
-          </a>
+    <>
+      <input
+        className={props.className || defaultClassNames}
+        autoComplete="off"
+        placeholder="Enter a classic address or X-Address"
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <div className="flex my-1">
+        <div className="flex-grow"></div>
+        <div
+          onClick={() => setShowTagInput(!showTagInput)}
+          className="text-xs text-underline text-blue-400 underline font-bold cursor-pointer"
+        >
+          Set Tag
         </div>
-      )}
-      <div
-        className={classNames(
-          className,
-          "p-2 border w-full rounded-md flex items-center gap-2"
-        )}
-      >
-        <QrcodeIcon
-          onClick={() => scan()}
-          className="w-6 h-6 inline text-gray-300"
-        />
-        <input
-          className={classNames(
-            inputClassName,
-            "flex-grow text-sm focus:outline-none"
-          )}
-          {...inputProps}
-          placeholder="Enter address here..."
-          value={addressInput}
-          ref={ref as any}
-        />
-        {addressInput && (
-          <XIcon
-            className="w-6 h-6 inline text-gray-300"
-            onClick={() => setAddressInput("")}
-          />
-        )}
       </div>
-      {description && <div {...descriptionProps}>{description}</div>}
-      {!accountNotFound && error && (
-        <div
-          className="text-xs p-2 text-red-400 flex items-center"
-          {...errorMessageProps}
-        >
-          <ExclamationCircleIcon className="-mt-0.5 mr-1 w-4 h-4 inline" />
-          {error?.message}
+      {showTagField && (
+        <div className="flex items-center grid grid-cols-3">
+          <div>Tag:</div>
+          <div className="col-span-2">
+            <input
+              type="number"
+              className={props.className || defaultClassNames}
+              autoComplete="off"
+              placeholder="Enter a tag"
+              onChange={(e) => setTag(+e.target.value)}
+            />
+          </div>
         </div>
       )}
-      {accountNotFound && (
-        <div
-          className="text-xs p-2 text-orange-400 flex items-center"
-          {...errorMessageProps}
-        >
-          <ExclamationCircleIcon className="-mt-0.5 mr-1 w-4 h-4 inline" />
-          Account not found, may not yet be initialized
-        </div>
-      )}
-      {!!wellKnownName && (
-        <div className="flex text-xs p-2">
-          {wellKnownName?.domain ? (
-            <div className="flex-grow flex items-center">
-              <a href={`//` + wellKnownName?.domain} target="_blank" rel="noreferrer">
-                <LinkIcon className="-mt-0.5 mr-1 w-4 h-4 inline" />
-                {wellKnownName?.name}
-              </a>
-            </div>
-          ) : (
-            <div className="flex-grow flex items-center">
-              {wellKnownName?.name}
-            </div>
-          )}
-          {wellKnownName?.verified && (
-            <div className="text-blue-400 flex items-center">
-              <CheckCircleIcon className="mr-1 w-5 h-5 inline" />
-              Verified Account
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+      <div className={props.errorClassName || defaultErrorClassNames}>
+        {error}
+      </div>
+    </>
   );
-}
-
-function classNames(...classes: (string | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function useQRCodeScanner() {
-  const [qrCodeValue, setQrCodeValue] = useState<string>();
-  const [qrScanner, setQRScanner] = useState<QrScanner>();
-  const [isScanning, setIsScanning] = useState(false);
-  const scan = async () => {
-    const video = document.createElement("video");
-    const qrScanner = new QrScanner(
-      video,
-      (result) => {
-        setQrCodeValue(result);
-        setQRScanner(undefined);
-        setIsScanning(false);
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-    setQRScanner(qrScanner);
-    setIsScanning(true);
-    qrScanner.start();
-    return () => cancel();
-  };
-  const cancel = () => {
-    qrScanner?.stop();
-    qrScanner?.$video.pause();
-    qrScanner?.destroy();
-    setQRScanner(undefined);
-    setIsScanning(false);
-  };
-  return { qrCodeValue, isScanning, scan, cancel };
-}
-
-export async function setupCamera(
-  video: HTMLVideoElement
-): Promise<{ video: HTMLVideoElement; stream: MediaStream }> {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: "user",
-    },
-  });
-  video.srcObject = stream;
-  return new Promise((resolve) => {
-    video.onloadedmetadata = () => {
-      resolve({ video, stream });
-    };
-  });
 }

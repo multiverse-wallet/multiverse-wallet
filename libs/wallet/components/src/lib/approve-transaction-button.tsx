@@ -5,6 +5,7 @@ import { useWalletState } from "@multiverse-wallet/wallet/hooks";
 import { Spinner } from "@multiverse-wallet/shared/components/spinner";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import ReactTimeago from "react-timeago";
+import { useNavigate } from "react-router-dom";
 
 export interface ApproveTransactionButtonProps {
   transaction: Transaction;
@@ -14,11 +15,16 @@ export function ApproveTransactionButton({
   transaction,
 }: ApproveTransactionButtonProps) {
   const { api } = useWalletState();
+  const navigate = useNavigate()
   const expiresAt = useMemo(() => {
     return (transaction.createdAt || Date.now()) + 60_000;
   }, [transaction]);
   const isExpired = Date.now() > expiresAt;
   const isPending = transaction.status === "pending";
+  const closePopup = () => {
+    navigate("/popup")
+    api.closePopup()
+  }
   switch (transaction.status) {
     case "pending":
       return (
@@ -71,7 +77,7 @@ export function ApproveTransactionButton({
             variant="dark"
             className="w-full"
             size="small"
-            onPress={() => api.closePopup()}
+            onPress={() => closePopup()}
           >
             Close
           </Button>
@@ -87,7 +93,7 @@ export function ApproveTransactionButton({
             variant="cancel"
             className="w-full"
             size="small"
-            onPress={() => api.closePopup()}
+            onPress={() => closePopup()}
           >
             Close
           </Button>
@@ -103,7 +109,7 @@ export function ApproveTransactionButton({
             variant="cancel"
             className="w-full"
             size="small"
-            onPress={() => api.closePopup()}
+            onPress={() => closePopup()}
           >
             Close
           </Button>
