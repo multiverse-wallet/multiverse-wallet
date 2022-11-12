@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
-  PublicAPI,
+  InternalAPI,
   BrowserRuntimeTransport,
   Account,
   Transaction,
@@ -21,7 +21,7 @@ if (chrome?.runtime) {
 }
 
 const walletStateContext = createContext<{
-  api: PublicAPI;
+  api: InternalAPI;
   lastUpdate: number;
 }>({} as any);
 
@@ -30,6 +30,7 @@ export function useWalletState() {
 }
 
 export const WalletStateProvider = ({ children }: any) => {
+  const api = useMemo(() => new InternalAPI(), [])
   const [lastUpdate, setLastUpdate] = useState(Date.now());
   useEffect(() => {
     return api.on("update", () => setLastUpdate(Date.now()));

@@ -39,6 +39,17 @@ module.exports = withNextra({
       test: /\.tsx?$/,
       use: [options.defaultLoaders.babel],
     });
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        crypto: require.resolve("crypto-browserify"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer"),
+        https: false,
+        net: false,
+        tls: false,
+      },
+    };
     return config;
   },
 });
