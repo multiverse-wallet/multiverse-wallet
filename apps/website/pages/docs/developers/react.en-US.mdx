@@ -1,0 +1,116 @@
+# Introduction
+
+## Basic Usage
+
+To start developing applications that utilise the Multiverse React library, install `@multiverse-wallet/react` using your package manager of choice, for example:
+
+With npm:
+
+```
+npm i @multiverse-wallet/react
+```
+
+Or yarn:
+
+```
+yarn add @multiverse-wallet/react
+```
+
+And then import in your project with:
+
+```js
+import { ... } from "@multiverse-wallet/react";
+```
+
+## Hooks
+
+### `useConnect()`
+
+This hook returns the currently selected network in Multiverse Wallet or undefined if the network is not connected or unavailable for some reason.
+
+Any error that occurs whilst fetching the network is returned with the error property. The network can be refreshed using the revalidate method, although, this shouldn't generally be needed as the network is updated on networkChanged events emitted by the Multiverse Wallet.
+
+```jsx
+import React from "react";
+import { useConnect } from "@multiverse-wallet/react";
+
+interface IUseConnect {
+  isActive: boolean;
+  isConnected: boolean;
+  connect: () => void;
+  disconnect: () => void;
+  error?: Error;
+  revalidate: () => void;
+}
+
+export function MyConnectComponent() {
+  const {
+    isActive,
+    isConnected,
+    connect,
+    disconnect,
+    error,
+    revalidate,
+  }: IUseConnect = useConnect();
+  if (error) {
+    return <div>{error?.message}</div>;
+  }
+  if (!isActive) {
+    return <div>Multiverse Wallet not available</div>;
+  }
+  if (!isConnected) {
+    return <button onClick={() => connect()}>Connect</button>;
+  }
+  return <button onClick={() => disconnect()}>Disconnect</button>;
+}
+```
+
+### `useAccount()`
+
+This hook returns the currently selected account in Multiverse Wallet or undefined if the account is not connected or unavailable for some reason.
+
+Any error that occurs whilst fetching the account is returned with the error property. The account can be refreshed using the revalidate method, although, this shouldn't generally be needed as the account is updated on accountChanged events emitted by the Multiverse Wallet.
+
+```jsx
+import React from "react";
+import { useAccount } from "@multiverse-wallet/react";
+
+interface IUseAccount {
+  account?: Account;
+  error?: Error;
+  revalidate: () => void;
+}
+
+export function MyAccountComponent() {
+  const { account, error, revalidate }: IUseAccount = useAccount();
+  if (error) {
+    return <div>{error?.message}</div>;
+  }
+  return <div>{account.name}</div>;
+}
+```
+
+### `useNetwork()`
+
+This hook returns the currently selected network in Multiverse Wallet or undefined if the network is not connected or unavailable for some reason.
+
+Any error that occurs whilst fetching the network is returned with the error property. The network can be refreshed using the revalidate method, although, this shouldn't generally be needed as the network is updated on networkChanged events emitted by the Multiverse Wallet.
+
+```jsx
+import React from "react";
+import { useNetwork } from "@multiverse-wallet/react";
+
+interface IUseNetwork {
+  network?: Network;
+  error?: Error;
+  revalidate: () => void;
+}
+
+export function MyNetworkComponent() {
+  const { network, error, revalidate }: IUseNetwork = useNetwork();
+  if (error) {
+    return <div>{error?.message}</div>;
+  }
+  return <div>{network.name}</div>;
+}
+```

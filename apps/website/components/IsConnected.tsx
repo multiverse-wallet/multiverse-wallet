@@ -1,22 +1,8 @@
-import React, { useEffect, useState } from "react";
-import multiverse from "@multiverse-wallet/multiverse";
+import React from "react";
+import { useConnect } from "@multiverse-wallet/react";
 
 export default function IsConnected() {
-  const [isConnected, setIsConnected] = useState<boolean>();
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-  const [error, setError] = useState<any>();
-  useEffect(() => {
-    return multiverse.on("update", () => setLastUpdate(Date.now()));
-  });
-  useEffect(() => {
-    multiverse
-      .isConnected()
-      .then((isConnected) => {
-        setIsConnected(isConnected);
-        setError(undefined);
-      })
-      .catch(setError);
-  }, [lastUpdate]);
+  const { isConnected, error } = useConnect()
   if (error) {
     return <div className="text-red-500">{error.message}</div>;
   }

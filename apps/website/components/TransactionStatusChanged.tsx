@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import multiverse, {
-  Account,
-  Network,
   Transaction,
 } from "@multiverse-wallet/multiverse";
 
@@ -15,12 +13,9 @@ export default function TransactionStatusChanged() {
   return (
     <div>
       {transactions.map((tx: Transaction) => (
-        <div key={tx.txHash}>
-          <div>ID: {tx.id}</div>
-          <div>Hash: {tx.txHash}</div>
-          <div>TxJson: {JSON.stringify(tx.txJson)}</div>
-          <div>Status: {JSON.stringify(tx.status)}</div>
-        </div>
+        <pre className="text-xs" key={tx.txHash}>
+          {JSON.stringify(tx, null, 2)}
+        </pre>
       ))}
       {!transactions?.length && <div>No events to display</div>}
     </div>

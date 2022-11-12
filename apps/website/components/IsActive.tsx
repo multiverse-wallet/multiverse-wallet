@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
-import multiverse from "@multiverse-wallet/multiverse";
+import React from "react";
+import { useConnect } from "@multiverse-wallet/react";
 
 export default function IsActive() {
-  const [isActive, setIsActive] = useState<boolean>();
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-  useEffect(() => {
-    return multiverse.on("update", () => setLastUpdate(Date.now()));
-  });
-  useEffect(() => {
-    multiverse.isActive().then((isActive) => setIsActive(isActive));
-  }, [lastUpdate]);
+  const { isActive } = useConnect()
   if (isActive) {
     return <div>Multiverse Wallet is active!</div>;
   }

@@ -7,5 +7,20 @@
   "docs": {
     "title": "Docs",
     "type": "page"
+  },
+  "privacy-policy": {
+    "title": "Privacy Policy",
+    "type": "page",
+    "hidden": true
+  },
+  "terms-and-conditions": {
+    "title": "Terms and Conditions",
+    "type": "page",
+    "hidden": true
+  },
+  "cookie-policy": {
+    "title": "Cookie Policy",
+    "type": "page",
+    "hidden": true
   }
 }

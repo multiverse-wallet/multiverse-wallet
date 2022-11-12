@@ -1,70 +1,60 @@
-import React, { useEffect, useState } from "react";
-import multiverse, { Account, Network } from "@multiverse-wallet/multiverse";
+import React from "react";
+import {
+  useAccount,
+  useNetwork,
+  useTransaction,
+} from "@multiverse-wallet/react";
 import { Button } from "@multiverse-wallet/shared/components/button";
 
 export default function RequestTransaction() {
-  const [error, setError] = useState<any>();
-  const [network, setNetwork] = useState<Network>();
-  const [transactionId, setTransactionId] = useState<string>();
-  const [transactionStatus, setTransactionStatus] = useState<string>();
+  const { account, error: accountError } = useAccount();
+  const { network, error: networkError } = useNetwork();
+  const {
+    transaction,
+    requestTransaction,
+    error: transactionError,
+  } = useTransaction();
   const submitTx = async () => {
-    multiverse
-      .getAccount()
-      .then((account) => {
-        const tx = {
-          TransactionType: "Payment",
-          Account: account.address,
-          Amount: "10000000",
-          DestinationTag: 123,
-          Destination: "rPoSmtTpzZ6RsJY9rNTtMjH1tKSiJHp9Fg",
-        };
-        return multiverse.requestTransaction(tx);
-      })
-      .catch(setError)
-      .then((transactionId: string) => {
-        setTransactionId(transactionId);
-        setError(undefined);
-      });
+    const tx = {
+      TransactionType: "Payment",
+      Account: account.address,
+      Amount: "10000000",
+      DestinationTag: 123,
+      Destination: "rPoSmtTpzZ6RsJY9rNTtMjH1tKSiJHp9Fg",
+    };
+    return requestTransaction(tx);
   };
-  useEffect(() => {
-    if (!transactionId) {
-      return;
-    }
-    multiverse
-      .getTransaction(transactionId)
-      .then((tx) => setTransactionStatus(tx.status));
-    return multiverse.on("transactionStatusChanged", (transaction) => {
-      if (transaction.id === transactionId) {
-        setTransactionStatus(transaction.status);
-      }
-    });
-  }, [transactionId]);
-  const updateNetwork = () => {
-    multiverse
-      .getNetwork()
-      .then((network) => {
-        setNetwork(network);
-        setError(undefined);
-      })
-      .catch(setError);
-  };
-  useEffect(() => {
-    updateNetwork();
-    return multiverse.on("networkChanged", () => updateNetwork());
-  }, []);
   if (network?.name.toLowerCase() !== "testnet") {
     return (
       <div className="text-purple-500">This example only works on testnet.</div>
     );
   }
-  if (error) {
-    return <div className="text-red-500">{error?.message}</div>;
+  if (accountError) {
+    return (
+      <div className="text-red-500">
+        Error getting account: {accountError?.message}
+      </div>
+    );
   }
-  if (transactionId) {
+  if (networkError) {
+    return (
+      <div className="text-red-500">
+        Error getting network: {networkError?.message}
+      </div>
+    );
+  }
+  if (transactionError) {
+    return (
+      <div className="text-red-500">
+        Error getting transaction: {transactionError?.message}
+      </div>
+    );
+  }
+  if (transaction) {
     return (
       <>
-        <div>Transaction requested with ID: {transactionId}</div>
-        <div>Transaction status is {transactionStatus}</div>
+        <div>Transaction requested with ID: {transaction?.id}</div>
+        <div>Transaction status is {transaction?.status}</div>
       </>
     );
   }

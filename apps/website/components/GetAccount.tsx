@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from "react";
-import multiverse, { Account } from "@multiverse-wallet/multiverse";
+import React from "react";
+import { useAccount } from "@multiverse-wallet/react";
 
 export default function GetAccount() {
-  const [account, setAccount] = useState<Account>();
-  const [error, setError] = useState<any>()
-  const updateAccount = () => {
-    multiverse
-      .getAccount()
-      .then((account) => {
-        setAccount(account)
-        setError(undefined)
-      })
-      .catch(setError);
-  };
-  useEffect(() => {
-    updateAccount();
-    return multiverse.on("accountChanged", () => updateAccount())
-  }, []);
+  const { account, error } = useAccount();
   if (error) {
-    return <div className="text-red-500">{error.message}</div>
+    return <div className="text-red-500">{error.message}</div>;
   }
   if (account) {
     return (

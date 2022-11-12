@@ -22,7 +22,9 @@ const theme = {
         <Logo height={40} />
         <span
           className="mx-2 font-extrabold hidden md:inline select-none"
-          title={"Multiverse Wallet: " + (TITLE_WITH_TRANSLATIONS[locale] || "")}
+          title={
+            "Multiverse Wallet: " + (TITLE_WITH_TRANSLATIONS[locale] || "")
+          }
         >
           Multiverse Wallet
         </span>
@@ -87,9 +89,25 @@ const theme = {
     switch (locale) {
       default:
         return (
-          <span>
-            &copy; 2022 Decentralised Advertising Ltd. All rights reserved.
-          </span>
+          <div className="grid grid-cols-3">
+            <div>
+              <span>
+                &copy; 2022 Decentralised Advertising Ltd. All rights reserved.
+              </span>
+            </div>
+            <div></div>
+            <div>
+              <div>
+                <a href="/privacy-policy">Privacy Policy</a>
+              </div>
+              <div>
+                <a href="/cookie-policy">Cookie Policy</a>
+              </div>
+              <div>
+                <a href="/terms-and-conditions">Terms and Conditions</a>
+              </div>
+            </div>
+          </div>
         );
     }
   },

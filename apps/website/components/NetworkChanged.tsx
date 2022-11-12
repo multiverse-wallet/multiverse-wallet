@@ -1,21 +1,7 @@
-import React, { useEffect, useState } from "react";
-import multiverse, { Network } from "@multiverse-wallet/multiverse";
+import React from "react";
+import { useNetwork } from "@multiverse-wallet/react";
 
 export default function NetworkChanged() {
-  const [networks, setNetworks] = useState<Network[]>([]);
-  useEffect(() => {
-    return multiverse.on("networkChanged", (network) => {
-      if (network) {
-        setNetworks([...networks, network]);
-      }
-    });
-  }, []);
-  return (
-    <div>
-      {networks.map((network) => (
-        <div key={network?.id}>Network changed to {network?.name}</div>
-      ))}
-      {!networks?.length && <div>No events to display</div>}
-    </div>
-  );
+  const { network } = useNetwork();
+  return <div>Network changed to {network?.name}</div>;
 }
