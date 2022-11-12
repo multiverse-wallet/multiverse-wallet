@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   InternalAPI,
   BrowserRuntimeTransport,
@@ -30,7 +36,16 @@ export function useWalletState() {
 }
 
 export const WalletStateProvider = ({ children }: any) => {
-  const api = useMemo(() => new InternalAPI(), [])
+  const api = useMemo(() => {
+    const api = new InternalAPI();
+    if (chrome?.runtime) {
+      api.setTransport(new BrowserRuntimeTransport());
+    } else {
+      // When in a browser context create a background instance locally.
+      new Background();
+    }
+    return api;
+  }, []);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
   useEffect(() => {
     return api.on("update", () => setLastUpdate(Date.now()));
