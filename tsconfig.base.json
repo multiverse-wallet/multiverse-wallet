@@ -24,6 +24,9 @@
       "@multiverse-wallet/multiverse-wallet": [
         "libs/multiverse-wallet/src/index.ts"
       ],
+      "@multiverse-wallet/react": [
+        "libs/react/src/index.ts"
+      ],
       "@multiverse-wallet/shared/api": [
         "libs/shared/api/src/index.ts"
       ],

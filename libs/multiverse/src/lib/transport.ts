@@ -4,7 +4,6 @@ import {
   MULTIVERSE_EVENT,
   MULTIVERSE_RPC_REQUEST,
   MULTIVERSE_RPC_RESPONSE,
-  PublicRPCRequestMethod,
 } from "./types";
 
 export interface RPCRequest<T> {
@@ -142,5 +141,31 @@ export class BrowserRuntimeTransport
       );
     }, options.timeoutMs);
     return p;
+  }
+}
+
+export class MockTransport extends EventEmitter implements ITransport {
+  public request: any;
+  private resolved: any;
+  private rejected: any;
+  public mockResolvedValue(
+    resolved: any | ((req: Partial<RPCRequest<any>>) => any)
+  ) {
+    this.rejected = undefined;
+    this.resolved = resolved;
+  }
+  public mockRejectedValue(rejected: any) {
+    this.resolved = undefined;
+    this.rejected = rejected;
+  }
+  async makeRPC<Req, Res>(request: Partial<RPCRequest<Req>>): Promise<Res> {
+    this.request = request;
+    if (this.rejected) {
+      return Promise.reject(this.rejected);
+    }
+    if (typeof this.resolved === "function") {
+      return Promise.resolve(this.resolved(this.request));
+    }
+    return Promise.resolve(this.resolved);
   }
 }

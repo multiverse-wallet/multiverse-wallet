@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useAccount should render account 1`] = `
+<body>
+  <div>
+    <div>
+      Test Account
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useAccount should render error 1`] = `
+<body>
+  <div>
+    <div>
+      an error occurred
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useConnect should render connected 1`] = `
+<body>
+  <div>
+    <div>
+      Connected
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useConnect should render not connected 1`] = `
+<body>
+  <div>
+    <div>
+      Not Connected
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useNetwork should render error 1`] = `
+<body>
+  <div>
+    <div>
+      an error occurred
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useNetwork should render network 1`] = `
+<body>
+  <div>
+    <div>
+      Test Network
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useTransaction should render error 1`] = `
+<body>
+  <div>
+    <div>
+      an error occurred
+    </div>
+  </div>
+</body>
+`;
+
+exports[`useTransaction should render transaction 1`] = `
+<body>
+  <div>
+    <div>
+      test
+    </div>
+  </div>
+</body>
+`;

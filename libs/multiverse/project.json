@@ -14,7 +14,9 @@
         "tsConfig": "libs/multiverse/tsconfig.lib.json",
         "assets": [
           "libs/multiverse/*.md"
-        ]
+        ],
+        "updateBuildableProjectDepsInPackageJson": true,
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

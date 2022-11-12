@@ -27,7 +27,7 @@ import {
   CancelTransactionRequest,
 } from "./types";
 
-export class MultiverseClientAPI {
+export class BaseClient {
   protected transport = new WindowTransport();
 
   setTransport(transport: ITransport) {
@@ -38,7 +38,74 @@ export class MultiverseClientAPI {
     this.transport.on(eventName, cb);
     return () => this.transport.off(eventName, cb);
   }
+}
 
+export class PublicAPI extends BaseClient {
+  async isActive(timeoutMs = 1000) {
+    try {
+      return await this.transport.makeRPC<void, boolean>(
+        {
+          method: PublicRPCRequestMethod.ping,
+        },
+        { timeoutMs }
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+  async isConnected() {
+    return this.transport.makeRPC<void, boolean>({
+      method: PublicRPCRequestMethod.isConnected,
+    });
+  }
+  async connect(): Promise<boolean> {
+    return await this.transport.makeRPC<void, boolean>({
+      method: PublicRPCRequestMethod.connect,
+    });
+  }
+  async disconnect(): Promise<void> {
+    await this.transport.makeRPC<void, void>({
+      method: PublicRPCRequestMethod.disconnect,
+    });
+  }
+  async getAccount(): Promise<Account | undefined> {
+    return await this.transport.makeRPC<void, Account | undefined>({
+      method: PublicRPCRequestMethod.getAccount,
+    });
+  }
+  async getNetwork(): Promise<Network | undefined> {
+    return await this.transport.makeRPC<void, Network | undefined>({
+      method: PublicRPCRequestMethod.getNetwork,
+    });
+  }
+  async requestTransaction(transaction: any): Promise<string> {
+    return await this.transport.makeRPC<any, string>({
+      method: PublicRPCRequestMethod.requestTransaction,
+      data: transaction,
+    });
+  }
+  async getTransaction(transactionId: string) {
+    return this.transport.makeRPC<GetTransactionRequest, Transaction>({
+      method: PublicRPCRequestMethod.getTransaction,
+      data: {
+        id: transactionId,
+      },
+    });
+  }
+  async getSettings() {
+    return this.transport.makeRPC<void, Settings>({
+      method: PublicRPCRequestMethod.getSettings,
+    });
+  }
+  async updateSettings(settings: Partial<Settings>) {
+    return this.transport.makeRPC<Partial<Settings>, Settings>({
+      method: PublicRPCRequestMethod.updateSettings,
+      data: settings,
+    });
+  }
+}
+
+export class InternalAPI extends PublicAPI {
   async lock() {
     await this.transport.makeRPC({
       method: RPCRequestMethod.lock,
@@ -221,71 +288,6 @@ export class MultiverseClientAPI {
   async closePopup() {
     return this.transport.makeRPC<void, void>({
       method: RPCRequestMethod.closePopup,
-    });
-  }
-}
-
-export class PublicAPI extends MultiverseClientAPI {
-  async isActive(timeoutMs = 1000) {
-    try {
-      return await this.transport.makeRPC<void, boolean>(
-        {
-          method: PublicRPCRequestMethod.ping,
-        },
-        { timeoutMs }
-      );
-    } catch (e) {
-      return false;
-    }
-  }
-  async isConnected() {
-    return this.transport.makeRPC<void, boolean>({
-      method: PublicRPCRequestMethod.isConnected,
-    });
-  }
-  async connect(): Promise<boolean> {
-    return await this.transport.makeRPC<void, boolean>({
-      method: PublicRPCRequestMethod.connect,
-    });
-  }
-  async disconnect(): Promise<void> {
-    await this.transport.makeRPC<void, void>({
-      method: PublicRPCRequestMethod.disconnect,
-    });
-  }
-  async getAccount(): Promise<Account | undefined> {
-    return await this.transport.makeRPC<void, Account | undefined>({
-      method: PublicRPCRequestMethod.getAccount,
-    });
-  }
-  async getNetwork(): Promise<Network | undefined> {
-    return await this.transport.makeRPC<void, Network | undefined>({
-      method: PublicRPCRequestMethod.getNetwork,
-    });
-  }
-  async requestTransaction(transaction: any): Promise<string> {
-    return await this.transport.makeRPC<void, string>({
-      method: PublicRPCRequestMethod.requestTransaction,
-      data: transaction,
-    });
-  }
-  async getTransaction(transactionId: string) {
-    return this.transport.makeRPC<GetTransactionRequest, Transaction>({
-      method: PublicRPCRequestMethod.getTransaction,
-      data: {
-        id: transactionId,
-      },
-    });
-  }
-  async getSettings() {
-    return this.transport.makeRPC<void, Settings>({
-      method: PublicRPCRequestMethod.getSettings,
-    });
-  }
-  async updateSettings(settings: Partial<Settings>) {
-    return this.transport.makeRPC<Partial<Settings>, Settings>({
-      method: PublicRPCRequestMethod.updateSettings,
-      data: settings,
     });
   }
 }

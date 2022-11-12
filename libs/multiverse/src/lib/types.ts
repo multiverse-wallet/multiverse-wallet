@@ -31,6 +31,9 @@ export enum RPCRequestMethod {
   cancelTransaction = "cancelTransaction",
   listTransactions = "listTransactions",
   clearTransactionHistory = "clearTransactionHistory",
+  listCollections = "listCollections",
+  createCollection = "createCollection",
+  createNFToken = "createNFToken",
 }
 
 export enum PublicRPCRequestMethod {
@@ -48,6 +51,7 @@ export enum PublicRPCRequestMethod {
 
 export enum APIEvents {
   update = "update",
+  connectionChanged = "connectionChanged",
   accountChanged = "accountChanged",
   networkChanged = "networkChanged",
   transactionStatusChanged = "transactionStatusChanged",
@@ -179,4 +183,8 @@ export interface Settings {
   emailAddress?: string;
   feedbackOptIn?: boolean;
   exchangeRateCurrency?: string;
+}
+
+export interface CreateCollectionRequest {
+  name: string;
 }
