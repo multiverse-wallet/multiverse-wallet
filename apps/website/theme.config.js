@@ -4,7 +4,7 @@ import Logo from "./components/Logo";
 
 const TITLE_WITH_TRANSLATIONS = {
   "en-US":
-    "Headless Components and Hooks for building React applications on the XRP Ledger",
+    "An open-source wallet for the XRPL that lives in the browser.",
 };
 
 const theme = {
@@ -36,7 +36,7 @@ const theme = {
     const ogTitle = title || "Multiverse Wallet";
     const ogDescription =
       meta.description ||
-      "Headless Components and Hooks for building React applications on the XRP Ledger.";
+      "An open-source wallet for the XRPL that lives in the browser.";
 
     return (
       <>
