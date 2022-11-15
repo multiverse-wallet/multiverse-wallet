@@ -7,13 +7,13 @@ import {
   GetTransactionRequest,
   SignAndSubmitTransactionRequest,
   CancelTransactionRequest,
-} from "@multiverse-wallet/multiverse";
-import { API, EXTENSION_ORIGIN } from "./api";
-import { State } from "./resource";
-import { v4 as uuid } from "uuid";
-import * as xrpl from "xrpl";
-import { TxRequest } from "xrpl";
-import { PublicMethod } from "./decorators";
+} from '@multiverse-wallet/multiverse';
+import { API, EXTENSION_ORIGIN } from './api';
+import { State } from './resource';
+import { v4 as uuid } from 'uuid';
+import * as xrpl from 'xrpl';
+import { TxRequest } from 'xrpl';
+import { PublicMethod } from './decorators';
 
 const PENDING_TRANSACTION_TIMEOUT_MS = 60_000;
 
@@ -52,14 +52,14 @@ export class TransactionsResource {
   async requestTransaction(req: RPCRequest<any>) {
     const id = uuid();
     const client = await this.getXRPLClient();
-    const filledTxJson = await client.autofill(req.data)
+    const filledTxJson = await client.autofill(req.data);
     await this.state.fetchAndUpdate(async (state) => {
       const ts = Date.now();
       state.transactions.unshift({
         id,
         txJson: filledTxJson,
         origin: req.origin,
-        status: "pending",
+        status: 'pending',
         lastUpdate: ts,
         createdAt: ts,
       });
@@ -100,8 +100,8 @@ export class TransactionsResource {
     if (!transaction) {
       return { error: `no transaction found with id: ${req.data.id}` };
     }
-    if (transaction.status !== "pending") {
-      return { error: "transaction no longer pending" };
+    if (transaction.status !== 'pending') {
+      return { error: 'transaction no longer pending' };
     }
     try {
       // Fetch the current client.
@@ -116,7 +116,7 @@ export class TransactionsResource {
       this.state.fetchAndUpdate(async (state) => {
         state.transactions = state.transactions.map((t) => {
           if (t.id === transaction.id) {
-            transaction.status = "submitted";
+            transaction.status = 'submitted';
             transaction.lastUpdate = Date.now();
             this.api.emit(APIEvents.transactionStatusChanged, transaction, [
               transaction.origin,
@@ -134,7 +134,7 @@ export class TransactionsResource {
       this.state.fetchAndUpdate(async (state) => {
         state.transactions = state.transactions.map((t) => {
           if (t.id === transaction.id) {
-            transaction.status = "failed";
+            transaction.status = 'failed';
             transaction.errorMessage = e.message;
             transaction.lastUpdate = Date.now();
             return transaction;
@@ -153,8 +153,8 @@ export class TransactionsResource {
       return {
         ...state,
         transactions: state.transactions.map((tx) => {
-          if (tx.id === req.data.id && tx.status === "pending") {
-            tx.status = "cancelled";
+          if (tx.id === req.data.id && tx.status === 'pending') {
+            tx.status = 'cancelled';
             this.api.emit(APIEvents.transactionStatusChanged, tx, [tx.origin]);
             this.api.emit(APIEvents.update);
           }
@@ -171,9 +171,9 @@ export class TransactionsResource {
         transactions: state.transactions.map((tx) => {
           const expirePendingBefore =
             Date.now() - PENDING_TRANSACTION_TIMEOUT_MS;
-          if (tx.status === "pending" && tx.createdAt < expirePendingBefore) {
-            tx.status = "cancelled";
-            tx.errorMessage = "cancelled due to timeout";
+          if (tx.status === 'pending' && tx.createdAt < expirePendingBefore) {
+            tx.status = 'cancelled';
+            tx.errorMessage = 'cancelled due to timeout';
             this.api.emit(APIEvents.transactionStatusChanged, tx, [tx.origin]);
             this.api.emit(APIEvents.update);
           }
@@ -186,14 +186,14 @@ export class TransactionsResource {
     const client = await this.getXRPLClient();
     const { transactions } = await this.state.fetch();
     const submittedTransactions = transactions.filter(
-      (tx) => tx.status === "submitted"
+      (tx) => tx.status === 'submitted'
     );
     for (const submittedTx of submittedTransactions) {
       let txRes: any;
       let txError: any;
       try {
         txRes = await client.request({
-          command: "tx",
+          command: 'tx',
           transaction: submittedTx.txHash!,
         } as TxRequest);
       } catch (e: any) {
@@ -208,7 +208,7 @@ export class TransactionsResource {
             }
             let hasUpdated = false;
             if (txError) {
-              tx.status = "failed";
+              tx.status = 'failed';
               tx.rawTxResponse = txError;
               hasUpdated = true;
               tx.lastUpdate = Date.now();
@@ -218,12 +218,12 @@ export class TransactionsResource {
               tx.txJson = txRes?.result;
               tx.rawTxResponse = txRes;
               if (txRes?.result?.validated) {
-                tx.status = "validated";
+                tx.status = 'validated';
                 hasUpdated = true;
                 tx.lastUpdate = Date.now();
               }
-              if (txRes?.status === "error") {
-                tx.status = "failed";
+              if (txRes?.status === 'error') {
+                tx.status = 'failed';
                 hasUpdated = true;
                 tx.lastUpdate = Date.now();
               }
@@ -246,8 +246,8 @@ export class TransactionsResource {
     const { selectedNetwork } = await this.api.networks.state.fetch();
     if (!this.xrpl) {
       this.xrpl = new xrpl.Client(selectedNetwork.server);
-      await this.xrpl.connect().catch(e => {
-        console.error(e)
+      await this.xrpl.connect().catch((e) => {
+        console.error(e);
       });
       return this.xrpl;
     }
@@ -258,8 +258,8 @@ export class TransactionsResource {
       return this.xrpl;
     }
     if (!this.xrpl.isConnected()) {
-      await this.xrpl.connect().catch(e => {
-        console.error(e)
+      await this.xrpl.connect().catch((e) => {
+        console.error(e);
       });
     }
     return this.xrpl;
@@ -273,7 +273,7 @@ export class TransactionsResource {
       return {
         ...state,
         transactions: state.transactions.filter((tx) => {
-          return tx.status === "pending" || tx.status === "submitted";
+          return tx.status === 'pending' || tx.status === 'submitted';
         }),
       };
     });

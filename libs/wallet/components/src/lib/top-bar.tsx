@@ -1,10 +1,10 @@
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import React from "react";
-import { SelectNetwork } from "./select-network";
-import { SelectAccount } from "./select-account";
-import { LockClosedIcon } from "@heroicons/react/solid";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import React from 'react';
+import { SelectNetwork } from './select-network';
+import { SelectAccount } from './select-account';
+import { LockClosedIcon } from '@heroicons/react/solid';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 
 export function TopBar() {
   const { api } = useWalletState();

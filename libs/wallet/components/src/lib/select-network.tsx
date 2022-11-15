@@ -1,45 +1,47 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
 import {
   ChevronDownIcon,
   CheckCircleIcon,
   QuestionMarkCircleIcon,
   ExclamationCircleIcon,
   CheckIcon,
-} from "@heroicons/react/solid";
-import { useNetworks, useSelectedNetwork, useWalletState } from "@multiverse-wallet/wallet/hooks";
-import React, { useEffect } from "react";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { navigateExtension } from "@multiverse-wallet/wallet/utils";
+} from '@heroicons/react/solid';
+import {
+  useNetworks,
+  useSelectedNetwork,
+  useWalletState,
+} from '@multiverse-wallet/wallet/hooks';
+import React, { useEffect } from 'react';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { navigateExtension } from '@multiverse-wallet/wallet/utils';
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export interface SelectNetworkProps {
-  align?: "left" | "right";
+  align?: 'left' | 'right';
 }
 
 export function SelectNetwork({ align }: SelectNetworkProps) {
   const { connectionState, error } = useXRPLContext();
-  const networks = useNetworks()
-  const { selectedNetwork, setSelectedNetwork } = useSelectedNetwork()
+  const networks = useNetworks();
+  const { selectedNetwork, setSelectedNetwork } = useSelectedNetwork();
   return (
     <Menu as="div" className="relative">
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md bg-white shadow px-4 py-2 text-sm font-medium focus:outline-none">
-          <div className="truncate w-20">
-            {selectedNetwork?.name}
-          </div>
-          {connectionState === "connected" && (
+          <div className="truncate w-20">{selectedNetwork?.name}</div>
+          {connectionState === 'connected' && (
             <CheckCircleIcon
               className="-mr-1 ml-2 h-5 w-5 text-green-400"
               aria-hidden="true"
             />
           )}
-          {connectionState === "connecting" && (
+          {connectionState === 'connecting' && (
             <QuestionMarkCircleIcon
               className="-mr-1 ml-2 h-5 w-5 text-indigo-400"
               aria-hidden="true"
@@ -66,12 +68,12 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
       >
         <Menu.Items
           className={`${
-            align === "left"
-              ? "origin-top-left left-0"
-              : "origin-top-right right-0"
+            align === 'left'
+              ? 'origin-top-left left-0'
+              : 'origin-top-right right-0'
           } z-10 max-w-md absolute mt-2 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
-          {" "}
+          {' '}
           <div className="py-3">
             <div className="block px-4 pb-3 text-xs border-b font-semibold">
               Switch Network
@@ -85,8 +87,8 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
                         setSelectedNetwork(network);
                       }}
                       className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm"
+                        active ? 'bg-gray-100' : '',
+                        'block px-4 py-2 text-sm'
                       )}
                     >
                       <div className="flex w-64 gap-4 cursor-pointer items-center">
@@ -111,9 +113,9 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
             </div>
             <Menu.Item>
               {() => (
-                <div className={classNames("block px-4 py-2 text-sm")}>
+                <div className={classNames('block px-4 py-2 text-sm')}>
                   <Button
-                    onPress={() => navigateExtension("/admin/networks")}
+                    onPress={() => navigateExtension('/admin/networks')}
                     variant="primary"
                     size="small"
                     className="rounded-full w-full"

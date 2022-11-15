@@ -1,10 +1,10 @@
-import { EventEmitter } from "events";
-import { v4 as uuid } from "uuid";
+import { EventEmitter } from 'events';
+import { v4 as uuid } from 'uuid';
 import {
   MULTIVERSE_EVENT,
   MULTIVERSE_RPC_REQUEST,
   MULTIVERSE_RPC_RESPONSE,
-} from "./types";
+} from './types';
 
 export interface RPCRequest<T> {
   id: string;
@@ -36,7 +36,7 @@ export interface ITransport extends EventEmitter {
 export class WindowTransport extends EventEmitter implements ITransport {
   constructor() {
     super();
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       window.addEventListener(MULTIVERSE_EVENT, (event: any) => {
         this.emit(event.detail.type, event.detail.data);
       });
@@ -50,7 +50,7 @@ export class WindowTransport extends EventEmitter implements ITransport {
       request.id = request.id || uuid();
       let hasResolved = false;
       const handleResponse = (event: Event) => {
-        console.log("window transport received", event);
+        console.log('window transport received', event);
         hasResolved = true;
         const { type, result, error } = (event as CustomEvent).detail;
         switch (type) {
@@ -80,7 +80,7 @@ export class WindowTransport extends EventEmitter implements ITransport {
       );
       setTimeout(() => {
         if (hasResolved) return;
-        reject(new Error("timed out waiting for a response"));
+        reject(new Error('timed out waiting for a response'));
         window.removeEventListener(request.id!, handleResponse);
       }, options.timeoutMs);
     });
@@ -92,11 +92,11 @@ export class BrowserRuntimeTransport
   implements ITransport
 {
   private requests: { [x: string]: any } = {};
-  private port = chrome?.runtime?.connect({ name: "browser" });
+  private port = chrome?.runtime?.connect({ name: 'browser' });
   constructor() {
     super();
     this.port.onMessage.addListener((message: any) => {
-      console.log("browser transport received", message);
+      console.log('browser transport received', message);
       const { type, id, result, error, event } = message;
       switch (type) {
         case MULTIVERSE_EVENT:
@@ -137,7 +137,7 @@ export class BrowserRuntimeTransport
     setTimeout(() => {
       if (hasResolved) return;
       this.requests[request.id!]?.reject(
-        new Error("timed out waiting for a response")
+        new Error('timed out waiting for a response')
       );
     }, options.timeoutMs);
     return p;
@@ -163,7 +163,7 @@ export class MockTransport extends EventEmitter implements ITransport {
     if (this.rejected) {
       return Promise.reject(this.rejected);
     }
-    if (typeof this.resolved === "function") {
+    if (typeof this.resolved === 'function') {
       return Promise.resolve(this.resolved(this.request));
     }
     return Promise.resolve(this.resolved);

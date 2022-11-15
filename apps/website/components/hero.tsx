@@ -1,6 +1,6 @@
-import { DownloadIcon } from "@heroicons/react/solid";
-import Link from "next/link";
-import Logo from "./Logo";
+import { DownloadIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
+import Logo from './Logo';
 
 export default function Hero() {
   return (
@@ -24,13 +24,11 @@ export default function Hero() {
                 An open-source wallet for the XRPL that lives in the browser.
               </p>
               <p>
-                <Link href="/docs/getting-started">
-                  <a href="/docs/getting-started" className="no-underline">
-                    <span className="inline-flex bg-gradient-to-br from-gray-600 to-gray-700 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
-                      <span>Download</span>
-                      <DownloadIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                  </a>
+                <Link href="/docs/getting-started" className="no-underline">
+                  <span className="inline-flex bg-gradient-to-br from-gray-600 to-gray-700 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
+                    <span>Download</span>
+                    <DownloadIcon className="h-5 w-5" aria-hidden="true" />
+                  </span>
                 </Link>
               </p>
             </div>
@@ -59,7 +57,9 @@ export default function Hero() {
                   Developer Friendly
                 </div>
                 <div>
-                  Designed with web app developers in mind, integration is easy. See our <Link href="/docs/developers/introduction"><a>docs</a></Link> for more information.
+                  Designed with web app developers in mind, integration is easy.
+                  See our <Link href="/docs/developers/introduction">docs</Link>{' '}
+                  for more information.
                 </div>
               </li>
             </ul>

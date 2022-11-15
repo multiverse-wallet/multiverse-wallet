@@ -1,19 +1,19 @@
-import { WalletStateProvider } from "@multiverse-wallet/wallet/hooks";
-import { StrictMode } from "react";
-import * as ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { WalletStateProvider } from '@multiverse-wallet/wallet/hooks';
+import { StrictMode } from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 
-import App from "./app/app";
+import App from './app/app';
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 root.render(
   <StrictMode>
     <HashRouter>
-        <WalletStateProvider>
-          <App />
-        </WalletStateProvider>
+      <WalletStateProvider>
+        <App />
+      </WalletStateProvider>
     </HashRouter>
   </StrictMode>
 );

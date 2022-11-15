@@ -1,5 +1,5 @@
-import React from "react";
-import { useNetwork } from "@multiverse-wallet/react";
+import React from 'react';
+import { useNetwork } from '@multiverse-wallet/react';
 
 export default function GetNetwork() {
   const { network, error } = useNetwork();

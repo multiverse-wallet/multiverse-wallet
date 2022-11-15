@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { Transaction } from "@multiverse-wallet/multiverse";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import ReactTimeago from "react-timeago";
-import { useNavigate } from "react-router-dom";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
+import React, { useMemo } from 'react';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { Transaction } from '@multiverse-wallet/multiverse';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import { CheckIcon, XIcon } from '@heroicons/react/solid';
+import ReactTimeago from 'react-timeago';
+import { useNavigate } from 'react-router-dom';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 
 export interface ApproveTransactionButtonProps {
   transaction: Transaction;
@@ -16,18 +16,18 @@ export function ApproveTransactionButton({
   transaction,
 }: ApproveTransactionButtonProps) {
   const { api } = useWalletState();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const expiresAt = useMemo(() => {
     return (transaction.createdAt || Date.now()) + 60_000;
   }, [transaction]);
   const isExpired = Date.now() > expiresAt;
-  const isPending = transaction.status === "pending";
+  const isPending = transaction.status === 'pending';
   const closePopup = () => {
-    navigate("/popup")
-    api.closePopup()
-  }
+    navigate('/popup');
+    api.closePopup();
+  };
   switch (transaction.status) {
-    case "pending":
+    case 'pending':
       return (
         <>
           <Button
@@ -57,18 +57,18 @@ export function ApproveTransactionButton({
           )}
         </>
       );
-    case "submitted":
+    case 'submitted':
       return (
         <div className="px-5">
           <div className="rounded-full shadow hover:shadow-lg bg-gradient-to-br from-blue-300 to-blue-400 border-none text-white -outline-teal active:bg-teal-600 px-5 py-2.5 text-sm leading-6 font-medium inline-flex items-center justify-center transition ease-in-out duration-500 mb-3 w-full">
-            Submitted{" "}
+            Submitted{' '}
             <span className="ml-2">
               <Spinner size="small" variant="light" />
             </span>
           </div>
         </div>
       );
-    case "validated":
+    case 'validated':
       return (
         <div className="px-5">
           <div className="rounded-full shadow hover:shadow-lg bg-gradient-to-br from-green-300 to-green-400 border-none text-white -outline-teal active:bg-teal-600 px-5 py-2.5 text-sm leading-6 font-medium inline-flex items-center justify-center transition ease-in-out duration-500 mb-3 w-full">
@@ -84,7 +84,7 @@ export function ApproveTransactionButton({
           </Button>
         </div>
       );
-    case "cancelled":
+    case 'cancelled':
       return (
         <div className="px-5">
           <div className="rounded-full shadow hover:shadow-lg bg-gradient-to-br from-gray-300 to-gray-400 border-none text-white -outline-teal active:bg-teal-600 px-5 py-2.5 text-sm leading-6 font-medium inline-flex items-center justify-center transition ease-in-out duration-500 mb-3 w-full">
@@ -100,7 +100,7 @@ export function ApproveTransactionButton({
           </Button>
         </div>
       );
-    case "failed":
+    case 'failed':
       return (
         <div className="px-5">
           <div className="rounded-full shadow hover:shadow-lg bg-gradient-to-br from-red-300 to-red-400 border-none text-white -outline-teal active:bg-teal-600 px-5 py-2.5 text-sm leading-6 font-medium inline-flex items-center justify-center transition ease-in-out duration-500 mb-3 w-full">

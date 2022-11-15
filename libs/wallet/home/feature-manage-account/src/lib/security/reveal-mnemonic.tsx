@@ -1,15 +1,15 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import Joi from "joi";
-import React, { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { MnemonicViewer } from "@multiverse-wallet/wallet/components";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import Joi from 'joi';
+import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { MnemonicViewer } from '@multiverse-wallet/wallet/components';
 
 export function RevealMnemonic() {
   const { api } = useWalletState();
-  const [decryptedMnemonic, setDecryptedMnemonic] = useState("");
+  const [decryptedMnemonic, setDecryptedMnemonic] = useState('');
   const [progressUntilRehiddenState, setProgressUntilRehiddenState] = useState({
     elapsedSeconds: 0,
     progressPercentage: 0,
@@ -24,7 +24,7 @@ export function RevealMnemonic() {
   } = useForm({
     resolver: joiResolver(
       Joi.object({
-        password: Joi.string().allow(""), // allow empty string so that the form can be submitted in the "hide case"
+        password: Joi.string().allow(''), // allow empty string so that the form can be submitted in the "hide case"
       })
     ),
   });
@@ -41,7 +41,7 @@ export function RevealMnemonic() {
     const intervalId = setInterval(() => {
       setProgressUntilRehiddenState((state) => {
         if (state.elapsedSeconds >= hideAfterSeconds) {
-          setDecryptedMnemonic("");
+          setDecryptedMnemonic('');
           clearInterval(intervalId);
           return {
             elapsedSeconds: 0,
@@ -69,26 +69,26 @@ export function RevealMnemonic() {
   async function onSubmit() {
     // Already showing the mnemonic, hide it again
     if (decryptedMnemonic) {
-      setDecryptedMnemonic("");
+      setDecryptedMnemonic('');
       return;
     }
 
     try {
-      const password = getValues("password");
+      const password = getValues('password');
       if (!password) {
-        setError("password", {
-          type: "required",
+        setError('password', {
+          type: 'required',
         });
         return;
       }
       const decryptedMnemonic = await api.revealRecoveryPhrase(password);
       setDecryptedMnemonic(decryptedMnemonic);
       // Clear the password input, they used the password successfully already
-      setValue("password", "");
+      setValue('password', '');
     } catch {
-      setDecryptedMnemonic("");
-      setError("password", {
-        type: "incorrectPassword",
+      setDecryptedMnemonic('');
+      setError('password', {
+        type: 'incorrectPassword',
       });
     }
   }
@@ -111,7 +111,7 @@ export function RevealMnemonic() {
                 </h2>
                 <p className="mt-4 text-sm leading-6 text-gray-500">
                   Confirm your password in order to reveal your secret recovery
-                  phrase.{" "}
+                  phrase.{' '}
                   <span className="font-bold">
                     Never share your secret recovery phrase with anyone, it is
                     all that is needed to regenerate your accounts and wallets.
@@ -137,20 +137,20 @@ export function RevealMnemonic() {
                         placeholder="***********"
                         isDisabled={!!decryptedMnemonic}
                         autoFocus={false}
-                        aria-invalid={errors["password"] ? "true" : "false"}
+                        aria-invalid={errors['password'] ? 'true' : 'false'}
                         aria-describedby="password-error"
                         validationState={
-                          errors["password"] ? "invalid" : undefined
+                          errors['password'] ? 'invalid' : undefined
                         }
                       />
                     );
                   }}
                 />
-                {errors["password"] && (
+                {errors['password'] && (
                   <p className="mt-2 text-sm text-red-600" id="password-error">
-                    {(errors["password"]["type"] as any) === "incorrectPassword"
-                      ? "Incorrect password, please make sure Caps Lock is turned off"
-                      : "Your password is required"}
+                    {(errors['password']['type'] as any) === 'incorrectPassword'
+                      ? 'Incorrect password, please make sure Caps Lock is turned off'
+                      : 'Your password is required'}
                   </p>
                 )}
               </div>
@@ -169,7 +169,7 @@ export function RevealMnemonic() {
 
         <div className="bg-gray-50 px-8 py-5 sm:flex sm:flex-row-reverse">
           <Button type="submit" variant="dark" size="medium">
-            {decryptedMnemonic ? "Hide Mnemonic" : "Reveal Mnemonic"}
+            {decryptedMnemonic ? 'Hide Mnemonic' : 'Reveal Mnemonic'}
           </Button>
           {decryptedMnemonic && (
             <div className="text-teal-500 flex justify-center items-center mr-6">
@@ -177,7 +177,7 @@ export function RevealMnemonic() {
                 ? `Auto-hiding in ${
                     5 - progressUntilRehiddenState.elapsedSeconds
                   }s...`
-                : "Auto-hiding..."}
+                : 'Auto-hiding...'}
             </div>
           )}
         </div>

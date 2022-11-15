@@ -1,4 +1,7 @@
+const path = require('path');
+const nxPreset = require('@nrwl/jest/preset').default;
 
-      const nxPreset = require('@nrwl/jest/preset').default;
-     
-      module.exports = { ...nxPreset }
+module.exports = {
+  ...nxPreset,
+  setupFiles: [path.resolve('tools/utils/jsdom-polyfills.js')],
+};

@@ -1,10 +1,10 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import Joi from "joi";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { LockOpenIcon } from "@heroicons/react/outline";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import Joi from 'joi';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { LockOpenIcon } from '@heroicons/react/outline';
 
 interface LoginProps {
   hasPrivateMessageBar: boolean;
@@ -26,7 +26,7 @@ export function Login({ hasPrivateMessageBar }: LoginProps) {
     ),
   });
 
-  const privateMessageBarHeight = "42px";
+  const privateMessageBarHeight = '42px';
 
   async function onPasswordSubmit({ password }: any) {
     setIsSubmitting(true);
@@ -36,8 +36,8 @@ export function Login({ hasPrivateMessageBar }: LoginProps) {
       setIsSubmitting(false);
     } catch (e) {
       setIsSubmitting(false);
-      setError("password", {
-        type: "incorrectPassword",
+      setError('password', {
+        type: 'incorrectPassword',
       });
     }
   }
@@ -64,13 +64,13 @@ export function Login({ hasPrivateMessageBar }: LoginProps) {
                             field={field}
                             type="password"
                             placeholder="Enter your password"
-                            aria-invalid={errors["password"] ? "true" : "false"}
+                            aria-invalid={errors['password'] ? 'true' : 'false'}
                             aria-describedby="password-error"
                             autoFocus={true}
                             infoText="All of your data is stored locally on your device and your password is never shared with, or stored on our servers."
                             isDisabled={isSubmitting}
                             validationState={
-                              errors["password"] ? "invalid" : undefined
+                              errors['password'] ? 'invalid' : undefined
                             }
                             trailingButton={
                               <button
@@ -84,15 +84,15 @@ export function Login({ hasPrivateMessageBar }: LoginProps) {
                         );
                       }}
                     />
-                    {errors["password"] && (
+                    {errors['password'] && (
                       <p
                         className="mt-2 text-sm text-red-600"
                         id="password-error"
                       >
-                        {(errors["password"]["type"] as any) ===
-                        "incorrectPassword"
-                          ? "Incorrect password, please make sure Caps Lock is turned off"
-                          : "Your password is required"}
+                        {(errors['password']['type'] as any) ===
+                        'incorrectPassword'
+                          ? 'Incorrect password, please make sure Caps Lock is turned off'
+                          : 'Your password is required'}
                       </p>
                     )}
                   </div>

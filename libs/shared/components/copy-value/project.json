@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/components/copy-value",
+  "name": "shared-components-copy-value",
   "sourceRoot": "libs/shared/components/copy-value/src",
   "projectType": "library",
   "generators": {},
@@ -15,10 +15,10 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "libs/shared/components/copy-value/jest.config.js",
+        "jestConfig": "libs/shared/components/copy-value/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/shared/components/copy-value"]
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/components/copy-value"]
     }
   },
   "tags": []

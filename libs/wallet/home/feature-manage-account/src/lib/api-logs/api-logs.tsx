@@ -1,7 +1,7 @@
-import { CodeIcon, CubeIcon } from "@heroicons/react/solid";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { useAPILogs, useWalletState } from "@multiverse-wallet/wallet/hooks";
-import React from "react";
+import { CodeIcon, CubeIcon } from '@heroicons/react/solid';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { useAPILogs, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import React from 'react';
 
 interface APILogsTableRowWithModalProps {
   apiLog: any;
@@ -28,7 +28,7 @@ export function APILogs() {
   const apiLogs = useAPILogs();
   const { api } = useWalletState();
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">

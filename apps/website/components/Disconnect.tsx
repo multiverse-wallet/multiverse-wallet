@@ -1,6 +1,6 @@
-import React from "react";
-import { useConnect } from "@multiverse-wallet/react";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import React from 'react';
+import { useConnect } from '@multiverse-wallet/react';
+import { Button } from '@multiverse-wallet/shared/components/button';
 
 export default function Connect() {
   const { disconnect, isConnected, error } = useConnect();

@@ -1,4 +1,4 @@
-import { joiResolver } from "@hookform/resolvers/joi";
+import { joiResolver } from '@hookform/resolvers/joi';
 import { generateMnemonic } from '@multiverse-wallet/wallet/utils';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import Joi from 'joi';
@@ -23,11 +23,11 @@ export function CreateAccountFormSeedPhrase(
     ),
   });
 
-  const confirmBackup = watch("confirmBackup");
+  const confirmBackup = watch('confirmBackup');
 
   useEffect(() => {
-    console.log(confirmBackup)
-  }, [confirmBackup])
+    console.log(confirmBackup);
+  }, [confirmBackup]);
 
   function onConfirmedBackup() {
     props.onConfirmedBackup(mnemonic);
@@ -63,7 +63,7 @@ export function CreateAccountFormSeedPhrase(
               type="checkbox"
               defaultValue="false"
               className="focus:ring-blue-200 border-gray-300 rounded h-4 w-4 text-teal-500 transition duration-150 ease-in-out"
-              {...register("confirmBackup")}
+              {...register('confirmBackup')}
             />
             <label
               htmlFor="confirmBackup"

@@ -7,28 +7,28 @@ import {
   LockClosedIcon,
   ServerIcon,
   UsersIcon,
-} from "@heroicons/react/solid";
+} from '@heroicons/react/solid';
 import {
   useAccounts,
   useNetworks,
   useSiteConnectionRequests,
   useSites,
   useTransactions,
-} from "@multiverse-wallet/wallet/hooks";
-import React from "react";
-import { Link, Route, Routes, useMatch } from "react-router-dom";
-import { ManageAccounts } from "./account/account";
-import { Security } from "./security/security";
-import { Settings } from "./settings/settings";
-import { Networks } from "./networks/networks";
+} from '@multiverse-wallet/wallet/hooks';
+import React from 'react';
+import { Link, Route, Routes, useMatch } from 'react-router-dom';
+import { ManageAccounts } from './account/account';
+import { Security } from './security/security';
+import { Settings } from './settings/settings';
+import { Networks } from './networks/networks';
 import {
   SelectAccount,
   SelectNetwork,
-} from "@multiverse-wallet/wallet/components";
-import { Sites } from "./sites/sites";
-import { APILogs } from "./api-logs/api-logs";
-import { Transactions } from "./transactions/transactions";
-import { TrustLines } from "./trust-lines/trust-lines";
+} from '@multiverse-wallet/wallet/components';
+import { Sites } from './sites/sites';
+import { APILogs } from './api-logs/api-logs';
+import { Transactions } from './transactions/transactions';
+import { TrustLines } from './trust-lines/trust-lines';
 
 interface NavItemProps {
   linkTo: string;
@@ -44,12 +44,12 @@ function NavItem({ linkTo, title, icon }: NavItemProps) {
       to={linkTo}
       className={`group rounded-md flex items-center text-sm leading-5 font-medium focus:outline-none ${
         !isSelected
-          ? "py-4 px-7 hover:text-gray-900 hover:bg-gray-50 focus:text-gray-900 focus:bg-gray-50"
-          : "py-4 px-7 text-white bg-gradient-to-br from-gray-600 to-gray-700"
+          ? 'py-4 px-7 hover:text-gray-900 hover:bg-gray-50 focus:text-gray-900 focus:bg-gray-50'
+          : 'py-4 px-7 text-white bg-gradient-to-br from-gray-600 to-gray-700'
       }`}
     >
       {React.cloneElement(icon, {
-        className: `mr-5 h-6 w-6 ${!isSelected ? "" : "text-white"}`,
+        className: `mr-5 h-6 w-6 ${!isSelected ? '' : 'text-white'}`,
       })}
       {title}
     </Link>
@@ -62,48 +62,48 @@ export function ManageAccount() {
   const siteConnectionRequests = useSiteConnectionRequests();
   const networks = useNetworks();
   const transactions = useTransactions();
-  const topBarHeight = "64px";
-  const privateMessageBarHeight = "42px";
+  const topBarHeight = '64px';
+  const privateMessageBarHeight = '42px';
 
   const navItems: NavItemProps[] = [
     {
-      title: "Accounts",
-      linkTo: "/admin/accounts",
+      title: 'Accounts',
+      linkTo: '/admin/accounts',
       icon: <UsersIcon className="w-5 h-5" />,
     },
     {
-      title: "Networks",
-      linkTo: "/admin/networks",
+      title: 'Networks',
+      linkTo: '/admin/networks',
       icon: <ServerIcon className="w-5 h-5" />,
     },
     {
-      title: "Connected Sites",
-      linkTo: "/admin/sites",
+      title: 'Connected Sites',
+      linkTo: '/admin/sites',
       icon: <GlobeAltIcon className="w-5 h-5" />,
     },
     {
-      title: "Trust Lines",
-      linkTo: "/admin/trust-lines",
+      title: 'Trust Lines',
+      linkTo: '/admin/trust-lines',
       icon: <LinkIcon className="w-5 h-5" />,
     },
     {
-      title: "Settings",
-      linkTo: "/admin/settings",
+      title: 'Settings',
+      linkTo: '/admin/settings',
       icon: <CogIcon className="w-5 h-5" />,
     },
     {
-      title: "Security",
-      linkTo: "/admin/security",
+      title: 'Security',
+      linkTo: '/admin/security',
       icon: <LockClosedIcon className="w-5 h-5" />,
     },
     {
-      title: "Transactions",
-      linkTo: "/admin/transactions",
+      title: 'Transactions',
+      linkTo: '/admin/transactions',
       icon: <CubeIcon className="w-5 h-5" />,
     },
     {
-      title: "API Logs",
-      linkTo: "/admin/api-logs",
+      title: 'API Logs',
+      linkTo: '/admin/api-logs',
       icon: <CodeIcon className="w-5 h-5" />,
     },
   ];
@@ -180,9 +180,7 @@ export function ManageAccount() {
             height: `calc(100vh - ${topBarHeight} - ${privateMessageBarHeight})`,
           }}
         >
-          <main
-            className="p-4 overflow-y-scroll"
-          >
+          <main className="p-4 overflow-y-scroll">
             <Routes>
               <Route
                 path="/admin/accounts"
@@ -194,12 +192,20 @@ export function ManageAccount() {
               />
               <Route
                 path="/admin/sites"
-                element={<Sites sites={sites || []} connectionRequests={siteConnectionRequests || []} />}
+                element={
+                  <Sites
+                    sites={sites || []}
+                    connectionRequests={siteConnectionRequests || []}
+                  />
+                }
               />
               <Route path="/admin/trust-lines" element={<TrustLines />} />
               <Route path="/admin/settings" element={<Settings />} />
               <Route path="/admin/security" element={<Security />} />
-              <Route path="/admin/transactions" element={<Transactions transactions={transactions || []} />} />
+              <Route
+                path="/admin/transactions"
+                element={<Transactions transactions={transactions || []} />}
+              />
               <Route path="/admin/api-logs" element={<APILogs />} />
             </Routes>
           </main>

@@ -1,5 +1,6 @@
 {
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "wallet-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/wallet-e2e/src",
   "projectType": "application",
   "targets": {
@@ -17,18 +18,12 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/wallet-e2e/**/*.{js,ts}"
-        ]
+        "lintFilePatterns": ["apps/wallet-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": [
-    "wallet"
-  ]
+  "implicitDependencies": ["wallet"]
 }

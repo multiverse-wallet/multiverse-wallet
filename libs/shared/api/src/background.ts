@@ -1,3 +1,3 @@
-import { Background } from "./lib/background";
+import { Background } from './lib/background';
 
 new Background();

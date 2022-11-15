@@ -52,4 +52,3 @@ export async function deleteInStorage(key: string): Promise<void> {
     });
   });
 }
-

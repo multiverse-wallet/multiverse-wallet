@@ -1,13 +1,12 @@
 {
+  "name": "wallet",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/wallet/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
@@ -26,9 +25,7 @@
             "output": "assets/shared"
           }
         ],
-        "styles": [
-          "apps/wallet/src/styles.css"
-        ],
+        "styles": ["apps/wallet/src/styles.css"],
         "scripts": [],
         "webpackConfig": "apps/wallet/webpack.config.js",
         "postcssConfig": "apps/browser-extension/home/postcss.config.js"
@@ -55,10 +52,15 @@
           "vendorChunk": false
         }
       },
-      "dependsOn": [{ "projects": "dependencies", "target": "build" }]
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        }
+      ]
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "wallet:build",
@@ -76,20 +78,14 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/wallet/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/wallet/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/wallet"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/wallet"],
       "options": {
         "jestConfig": "apps/wallet/jest.config.ts",
         "passWithNoTests": true

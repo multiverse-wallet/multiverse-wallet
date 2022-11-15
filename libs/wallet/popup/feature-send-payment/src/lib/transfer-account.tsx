@@ -1,13 +1,10 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline";
-import { Account } from "@multiverse-wallet/multiverse";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { TopBar } from "@multiverse-wallet/wallet/components";
+import { Account } from '@multiverse-wallet/multiverse';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { AccountBalance } from '@multiverse-wallet/wallet/components';
 import {
   useAccounts,
   useSelectedAccount,
-} from "@multiverse-wallet/wallet/hooks";
-import { AccountBalance } from "libs/wallet/components/src/lib/account-balance";
-import { useState } from "react";
+} from '@multiverse-wallet/wallet/hooks';
 
 /* eslint-disable-next-line */
 export interface TransferAccountProps {
@@ -26,8 +23,8 @@ export function TransferAccount(props: TransferAccountProps) {
           <li
             key={account.id}
             onClick={() => {
-              props?.onSelect(account)
-              props?.back()
+              props?.onSelect(account);
+              props?.back();
             }}
             className="flex gap-4 cursor-pointer items-center p-3"
           >

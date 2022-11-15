@@ -1,31 +1,31 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
 import {
   ChevronDownIcon,
   CheckCircleIcon,
   QuestionMarkCircleIcon,
   ExclamationCircleIcon,
   CheckIcon,
-} from "@heroicons/react/solid";
+} from '@heroicons/react/solid';
 import {
   useAccounts,
   useSelectedAccount,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
-import React, { useEffect } from "react";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { AccountBalance } from "./account-balance";
-import { navigateExtension } from "@multiverse-wallet/wallet/utils";
-import { UsersIcon } from "@heroicons/react/solid";
+} from '@multiverse-wallet/wallet/hooks';
+import React, { useEffect } from 'react';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { AccountBalance } from './account-balance';
+import { navigateExtension } from '@multiverse-wallet/wallet/utils';
+import { UsersIcon } from '@heroicons/react/solid';
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export interface SelectAccountProps {
-  align?: "left" | "right";
+  align?: 'left' | 'right';
   showIcon?: boolean;
 }
 
@@ -43,7 +43,7 @@ export function SelectAccount({ align, showIcon }: SelectAccountProps) {
           ) : (
             selectedAccount?.name
           )}
-          {!selectedAccount && "Select Account"}
+          {!selectedAccount && 'Select Account'}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -59,9 +59,9 @@ export function SelectAccount({ align, showIcon }: SelectAccountProps) {
       >
         <Menu.Items
           className={`${
-            align === "left"
-              ? "origin-top-left left-0"
-              : "origin-top-right right-0"
+            align === 'left'
+              ? 'origin-top-left left-0'
+              : 'origin-top-right right-0'
           } z-10 max-w-md absolute mt-2 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           <div className="py-3">
@@ -77,8 +77,8 @@ export function SelectAccount({ align, showIcon }: SelectAccountProps) {
                         setSelectedAccount(account);
                       }}
                       className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm"
+                        active ? 'bg-gray-100' : '',
+                        'block px-4 py-2 text-sm'
                       )}
                     >
                       <div className="flex w-64 gap-4 cursor-pointer items-center">
@@ -103,9 +103,9 @@ export function SelectAccount({ align, showIcon }: SelectAccountProps) {
             </div>
             <Menu.Item>
               {() => (
-                <div className={classNames("block px-4 py-2 text-sm")}>
+                <div className={classNames('block px-4 py-2 text-sm')}>
                   <Button
-                    onPress={() => navigateExtension("/admin/accounts")}
+                    onPress={() => navigateExtension('/admin/accounts')}
                     variant="primary"
                     size="small"
                     className="rounded-full w-full"

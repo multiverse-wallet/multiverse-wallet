@@ -1,17 +1,17 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { ChevronLeftIcon } from '@heroicons/react/outline';
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   AddressInput,
   AmountInput,
   TopBar,
-} from "@multiverse-wallet/wallet/components";
+} from '@multiverse-wallet/wallet/components';
 import {
   useSelectedAccount,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import TransferAccount from "./transfer-account";
+} from '@multiverse-wallet/wallet/hooks';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import TransferAccount from './transfer-account';
 
 /* eslint-disable-next-line */
 export interface SendPaymentProps {}
@@ -33,7 +33,7 @@ export function SendPayment(props: SendPaymentProps) {
   }, [amount, address, selectedAccount]);
   const requestTransaction = async () => {
     const tx = {
-      TransactionType: "Payment",
+      TransactionType: 'Payment',
       Account: selectedAccount?.address,
       Amount: formatAmount(amount),
       Destination: address,
@@ -47,11 +47,12 @@ export function SendPayment(props: SendPaymentProps) {
     <>
       <TopBar />
       <div className="border-t border-b border-gray-50">
-        <Link to="/popup">
-          <a className="p-2 text-xs text-blue-400 underline flex items-center">
-            <ChevronLeftIcon className="w-5 h-5 text-black inline" />
-            Back
-          </a>
+        <Link
+          to="/popup"
+          className="p-2 text-xs text-blue-400 underline flex items-center"
+        >
+          <ChevronLeftIcon className="w-5 h-5 text-black inline" />
+          Back
         </Link>
       </div>
       <div className="text-center text-lg py-3">Send Payment</div>
@@ -90,7 +91,7 @@ function formatAmount(amount?: {
       currency?: string;
       issuer?: string | undefined;
     } {
-  if (amount?.currency === "XRP" && amount.value) {
+  if (amount?.currency === 'XRP' && amount.value) {
     return (+amount.value * 1e6).toString();
   }
   return amount;

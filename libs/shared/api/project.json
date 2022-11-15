@@ -1,32 +1,27 @@
 {
+  "name": "shared-api",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/api/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/api",
         "main": "libs/shared/api/src/index.ts",
         "tsConfig": "libs/shared/api/tsconfig.lib.json",
-        "assets": [
-          "libs/shared/api/*.md"
-        ]
+        "assets": ["libs/shared/api/*.md"]
       },
       "dependsOn": ["build-content", "build-background"]
     },
     "build-content": {
       "executor": "@nrwl/web:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "vendorChunk": false,
         "outputPath": "dist/libs/shared/content",
-        "index": "libs/shared/api/index.html", 
+        "index": "libs/shared/api/index.html",
         "main": "libs/shared/api/src/content.ts",
         "tsConfig": "libs/shared/api/tsconfig.content.json",
         "webpackConfig": "libs/shared/api/webpack.config.js"
@@ -34,13 +29,11 @@
     },
     "build-background": {
       "executor": "@nrwl/web:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "vendorChunk": false,
         "outputPath": "dist/libs/shared/background",
-        "index": "libs/shared/api/index.html", 
+        "index": "libs/shared/api/index.html",
         "main": "libs/shared/api/src/background.ts",
         "tsConfig": "libs/shared/api/tsconfig.background.json",
         "webpackConfig": "libs/shared/api/webpack.config.js"
@@ -48,20 +41,14 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/shared/api/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/shared/api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/shared/api"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/api"],
       "options": {
         "jestConfig": "libs/shared/api/jest.config.ts",
         "passWithNoTests": true

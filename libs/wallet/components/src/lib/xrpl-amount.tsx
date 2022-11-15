@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 export interface IssuedCurrencyAmount {
   currency: string;
@@ -12,8 +12,8 @@ export interface XRPLAmountProps {
 }
 
 export function XRPLAmount({ children, amount }: XRPLAmountProps) {
-  const currency = typeof amount === "string" ? "XRP" : amount.currency;
-  const value = typeof amount === "string" ? amount : amount.amount;
+  const currency = typeof amount === 'string' ? 'XRP' : amount.currency;
+  const value = typeof amount === 'string' ? amount : amount.amount;
   return children({ value, currency });
 }
 
@@ -26,7 +26,11 @@ interface XRPLAmountValueProps {
   scale: number;
 }
 
-function XRPLAmountValue({ children, decimalPlaces, scale }: XRPLAmountValueProps) {
+function XRPLAmountValue({
+  children,
+  decimalPlaces,
+  scale,
+}: XRPLAmountValueProps) {
   const value = Number(children) / scale;
   return <>{value.toFixed(decimalPlaces)}</>;
 }
@@ -56,9 +60,9 @@ function XRPLAmountCurrency({
     }
     return currencyChars
       .map((charCode) => String.fromCharCode(parseInt(charCode, 16)))
-      .join("");
+      .join('');
   }, [children]);
-  if (unicodeSymbol && currencyToDisplay === "XRP") {
+  if (unicodeSymbol && currencyToDisplay === 'XRP') {
     return <></>;
   }
   return <>{currencyToDisplay}</>;

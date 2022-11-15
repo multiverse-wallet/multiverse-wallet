@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import {
   useAccount,
   useNetwork,
   useTransaction,
-} from "@multiverse-wallet/react";
-import { Button } from "@multiverse-wallet/shared/components/button";
+} from '@multiverse-wallet/react';
+import { Button } from '@multiverse-wallet/shared/components/button';
 
 export default function RequestTransaction() {
   const { account, error: accountError } = useAccount();
@@ -16,15 +16,15 @@ export default function RequestTransaction() {
   } = useTransaction();
   const submitTx = async () => {
     const tx = {
-      TransactionType: "Payment",
+      TransactionType: 'Payment',
       Account: account.address,
-      Amount: "10000000",
+      Amount: '10000000',
       DestinationTag: 123,
-      Destination: "rPoSmtTpzZ6RsJY9rNTtMjH1tKSiJHp9Fg",
+      Destination: 'rPoSmtTpzZ6RsJY9rNTtMjH1tKSiJHp9Fg',
     };
     return requestTransaction(tx);
   };
-  if (network?.name.toLowerCase() !== "testnet") {
+  if (network?.name.toLowerCase() !== 'testnet') {
     return (
       <div className="text-purple-500">This example only works on testnet.</div>
     );

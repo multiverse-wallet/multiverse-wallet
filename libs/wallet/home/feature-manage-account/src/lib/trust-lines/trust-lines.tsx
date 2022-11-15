@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export function TrustLines() {
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">

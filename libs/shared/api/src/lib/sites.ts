@@ -8,10 +8,10 @@ import {
   SiteConnectionStatus,
   PublicRPCRequestMethod,
   APIEvents,
-} from "@multiverse-wallet/multiverse";
-import { API } from "./api";
-import { PublicMethod, WhitelistedMethod } from "./decorators";
-import { State } from "./resource";
+} from '@multiverse-wallet/multiverse';
+import { API } from './api';
+import { PublicMethod, WhitelistedMethod } from './decorators';
+import { State } from './resource';
 
 export interface SitesState {
   connectionRequests: SiteConnectionRequest[];
@@ -67,11 +67,11 @@ export class SitesResource {
       (site) => site.origin === req.origin
     );
     if (findExistingRequest) {
-      return { result: "pending" };
+      return { result: 'pending' };
     }
     const findExistingSite = sites.find((site) => site.origin === req.origin);
     if (findExistingSite) {
-      return { result: "connected" };
+      return { result: 'connected' };
     }
     await this.state.fetchAndUpdate(async (state) => {
       state.connectionRequests.push({
@@ -79,7 +79,7 @@ export class SitesResource {
       });
       return state;
     });
-    return { result: "created" };
+    return { result: 'created' };
   }
   async getSiteConnectionRequests() {
     const { connectionRequests } = await this.state.fetch();
@@ -87,11 +87,11 @@ export class SitesResource {
   }
   async approveSite(req: RPCRequest<Site>) {
     if (!req.data?.origin || !req.data?.allowedAccounts?.length) {
-      return { error: "origin and allowedAccounts are required properties" };
+      return { error: 'origin and allowedAccounts are required properties' };
     }
     const { sites } = await this.state.fetch();
     if (sites.some((site) => site.origin === req.data.origin)) {
-      return { error: "site already connected" };
+      return { error: 'site already connected' };
     }
     await this.state.fetchAndUpdate(async (state) => {
       state.sites.push(req.data);
@@ -143,18 +143,18 @@ export class SitesResource {
   @WhitelistedMethod()
   async connect(req: RPCRequest<void>): Promise<RPCResponse<boolean>> {
     const siteConnectionReq = await this.createSiteConnectionRequest(req);
-    if (siteConnectionReq.result !== "connected") {
+    if (siteConnectionReq.result !== 'connected') {
       await this.api.extension.openPopup({
         id: req.id,
         origin: req.origin,
         method: RPCRequestMethod.openPopup,
-        data: { path: "/popup/connect" },
+        data: { path: '/popup/connect' },
       });
       return { result: true };
     }
     return {
       error:
-        "connection already exists, please disconnect and reconnect to amend connected accounts",
+        'connection already exists, please disconnect and reconnect to amend connected accounts',
     };
   }
   @PublicMethod()

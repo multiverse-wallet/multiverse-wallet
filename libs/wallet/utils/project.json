@@ -5,34 +5,24 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/wallet/utils",
         "main": "libs/wallet/utils/src/index.ts",
         "tsConfig": "libs/wallet/utils/tsconfig.lib.json",
-        "assets": [
-          "libs/wallet/utils/*.md"
-        ]
+        "assets": ["libs/wallet/utils/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/wallet/utils/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/wallet/utils/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/wallet/utils"
-      ],
+      "outputs": ["coverage/libs/wallet/utils"],
       "options": {
         "jestConfig": "libs/wallet/utils/jest.config.ts",
         "passWithNoTests": true

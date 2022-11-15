@@ -1,14 +1,14 @@
-import { AriaTextFieldProps } from "@react-aria/textfield";
-import { AccountBalance } from "@xrpl-components/react/components/account-balance";
+import { AriaTextFieldProps } from '@react-aria/textfield';
+import { AccountBalance } from '@xrpl-components/react/components/account-balance';
 import {
   isValidXAddress,
   xAddressToClassicAddress,
   isValidClassicAddress,
-} from "xrpl";
-import React, { useEffect, useMemo, useState } from "react";
+} from 'xrpl';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export interface AddressInputProps
-  extends Omit<AriaTextFieldProps, "onChange"> {
+  extends Omit<AriaTextFieldProps, 'onChange'> {
   className?: string;
   errorClassName?: string;
   onChange: (value: {
@@ -18,9 +18,9 @@ export interface AddressInputProps
 }
 
 const defaultClassNames =
-  "p-2 rounded border shadow-sm dark:text-gray-100 dark:bg-gray-700 dark:border-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:ring-opacity-50 dark:placeholder-gray-500 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 placeholder-gray-400 py-3 px-4 block w-full transition ease-in-out duration-150 w-full";
+  'p-2 rounded border shadow-sm dark:text-gray-100 dark:bg-gray-700 dark:border-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:ring-opacity-50 dark:placeholder-gray-500 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 placeholder-gray-400 py-3 px-4 block w-full transition ease-in-out duration-150 w-full';
 
-const defaultErrorClassNames = "m-1 text-red-600 text-sm";
+const defaultErrorClassNames = 'm-1 text-red-600 text-sm';
 
 export function AddressInput(props: AddressInputProps) {
   const [error, setError] = useState<string>();
@@ -51,7 +51,7 @@ export function AddressInput(props: AddressInputProps) {
       setError(undefined);
       return;
     }
-    setError("Invalid address, must be either a classic address or X-Address");
+    setError('Invalid address, must be either a classic address or X-Address');
     setAddress(undefined);
     setTag(undefined);
   }, [error, value]);

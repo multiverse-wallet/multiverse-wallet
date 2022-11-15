@@ -1,5 +1,5 @@
 {
-  "root": "libs/wallet/assets",
+  "name": "wallet-assets",
   "sourceRoot": "libs/wallet/assets/src",
   "projectType": "library",
   "generators": {},

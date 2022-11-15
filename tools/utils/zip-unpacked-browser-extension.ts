@@ -66,8 +66,6 @@ addDirectory(
     await ensureDir('./tmp/wallet-unpacked');
 
     zip.end();
-    zip.outputStream.pipe(
-      createWriteStream('./tmp/multiverse-wallet.zip')
-    );
+    zip.outputStream.pipe(createWriteStream('./tmp/multiverse-wallet.zip'));
   }
 );

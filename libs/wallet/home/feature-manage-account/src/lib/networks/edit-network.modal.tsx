@@ -1,20 +1,20 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
   ModalDialogFooter,
   ModalDialogHeader,
   ModalTitleProps,
-} from "@multiverse-wallet/shared/components/modal-dialog";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import Joi from "joi";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Checkbox } from "@multiverse-wallet/shared/components/checkbox";
-import { INetwork } from "@xrpl-components/react/hooks/xrpl";
-import { CreateNetworkRequest, Network } from "@multiverse-wallet/multiverse";
+} from '@multiverse-wallet/shared/components/modal-dialog';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import Joi from 'joi';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Checkbox } from '@multiverse-wallet/shared/components/checkbox';
+import { INetwork } from '@xrpl-components/react/hooks/xrpl';
+import { CreateNetworkRequest, Network } from '@multiverse-wallet/multiverse';
 
 interface EditNetworkModalProps {
   network: Network;
@@ -51,8 +51,8 @@ export function EditNetworkModal({
       setIsSubmitting(false);
       closeModal();
     } catch (e: any) {
-      setError("account", {
-        type: "validate",
+      setError('account', {
+        type: 'validate',
         message: e.message,
       });
       setIsSubmitting(false);
@@ -81,16 +81,16 @@ export function EditNetworkModal({
                   type="text"
                   label="Name"
                   placeholder="My Awesome Network"
-                  aria-invalid={errors["name"] ? "true" : "false"}
+                  aria-invalid={errors['name'] ? 'true' : 'false'}
                   aria-describedby="network-name-error"
                   autoFocus={true}
                   isDisabled={isSubmitting}
-                  validationState={errors["name"] ? "invalid" : undefined}
+                  validationState={errors['name'] ? 'invalid' : undefined}
                 />
               );
             }}
           />
-          {errors["name"] && (
+          {errors['name'] && (
             <p className="mt-2 text-sm text-red-600" id="network-name-error">
               You must provide a name for the Network
             </p>
@@ -107,16 +107,16 @@ export function EditNetworkModal({
                   type="text"
                   label="Server"
                   placeholder="e.g. wss://s1.ripple.com"
-                  aria-invalid={errors["server"] ? "true" : "false"}
+                  aria-invalid={errors['server'] ? 'true' : 'false'}
                   aria-describedby="server-error"
                   autoFocus={true}
                   isDisabled={isSubmitting}
-                  validationState={errors["server"] ? "invalid" : undefined}
+                  validationState={errors['server'] ? 'invalid' : undefined}
                 />
               );
             }}
           />
-          {errors["server"] && (
+          {errors['server'] && (
             <p className="mt-2 text-sm text-red-600" id="server-error">
               You must provide a server for the Network
             </p>
@@ -152,7 +152,7 @@ export function EditNetworkModal({
           >
             {isSubmitting ? (
               <div className="flex flex-row">
-                <span style={{ marginTop: "2px" }}>
+                <span style={{ marginTop: '2px' }}>
                   <Spinner size="small" />
                 </span>
               </div>

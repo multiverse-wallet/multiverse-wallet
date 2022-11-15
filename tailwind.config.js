@@ -1,33 +1,33 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
+const { fontFamily } = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   content: [
     './libs/**/*.{html,js,ts,tsx,jsx}',
     './apps/**/*.{html,js,ts,tsx,jsx}',
   ],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       transitionProperty: {
-        height: "height",
+        height: 'height',
       },
       fontFamily: {
-        sans: ["Inter var", ...fontFamily.sans],
+        sans: ['Inter var', ...fontFamily.sans],
         header: [...fontFamily.serif],
-        "light-header": [...fontFamily.serif],
+        'light-header': [...fontFamily.serif],
       },
       colors: {
         ...colors,
         gray: colors.slate,
       },
       animation: {
-        "reverse-spin": "reverse-spin 1s linear infinite",
+        'reverse-spin': 'reverse-spin 1s linear infinite',
       },
       keyframes: {
-        "reverse-spin": {
+        'reverse-spin': {
           from: {
-            transform: "rotate(360deg)",
+            transform: 'rotate(360deg)',
           },
         },
       },
@@ -35,7 +35,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      opacity: ["disabled"],
+      opacity: ['disabled'],
     },
   },
   plugins: [],

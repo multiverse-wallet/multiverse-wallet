@@ -1,15 +1,15 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon } from '@heroicons/react/outline';
 import {
   ApproveTransactionButton,
   TopBar,
   TransactionSummary,
-} from "@multiverse-wallet/wallet/components";
+} from '@multiverse-wallet/wallet/components';
 import {
   useTransaction,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
-import { useParams } from "react-router-dom";
-import { Button } from "@multiverse-wallet/shared/components/button";
+} from '@multiverse-wallet/wallet/hooks';
+import { useParams } from 'react-router-dom';
+import { Button } from '@multiverse-wallet/shared/components/button';
 
 /* eslint-disable-next-line */
 export interface TransactionProps {}

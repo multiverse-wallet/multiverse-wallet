@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useRouter } from "next/router";
-import Logo from "./components/Logo";
+import { useRouter } from 'next/router';
+import Logo from './components/Logo';
 
 const TITLE_WITH_TRANSLATIONS = {
-  "en-US":
-    "An open-source wallet for the XRPL that lives in the browser.",
+  'en-US': 'An open-source wallet for the XRPL that lives in the browser.',
 };
 
 const theme = {
-  projectLink: "https://github.com/multiverse-wallet/multiverse-wallet",
+  projectLink: 'https://github.com/multiverse-wallet/multiverse-wallet',
   docsRepositoryBase:
-    "https://github.com/multiverse-wallet/multiverse-wallet/tree/main/apps/website/pages",
-  titleSuffix: " – Multiverse Wallet",
+    'https://github.com/multiverse-wallet/multiverse-wallet/tree/main/apps/website/pages',
+  titleSuffix: ' – Multiverse Wallet',
   search: true,
   unstable_flexsearch: true,
   floatTOC: true,
@@ -23,7 +22,7 @@ const theme = {
         <span
           className="mx-2 font-extrabold hidden md:inline select-none"
           title={
-            "Multiverse Wallet: " + (TITLE_WITH_TRANSLATIONS[locale] || "")
+            'Multiverse Wallet: ' + (TITLE_WITH_TRANSLATIONS[locale] || '')
           }
         >
           Multiverse Wallet
@@ -32,11 +31,11 @@ const theme = {
     );
   },
   head: ({ title, meta }) => {
-    const ogImage = meta.image || "/og-image.jpg";
-    const ogTitle = title || "Multiverse Wallet";
+    const ogImage = meta.image || '/og-image.jpg';
+    const ogTitle = title || 'Multiverse Wallet';
     const ogDescription =
       meta.description ||
-      "An open-source wallet for the XRPL that lives in the browser.";
+      'An open-source wallet for the XRPL that lives in the browser.';
 
     return (
       <>
@@ -82,7 +81,7 @@ const theme = {
   footerEditLink: ({ locale }) => {
     switch (locale) {
       default:
-        return "Edit this page on GitHub →";
+        return 'Edit this page on GitHub →';
     }
   },
   footerText: ({ locale }) => {

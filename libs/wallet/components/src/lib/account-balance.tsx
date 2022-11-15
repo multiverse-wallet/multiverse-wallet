@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { AccountBalance as XRPLAccountBalance } from "@xrpl-components/react/components/account-balance";
-import { Account } from "@multiverse-wallet/multiverse";
+import React, { useEffect } from 'react';
+import { AccountBalance as XRPLAccountBalance } from '@xrpl-components/react/components/account-balance';
+import { Account } from '@multiverse-wallet/multiverse';
 
 export interface AccountBalanceProps {
   account?: Account;

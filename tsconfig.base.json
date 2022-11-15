@@ -10,26 +10,17 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@multiverse-wallet/multiverse": [
-        "libs/multiverse/src/index.ts"
-      ],
+      "@multiverse-wallet/multiverse": ["libs/multiverse/src/index.ts"],
       "@multiverse-wallet/multiverse-wallet": [
         "libs/multiverse-wallet/src/index.ts"
       ],
-      "@multiverse-wallet/react": [
-        "libs/react/src/index.ts"
-      ],
-      "@multiverse-wallet/shared/api": [
-        "libs/shared/api/src/index.ts"
-      ],
+      "@multiverse-wallet/react": ["libs/react/src/index.ts"],
+      "@multiverse-wallet/shared/api": ["libs/shared/api/src/index.ts"],
       "@multiverse-wallet/shared/components/button": [
         "libs/shared/components/button/src/index.ts"
       ],
@@ -54,12 +45,8 @@
       "@multiverse-wallet/shared/components/text-field": [
         "libs/shared/components/text-field/src/index.ts"
       ],
-      "@multiverse-wallet/shared/hooks": [
-        "libs/shared/hooks/src/index.ts"
-      ],
-      "@multiverse-wallet/shared/utils": [
-        "libs/shared/utils/src/index.ts"
-      ],
+      "@multiverse-wallet/shared/hooks": ["libs/shared/hooks/src/index.ts"],
+      "@multiverse-wallet/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@multiverse-wallet/wallet/components": [
         "libs/wallet/components/src/index.ts"
       ],
@@ -69,9 +56,7 @@
       "@multiverse-wallet/wallet/home/feature-manage-account": [
         "libs/wallet/home/feature-manage-account/src/index.ts"
       ],
-      "@multiverse-wallet/wallet/hooks": [
-        "libs/wallet/hooks/src/index.ts"
-      ],
+      "@multiverse-wallet/wallet/hooks": ["libs/wallet/hooks/src/index.ts"],
       "@multiverse-wallet/wallet/popup/feature-connect": [
         "libs/wallet/popup/feature-connect/src/index.ts"
       ],
@@ -84,17 +69,9 @@
       "@multiverse-wallet/wallet/popup/feature-transaction": [
         "libs/wallet/popup/feature-transaction/src/index.ts"
       ],
-      "@multiverse-wallet/wallet/utils": [
-        "libs/wallet/utils/src/index.ts"
-      ]
+      "@multiverse-wallet/wallet/utils": ["libs/wallet/utils/src/index.ts"]
     },
-    "types": [
-      "node",
-      "chrome"
-    ]
+    "types": ["node", "chrome"]
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

@@ -3,11 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": [
-      "jest",
-      "node",
-      "chrome"
-    ],
+    "types": ["jest", "node", "chrome"],
     "jsx": "react"
   },
   "include": [

@@ -1,8 +1,8 @@
-import { API } from "./api";
-import { State } from "./resource";
-import { Wallet } from "xrpl";
-import { Vault } from "./vault";
-import { v4 as uuid } from "uuid";
+import { API } from './api';
+import { State } from './resource';
+import { Wallet } from 'xrpl';
+import { Vault } from './vault';
+import { v4 as uuid } from 'uuid';
 import {
   Account,
   APIEvents,
@@ -14,8 +14,8 @@ import {
   RPCResponse,
   SelectAccountRequest,
   UpdateAccountRequest,
-} from "@multiverse-wallet/multiverse";
-import { PublicMethod } from "./decorators";
+} from '@multiverse-wallet/multiverse';
+import { PublicMethod } from './decorators';
 
 export interface AccountsState {
   selectedAccount?: Account;
@@ -56,7 +56,7 @@ export class AccountsResource {
     const { selectedAccount } = await this.state.fetch();
     const { decryptedSecretRecoveryPhrase } = this.api.vault;
     if (!decryptedSecretRecoveryPhrase) {
-      throw new Error("wallet should be locked!");
+      throw new Error('wallet should be locked!');
     }
     if (selectedAccount?.derivationPath) {
       return Wallet.fromMnemonic(decryptedSecretRecoveryPhrase, {
@@ -69,7 +69,7 @@ export class AccountsResource {
       );
       return Wallet.fromSecret(secret);
     }
-    throw new Error("unable to instantiate Wallet");
+    throw new Error('unable to instantiate Wallet');
   }
   async listAccounts(req: RPCRequest<void>) {
     const { accounts } = await this.state.fetch();
@@ -94,7 +94,7 @@ export class AccountsResource {
   async createAccount(req: RPCRequest<CreateAccountRequest>) {
     const { decryptedSecretRecoveryPhrase } = this.vault;
     if (!decryptedSecretRecoveryPhrase) {
-      throw new Error("wallet locked!");
+      throw new Error('wallet locked!');
     }
     const newAccountId = uuid();
     if (req.data.derivationPath) {

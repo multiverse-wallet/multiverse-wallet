@@ -5,7 +5,7 @@ import { ImportData } from './import-data';
 
 export function Security() {
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
@@ -13,7 +13,8 @@ export function Security() {
           </h1>
 
           <p className="mt-4 mx-auto text-lg leading-6 text-gray-500">
-            Reveal your secret recovery phrase and import or export copies of your encrypted data.
+            Reveal your secret recovery phrase and import or export copies of
+            your encrypted data.
           </p>
         </div>
       </header>

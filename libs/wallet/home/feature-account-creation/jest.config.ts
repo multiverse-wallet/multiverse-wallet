@@ -3,8 +3,9 @@ export default {
   displayName: 'wallet-feature-account-creation',
   preset: '../../../../jest.preset.js',
   transform: {
-    '^.+\\.[tj]sx?$': 'babel-jest'
+    '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/libs/wallet/feature-account-creation'
+  coverageDirectory:
+    '../../../../coverage/libs/wallet/feature-account-creation',
 };

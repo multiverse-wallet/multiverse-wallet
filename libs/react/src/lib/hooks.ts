@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Account,
   Network,
   PublicAPI,
   Transaction,
-} from "@multiverse-wallet/multiverse";
-import * as xrpl from "xrpl";
+} from '@multiverse-wallet/multiverse';
+import * as xrpl from 'xrpl';
 
 const defaultApi = new PublicAPI();
 
@@ -61,19 +61,19 @@ export function useConnect({ overrideApi }: UseConnectOpts = {}): IUseConnect {
   }, [api]);
   useEffect(() => {
     revalidate();
-    return api?.on("accountChanged", () => {
+    return api?.on('accountChanged', () => {
       revalidate();
     });
   }, [api, revalidate]);
   useEffect(() => {
     revalidate();
-    return api?.on("connectionChanged", () => {
+    return api?.on('connectionChanged', () => {
       revalidate();
     });
   }, [api, revalidate]);
   useEffect(() => {
     revalidate();
-    return api?.on("update", () => {
+    return api?.on('update', () => {
       revalidate();
     });
   }, [api, revalidate]);
@@ -111,7 +111,7 @@ export function useAccount({ overrideApi }: UseAccountOpts = {}): IUseAccount {
   }, [api]);
   useEffect(() => {
     revalidate();
-    return api?.on("accountChanged", () => {
+    return api?.on('accountChanged', () => {
       revalidate();
     });
   }, [api, revalidate]);
@@ -146,7 +146,7 @@ export function useNetwork({ overrideApi }: UseNetworkOpts = {}): IUseNetwork {
   }, [api]);
   useEffect(() => {
     revalidate();
-    return api?.on("networkChanged", () => {
+    return api?.on('networkChanged', () => {
       revalidate();
     });
   }, [api, revalidate]);
@@ -203,7 +203,7 @@ export function useTransaction({
   }, [transactionId, api]);
   useEffect(() => {
     revalidate();
-    return api?.on("transactionStatusChanged", (tx) => {
+    return api?.on('transactionStatusChanged', (tx) => {
       revalidate();
     });
   }, [api, revalidate]);
@@ -229,8 +229,8 @@ export function useClient({ overrideApi, clientOptions }: UseClientOpts) {
     if (!network) return;
     const client = new xrpl.Client(network.server, clientOptions);
     await client.connect().catch((e) => setError(e));
-    client.on("error", (e) => setError(e));
-    client.on("disconnected", () => reconnect());
+    client.on('error', (e) => setError(e));
+    client.on('disconnected', () => reconnect());
     setClient(client);
     setError(undefined);
   }, [network, clientOptions]);

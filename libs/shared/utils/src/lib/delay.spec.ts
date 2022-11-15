@@ -2,7 +2,7 @@ import { delay } from './delay';
 
 describe('delay()', () => {
   beforeEach(() => {
-    jest.useFakeTimers('legacy');
+    jest.useFakeTimers({ legacyFakeTimers: true });
   });
 
   it('should resolve after the given number of milliseconds have elapsed', async () => {

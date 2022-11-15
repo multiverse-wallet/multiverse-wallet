@@ -10,11 +10,11 @@ import {
   SelectNetworkRequest,
   UpdateAccountRequest,
   UpdateNetworkRequest,
-} from "@multiverse-wallet/multiverse";
-import { API } from "./api";
-import { State } from "./resource";
-import { v4 as uuid } from "uuid";
-import { PublicMethod } from "./decorators";
+} from '@multiverse-wallet/multiverse';
+import { API } from './api';
+import { State } from './resource';
+import { v4 as uuid } from 'uuid';
+import { PublicMethod } from './decorators';
 
 export interface NetworksState {
   selectedNetwork: Network;
@@ -24,30 +24,30 @@ export interface NetworksState {
 export class NetworksResource {
   public state = new State<NetworksState>(NetworksResource.name, {
     selectedNetwork: {
-      id: "1",
-      name: "mainnet",
-      server: "wss://s1.ripple.com",
+      id: '1',
+      name: 'mainnet',
+      server: 'wss://s1.ripple.com',
     },
     networks: [
       {
-        id: "1",
-        name: "mainnet",
-        server: "wss://s1.ripple.com",
+        id: '1',
+        name: 'mainnet',
+        server: 'wss://s1.ripple.com',
       },
       {
-        id: "2",
-        name: "testnet",
-        server: "wss://s.altnet.rippletest.net",
+        id: '2',
+        name: 'testnet',
+        server: 'wss://s.altnet.rippletest.net',
       },
       {
-        id: "3",
-        name: "devnet",
-        server: "wss://s.devnet.rippletest.net",
+        id: '3',
+        name: 'devnet',
+        server: 'wss://s.devnet.rippletest.net',
       },
     ],
   });
   constructor(private api: API) {
-    api.rpcMethodRegistry.set("listNetworks", (r) => this.listNetworks(r));
+    api.rpcMethodRegistry.set('listNetworks', (r) => this.listNetworks(r));
     api.rpcMethodRegistry.set(RPCRequestMethod.getSelectedNetwork, (r) =>
       this.getSelectedNetwork(r)
     );

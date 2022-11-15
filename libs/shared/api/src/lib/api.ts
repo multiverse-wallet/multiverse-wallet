@@ -1,20 +1,26 @@
-import { EventEmitter } from "events";
-import { Vault } from "./vault";
-import { AccountsResource } from "./accounts";
-import { NetworksResource } from "./networks";
-import { SitesResource } from "./sites";
-import { RPCRequest, RPCRequestMethod, RPCResponse } from "@multiverse-wallet/multiverse";
+import { EventEmitter } from 'events';
+import { Vault } from './vault';
+import { AccountsResource } from './accounts';
+import { NetworksResource } from './networks';
+import { SitesResource } from './sites';
+import {
+  RPCRequest,
+  RPCRequestMethod,
+  RPCResponse,
+} from '@multiverse-wallet/multiverse';
 import {
   isPublicMethod,
   isWhitelistedMethod,
   PublicMethod,
   WhitelistedMethod,
-} from "./decorators";
-import { LogResource } from "./log";
-import { TransactionsResource } from "./transactions";
-import { SettingsResource } from "./settings";
+} from './decorators';
+import { LogResource } from './log';
+import { TransactionsResource } from './transactions';
+import { SettingsResource } from './settings';
 
-export const EXTENSION_ORIGIN = `chrome-extension://${chrome?.runtime?.id || ''}`;
+export const EXTENSION_ORIGIN = `chrome-extension://${
+  chrome?.runtime?.id || ''
+}`;
 
 export class API extends EventEmitter {
   public rpcMethodRegistry = new Map<
@@ -29,10 +35,10 @@ export class API extends EventEmitter {
   public log = new LogResource(this);
   public transactions = new TransactionsResource(this);
   public settings = new SettingsResource(this);
-  
+
   constructor() {
     super();
-    this.rpcMethodRegistry.set("ping", this.ping);
+    this.rpcMethodRegistry.set('ping', this.ping);
   }
 
   override emit(
@@ -58,7 +64,11 @@ export class API extends EventEmitter {
         error: `method ${req.method} not implemented`,
       };
     }
-    if (chrome.runtime && req.origin !== EXTENSION_ORIGIN && !isPublicMethod(req.method)) {
+    if (
+      chrome.runtime &&
+      req.origin !== EXTENSION_ORIGIN &&
+      !isPublicMethod(req.method)
+    ) {
       return {
         error: `method ${req.method} not public`,
       };
@@ -102,30 +112,33 @@ export interface OpenPopupRequest {
 
 export class ExtensionAPI {
   constructor(private api: API) {
-    api.rpcMethodRegistry.set(RPCRequestMethod.openPopup, (r) => this.openPopup(r));
-    api.rpcMethodRegistry.set(RPCRequestMethod.closePopup, () => this.closePopup());
+    api.rpcMethodRegistry.set(RPCRequestMethod.openPopup, (r) =>
+      this.openPopup(r)
+    );
+    api.rpcMethodRegistry.set(RPCRequestMethod.closePopup, () =>
+      this.closePopup()
+    );
   }
   async openPopup(
     req: RPCRequest<OpenPopupRequest>
   ): Promise<RPCResponse<boolean>> {
-    await chrome.windows
-      .create({
-        type: "popup",
-        url: `index.html/#${req.data.path}?requestId=${req.id}`,
-        height: req.data.height || 600,
-        width: req.data.width || 400,
-      });
+    await chrome.windows.create({
+      type: 'popup',
+      url: `index.html/#${req.data.path}?requestId=${req.id}`,
+      height: req.data.height || 600,
+      width: req.data.width || 400,
+    });
     return { result: true };
   }
   async closePopup() {
     if (chrome.windows) {
-      const currentWindow = await chrome.windows.getCurrent()
-      if (currentWindow.type === "popup") {
+      const currentWindow = await chrome.windows.getCurrent();
+      if (currentWindow.type === 'popup') {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        chrome.windows.remove(currentWindow.id!)
-        return { result: true }
+        chrome.windows.remove(currentWindow.id!);
+        return { result: true };
       }
     }
-    return { result: false }
+    return { result: false };
   }
 }

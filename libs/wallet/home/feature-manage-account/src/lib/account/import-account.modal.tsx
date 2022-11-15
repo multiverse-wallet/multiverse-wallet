@@ -1,17 +1,17 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
   ModalDialogFooter,
   ModalDialogHeader,
   ModalTitleProps,
-} from "@multiverse-wallet/shared/components/modal-dialog";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import Joi from "joi";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+} from '@multiverse-wallet/shared/components/modal-dialog';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import Joi from 'joi';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 interface ImportAccountModalProps {
   titleProps: ModalTitleProps;
@@ -46,8 +46,8 @@ export function ImportAccountModal({
       closeModal();
     } catch {
       setIsSubmitting(false);
-      setError("secret", {
-        type: "invalidSecret",
+      setError('secret', {
+        type: 'invalidSecret',
       });
     }
   }
@@ -74,16 +74,16 @@ export function ImportAccountModal({
                     type="text"
                     label="Account Name"
                     placeholder="My Awesome Account"
-                    aria-invalid={errors["name"] ? "true" : "false"}
+                    aria-invalid={errors['name'] ? 'true' : 'false'}
                     aria-describedby="account-name-error"
                     autoFocus={true}
                     isDisabled={isSubmitting}
-                    validationState={errors["name"] ? "invalid" : undefined}
+                    validationState={errors['name'] ? 'invalid' : undefined}
                   />
                 );
               }}
             />
-            {errors["name"] && (
+            {errors['name'] && (
               <p className="mt-2 text-sm text-red-600" id="name-error">
                 You must provide a name for the account.
               </p>
@@ -102,20 +102,20 @@ export function ImportAccountModal({
                     type="password"
                     label="Secret"
                     placeholder="**********"
-                    aria-invalid={errors["secret"] ? "true" : "false"}
+                    aria-invalid={errors['secret'] ? 'true' : 'false'}
                     aria-describedby="private-key-error"
                     autoFocus={false}
                     isDisabled={isSubmitting}
-                    validationState={errors["secret"] ? "invalid" : undefined}
+                    validationState={errors['secret'] ? 'invalid' : undefined}
                   />
                 );
               }}
             />
-            {errors["secret"] && (
+            {errors['secret'] && (
               <p className="mt-2 text-sm text-red-600" id="private-key-error">
-                {(errors["secret"]["type"] as any) === "invalidSecret"
-                  ? "Please ensure that this is a valid secret"
-                  : "A secret value is required"}
+                {(errors['secret']['type'] as any) === 'invalidSecret'
+                  ? 'Please ensure that this is a valid secret'
+                  : 'A secret value is required'}
               </p>
             )}
           </div>
@@ -132,7 +132,7 @@ export function ImportAccountModal({
           >
             {isSubmitting ? (
               <div className="flex flex-row">
-                <span style={{ marginTop: "2px" }}>
+                <span style={{ marginTop: '2px' }}>
                   <Spinner size="small" />
                 </span>
                 <span className="ml-4">Importing Account...</span>

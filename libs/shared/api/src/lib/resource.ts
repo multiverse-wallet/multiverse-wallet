@@ -1,10 +1,10 @@
-import { getFromStorage, setInStorage } from "./storage";
+import { getFromStorage, setInStorage } from './storage';
 
 export class State<T> {
   constructor(public storageKey: string, public defaultState: T) {}
   async save(state: T): Promise<T> {
     await setInStorage(this.storageKey, state);
-    return state
+    return state;
   }
   async fetch(): Promise<T> {
     return await getFromStorage<T>(this.storageKey).catch(() => {
