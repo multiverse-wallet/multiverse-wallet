@@ -16,7 +16,7 @@ jobs:
     with:
       number-of-agents: ${{ env.AGENT_COUNT }}
       init-commands: |
-        yarn nx-cloud start-ci-run --stop-agents-after="build" --agent-count=${{ env.AGENT_COUNT }}
+        yarn nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
       parallel-commands: |
         yarn nx-cloud record -- yarn nx workspace-lint
         yarn nx-cloud record -- yarn nx format:check
