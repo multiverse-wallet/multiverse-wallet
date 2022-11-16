@@ -1,5 +1,6 @@
+/* eslint-disable */
 module.exports = {
-  displayName: 'shared-components-modal-dialog',
+  displayName: 'shared-components-text-field',
   preset: '../../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': [
@@ -8,5 +9,5 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/libs/shared/components/modal-dialog',
+  coverageDirectory: '../../../../coverage/libs/shared/components/text-field',
 };

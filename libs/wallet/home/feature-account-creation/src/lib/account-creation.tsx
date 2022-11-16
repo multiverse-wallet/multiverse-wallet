@@ -1,8 +1,8 @@
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { CreateAccountForm } from "./create-account-form";
-import { ImportAccountForm } from "./import-account-form";
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { CreateAccountForm } from './create-account-form';
+import { ImportAccountForm } from './import-account-form';
 
 export function AccountCreation() {
   const { api } = useWalletState();
@@ -12,7 +12,7 @@ export function AccountCreation() {
     password: string
   ) {
     await api.setupRecoveryPhrase({ password, secretRecoveryPhrase });
-    navigate("/");
+    navigate('/');
   }
 
   return (
@@ -41,11 +41,11 @@ export function AccountCreation() {
                 <p className="mt-4 text-md text-center">
                   Everything you do here is running privately on your computer,
                   nothing is ever sent to our servers. It's important to
-                  understand that this also means{" "}
+                  understand that this also means{' '}
                   <span className="font-bold">
                     we cannot help you recover any of the secure data
-                  </span>{" "}
-                  you create and use within this context.{" "}
+                  </span>{' '}
+                  you create and use within this context.{' '}
                   <span className="highlight">
                     Please read all the instructions carefully!
                   </span>

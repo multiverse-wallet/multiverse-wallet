@@ -1,67 +1,67 @@
 export enum RPCRequestMethod {
-  lock = "lock",
-  unlock = "unlock",
-  isLocked = "isLocked",
-  hasCompletedSetup = "hasCompletedSetup",
-  setupRecoveryPhrase = "setupRecoveryPhrase",
-  revealRecoveryPhrase = "revealRecoveryPhrase",
-  createSiteConnectionRequest = "createSiteConnectionRequest",
-  openPopup = "openPopup",
-  closePopup = "closePopup",
-  listAccounts = "listAccounts",
-  getSelectedAccount = "getSelectedAccount",
-  selectAccount = "selectAccount",
-  createAccount = "createAccount",
-  deleteAccount = "deleteAccount",
-  updateAccount = "updateAccount",
-  listNetworks = "listNetworks",
-  getSelectedNetwork = "getSelectedNetwork",
-  createNetwork = "createNetwork",
-  updateNetwork = "updateNetwork",
-  deleteNetwork = "deleteNetwork",
-  selectNetwork = "selectNetwork",
-  listSites = "listSites",
-  getSiteConnectionRequests = "getSiteConnectionRequests",
-  approveSite = "approveSite",
-  denySite = "denySite",
-  deleteSite = "deleteSite",
-  getApiLogs = "getApiLogs",
-  clearApiLogs = "clearApiLogs",
-  signAndSubmitTransaction = "signAndSubmitTransaction",
-  cancelTransaction = "cancelTransaction",
-  listTransactions = "listTransactions",
-  clearTransactionHistory = "clearTransactionHistory",
-  listCollections = "listCollections",
-  createCollection = "createCollection",
-  createNFToken = "createNFToken",
+  lock = 'lock',
+  unlock = 'unlock',
+  isLocked = 'isLocked',
+  hasCompletedSetup = 'hasCompletedSetup',
+  setupRecoveryPhrase = 'setupRecoveryPhrase',
+  revealRecoveryPhrase = 'revealRecoveryPhrase',
+  createSiteConnectionRequest = 'createSiteConnectionRequest',
+  openPopup = 'openPopup',
+  closePopup = 'closePopup',
+  listAccounts = 'listAccounts',
+  getSelectedAccount = 'getSelectedAccount',
+  selectAccount = 'selectAccount',
+  createAccount = 'createAccount',
+  deleteAccount = 'deleteAccount',
+  updateAccount = 'updateAccount',
+  listNetworks = 'listNetworks',
+  getSelectedNetwork = 'getSelectedNetwork',
+  createNetwork = 'createNetwork',
+  updateNetwork = 'updateNetwork',
+  deleteNetwork = 'deleteNetwork',
+  selectNetwork = 'selectNetwork',
+  listSites = 'listSites',
+  getSiteConnectionRequests = 'getSiteConnectionRequests',
+  approveSite = 'approveSite',
+  denySite = 'denySite',
+  deleteSite = 'deleteSite',
+  getApiLogs = 'getApiLogs',
+  clearApiLogs = 'clearApiLogs',
+  signAndSubmitTransaction = 'signAndSubmitTransaction',
+  cancelTransaction = 'cancelTransaction',
+  listTransactions = 'listTransactions',
+  clearTransactionHistory = 'clearTransactionHistory',
+  listCollections = 'listCollections',
+  createCollection = 'createCollection',
+  createNFToken = 'createNFToken',
 }
 
 export enum PublicRPCRequestMethod {
-  ping = "ping",
-  isConnected = "isConnected",
-  connect = "connect",
-  disconnect = "disconnect",
-  getAccount = "getAccount",
-  getNetwork = "getNetwork",
-  requestTransaction = "requestTransaction",
-  getTransaction = "getTransaction",
-  getSettings = "getSettings",
-  updateSettings = "updateSettings",
+  ping = 'ping',
+  isConnected = 'isConnected',
+  connect = 'connect',
+  disconnect = 'disconnect',
+  getAccount = 'getAccount',
+  getNetwork = 'getNetwork',
+  requestTransaction = 'requestTransaction',
+  getTransaction = 'getTransaction',
+  getSettings = 'getSettings',
+  updateSettings = 'updateSettings',
 }
 
 export enum APIEvents {
-  update = "update",
-  connectionChanged = "connectionChanged",
-  accountChanged = "accountChanged",
-  networkChanged = "networkChanged",
-  transactionStatusChanged = "transactionStatusChanged",
+  update = 'update',
+  connectionChanged = 'connectionChanged',
+  accountChanged = 'accountChanged',
+  networkChanged = 'networkChanged',
+  transactionStatusChanged = 'transactionStatusChanged',
 }
 
 export type APIEvent = keyof typeof APIEvents;
 
-export const MULTIVERSE_EVENT = "MULTIVERSE_EVENT";
-export const MULTIVERSE_RPC_REQUEST = "MULTIVERSE_RPC_REQUEST";
-export const MULTIVERSE_RPC_RESPONSE = "MULTIVERSE_RPC_RESPONSE";
+export const MULTIVERSE_EVENT = 'MULTIVERSE_EVENT';
+export const MULTIVERSE_RPC_REQUEST = 'MULTIVERSE_RPC_REQUEST';
+export const MULTIVERSE_RPC_RESPONSE = 'MULTIVERSE_RPC_RESPONSE';
 
 export interface Network {
   id: string;
@@ -133,7 +133,7 @@ export interface SiteConnectionRequest {
   origin?: string;
 }
 
-export type SiteConnectionStatus = "connected" | "pending" | "created";
+export type SiteConnectionStatus = 'connected' | 'pending' | 'created';
 
 export interface UnlockRequest {
   password: string;
@@ -173,11 +173,11 @@ export interface Transaction {
 }
 
 export type TransactionStatus =
-  | "pending"
-  | "cancelled"
-  | "submitted"
-  | "failed"
-  | "validated";
+  | 'pending'
+  | 'cancelled'
+  | 'submitted'
+  | 'failed'
+  | 'validated';
 
 export interface Settings {
   emailAddress?: string;

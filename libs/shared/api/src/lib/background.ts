@@ -4,8 +4,8 @@ import {
   MULTIVERSE_RPC_REQUEST,
   MULTIVERSE_RPC_RESPONSE,
   RPCRequest,
-} from "@multiverse-wallet/multiverse";
-import { API, EXTENSION_ORIGIN } from "./api";
+} from '@multiverse-wallet/multiverse';
+import { API, EXTENSION_ORIGIN } from './api';
 
 const IS_RUNNING_IN_CHROME_EXTENSION = !!chrome?.runtime;
 
@@ -58,7 +58,7 @@ export class Background {
       });
     } else {
       window?.addEventListener(
-        "message",
+        'message',
         (event) => {
           if (event.source != window) {
             return;

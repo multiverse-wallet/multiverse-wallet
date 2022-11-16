@@ -1,15 +1,15 @@
-import { useAccounts, useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { useAccounts, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
   ModalDialogFooter,
   ModalTitleProps,
-} from "@multiverse-wallet/shared/components/modal-dialog";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { SiteConnectionRequest } from "@multiverse-wallet/multiverse";
-import { AccountBalance } from "@multiverse-wallet/wallet/components";
+} from '@multiverse-wallet/shared/components/modal-dialog';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { SiteConnectionRequest } from '@multiverse-wallet/multiverse';
+import { AccountBalance } from '@multiverse-wallet/wallet/components';
 
 interface ApproveSiteModalProps {
   connectionRequest: SiteConnectionRequest;
@@ -47,8 +47,8 @@ export function ApproveSiteModal({
       closeModal();
     } catch (e) {
       console.log(e);
-      setError("account", {
-        type: "required",
+      setError('account', {
+        type: 'required',
       });
     }
     setIsSubmitting(false);
@@ -105,7 +105,7 @@ export function ApproveSiteModal({
             />
           ))}
         </div>
-        {errors["account"] && (
+        {errors['account'] && (
           <p className="mt-2 text-sm text-red-600" id="account-name-error">
             You must select an account to approve the connection.
           </p>
@@ -122,7 +122,7 @@ export function ApproveSiteModal({
           >
             {isSubmitting ? (
               <div className="flex flex-row">
-                <span style={{ marginTop: "2px" }}>
+                <span style={{ marginTop: '2px' }}>
                   <Spinner size="small" />
                 </span>
                 <span className="ml-4">Connecting...</span>

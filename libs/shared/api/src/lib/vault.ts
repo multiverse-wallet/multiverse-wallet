@@ -1,17 +1,17 @@
-import { encrypt, decrypt } from "@metamask/browser-passworder";
+import { encrypt, decrypt } from '@metamask/browser-passworder';
 import {
   APIEvents,
   RevealRecoveryPhraseRequest,
   RPCRequest,
   RPCRequestMethod,
   SetupRecoveryPhraseRequest,
-} from "@multiverse-wallet/multiverse";
-import { API } from "./api";
-import { State } from "./resource";
-import * as bip39 from "bip39";
+} from '@multiverse-wallet/multiverse';
+import { API } from './api';
+import { State } from './resource';
+import * as bip39 from 'bip39';
 
 const SESSION_TIMEOUT = 3_600_000;
-const DEFAULT_ACCOUNT_NAME = "Account 1";
+const DEFAULT_ACCOUNT_NAME = 'Account 1';
 
 interface VaultState {
   encryptedSecretRecoveryPhrase?: any;
@@ -33,16 +33,16 @@ export class Vault {
         this.lock();
       }
     }, 1000);
-    api.rpcMethodRegistry.set("unlock", (r) => this.unlock(r.data.password));
-    api.rpcMethodRegistry.set("lock", (r) => this.lock());
-    api.rpcMethodRegistry.set("isLocked", (r) => this.isLocked());
-    api.rpcMethodRegistry.set("hasCompletedSetup", (r) =>
+    api.rpcMethodRegistry.set('unlock', (r) => this.unlock(r.data.password));
+    api.rpcMethodRegistry.set('lock', (r) => this.lock());
+    api.rpcMethodRegistry.set('isLocked', (r) => this.isLocked());
+    api.rpcMethodRegistry.set('hasCompletedSetup', (r) =>
       this.hasCompletedSetup()
     );
-    api.rpcMethodRegistry.set("setupRecoveryPhrase", (r) =>
+    api.rpcMethodRegistry.set('setupRecoveryPhrase', (r) =>
       this.setupRecoveryPhrase(r)
     );
-    api.rpcMethodRegistry.set("revealRecoveryPhrase", (r) =>
+    api.rpcMethodRegistry.set('revealRecoveryPhrase', (r) =>
       this.revealRecoveryPhrase(r)
     );
   }
@@ -82,7 +82,7 @@ export class Vault {
 
   async setupRecoveryPhrase(request: RPCRequest<SetupRecoveryPhraseRequest>) {
     if (!bip39.validateMnemonic(request.data.secretRecoveryPhrase)) {
-      return { error: "invalid mnemonic" };
+      return { error: 'invalid mnemonic' };
     }
     try {
       await this.state.fetchAndUpdate(async (state) => {
@@ -96,15 +96,15 @@ export class Vault {
       });
       const { result: accountId } = await this.api.accounts.createAccount({
         method: RPCRequestMethod.createAccount,
-        id: "",
+        id: '',
         data: { name: DEFAULT_ACCOUNT_NAME },
-        origin: "self",
+        origin: 'self',
       });
       await this.api.accounts.selectAccount({
         method: RPCRequestMethod.selectAccount,
-        id: "",
+        id: '',
         data: { id: accountId },
-        origin: "self",
+        origin: 'self',
       });
       this.api.emit(APIEvents.update);
       return { result: true };
@@ -126,13 +126,13 @@ export class Vault {
   }
   async encryptSecret(value: string): Promise<string> {
     if (!this.decryptedSecretRecoveryPhrase) {
-      return Promise.reject("failed to encrypt value, vault is locked");
+      return Promise.reject('failed to encrypt value, vault is locked');
     }
     return await encrypt(this.decryptedSecretRecoveryPhrase, value);
   }
   async decryptSecret(value: string): Promise<string> {
     if (!this.decryptedSecretRecoveryPhrase) {
-      return Promise.reject("failed to decrypt value, vault is locked");
+      return Promise.reject('failed to decrypt value, vault is locked');
     }
     return await decrypt(this.decryptedSecretRecoveryPhrase, value);
   }

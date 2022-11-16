@@ -1,5 +1,6 @@
+/* eslint-disable */
 module.exports = {
-  displayName: 'shared-components-text-field',
+  displayName: 'shared-components-copy-value',
   preset: '../../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': [
@@ -8,5 +9,5 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/libs/shared/components/text-field',
+  coverageDirectory: '../../../../coverage/libs/shared/components/copy-value',
 };

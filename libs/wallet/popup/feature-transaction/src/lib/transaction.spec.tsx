@@ -4,7 +4,7 @@ import WalletPopupFeatureTransaction from './transaction';
 
 describe('WalletPopupFeatureTransaction', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(< WalletPopupFeatureTransaction />);
+    const { baseElement } = render(<WalletPopupFeatureTransaction />);
     expect(baseElement).toBeTruthy();
   });
 });

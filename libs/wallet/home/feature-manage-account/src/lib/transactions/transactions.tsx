@@ -1,13 +1,13 @@
-import React, { useMemo } from "react";
-import { CubeIcon } from "@heroicons/react/solid";
-import { Transaction } from "@multiverse-wallet/multiverse";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { ModalDialog } from "@multiverse-wallet/shared/components/modal-dialog";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { OverlayContainer } from "@react-aria/overlays";
-import { useOverlayTriggerState } from "@react-stately/overlays";
-import { TransactionJSONModal } from "./transaction-json-modal";
-import TimeAgo from 'react-timeago'
+import React, { useMemo } from 'react';
+import { CubeIcon } from '@heroicons/react/solid';
+import { Transaction } from '@multiverse-wallet/multiverse';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { OverlayContainer } from '@react-aria/overlays';
+import { useOverlayTriggerState } from '@react-stately/overlays';
+import { TransactionJSONModal } from './transaction-json-modal';
+import TimeAgo from 'react-timeago';
 
 export interface TransactionsProps {
   transactions: Transaction[];
@@ -23,8 +23,8 @@ function TransactionsTableRowWithModal({
   const transactionJsonOverlayState = useOverlayTriggerState({});
   const transactionRawResponseJsonOverlayState = useOverlayTriggerState({});
   const txResult = useMemo(() => {
-    return transaction?.txJson?.meta?.TransactionResult || '-'
-  }, [transaction])
+    return transaction?.txJson?.meta?.TransactionResult || '-';
+  }, [transaction]);
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">

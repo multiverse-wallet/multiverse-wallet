@@ -3,10 +3,9 @@ import {
   RPCRequest,
   RPCResponse,
   Settings,
-} from "@multiverse-wallet/multiverse";
-import { API } from "./api";
-import { State } from "./resource";
-
+} from '@multiverse-wallet/multiverse';
+import { API } from './api';
+import { State } from './resource';
 
 export class SettingsResource {
   public state = new State<Settings>(SettingsResource.name, {});
@@ -15,7 +14,7 @@ export class SettingsResource {
       this.getSettings()
     );
     api.rpcMethodRegistry.set(PublicRPCRequestMethod.updateSettings, (r) =>
-    this.updateSettings(r)
+      this.updateSettings(r)
     );
   }
   async getSettings(): Promise<RPCResponse<Settings>> {

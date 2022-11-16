@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const getWebpackConfig = require("@nrwl/react/plugins/webpack");
-const { IgnorePlugin, ProvidePlugin } = require("webpack");
+const getWebpackConfig = require('@nrwl/react/plugins/webpack');
+const { IgnorePlugin, ProvidePlugin } = require('webpack');
 
 module.exports = (config) => {
   config = getWebpackConfig(config);
@@ -10,9 +10,9 @@ module.exports = (config) => {
 
   config.resolve.fallback = {
     ...config.resolve.fallback,
-    crypto: require.resolve("crypto-browserify"),
-    stream: require.resolve("stream-browserify"),
-    buffer: require.resolve("buffer"),
+    crypto: require.resolve('crypto-browserify'),
+    stream: require.resolve('stream-browserify'),
+    buffer: require.resolve('buffer'),
     https: false,
     net: false,
     tls: false,
@@ -29,7 +29,7 @@ module.exports = (config) => {
 
   config.plugins.push(
     new ProvidePlugin({
-      Buffer: ["buffer", "Buffer"],
+      Buffer: ['buffer', 'Buffer'],
     })
   );
 

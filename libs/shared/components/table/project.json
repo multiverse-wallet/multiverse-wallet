@@ -1,5 +1,5 @@
 {
-  "root": "libs/shared/components/table",
+  "name": "shared-components-table",
   "sourceRoot": "libs/shared/components/table/src",
   "projectType": "library",
   "targets": {
@@ -13,9 +13,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/shared/components/table"],
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/components/table"],
       "options": {
-        "jestConfig": "libs/shared/components/table/jest.config.js",
+        "jestConfig": "libs/shared/components/table/jest.config.ts",
         "passWithNoTests": true
       }
     }

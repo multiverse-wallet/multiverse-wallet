@@ -1,7 +1,7 @@
-import { AriaCheckboxProps, useCheckbox } from "@react-aria/checkbox";
-import React, { RefObject, useRef } from "react";
-import { useToggleState } from "react-stately";
-import { ControllerRenderProps } from "react-hook-form";
+import { AriaCheckboxProps, useCheckbox } from '@react-aria/checkbox';
+import React, { RefObject, useRef } from 'react';
+import { useToggleState } from 'react-stately';
+import { ControllerRenderProps } from 'react-hook-form';
 
 /**
  * We create an explicit first-party interface (rather than just extending
@@ -10,13 +10,13 @@ import { ControllerRenderProps } from "react-hook-form";
  */
 export interface CheckboxProps {
   label?: string;
-  validationState?: AriaCheckboxProps["validationState"];
-  isDisabled?: AriaCheckboxProps["isDisabled"];
-  value?: AriaCheckboxProps["value"];
-  name?: AriaCheckboxProps["name"];
-  id?: AriaCheckboxProps["id"];
-  onChange?: AriaCheckboxProps["onChange"];
-  onBlur?: AriaCheckboxProps["onBlur"];
+  validationState?: AriaCheckboxProps['validationState'];
+  isDisabled?: AriaCheckboxProps['isDisabled'];
+  value?: AriaCheckboxProps['value'];
+  name?: AriaCheckboxProps['name'];
+  id?: AriaCheckboxProps['id'];
+  onChange?: AriaCheckboxProps['onChange'];
+  onBlur?: AriaCheckboxProps['onBlur'];
   className?: string;
   field?: ControllerRenderProps<any, any>;
 }

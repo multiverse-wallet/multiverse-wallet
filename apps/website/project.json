@@ -1,19 +1,24 @@
 {
+  "name": "website",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "root": "apps/website",
   "sourceRoot": "apps/website",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "npx next build",
         "cwd": "apps/website"
       },
-      "dependsOn": [{ "projects": "dependencies", "target": "build" }]
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        }
+      ]
     },
     "serve": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "npx next dev",
         "cwd": "apps/website"

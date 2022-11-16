@@ -3,11 +3,11 @@ import {
   MockTransport,
   PublicAPI,
   RPCRequest,
-} from "@multiverse-wallet/multiverse";
-import { render, act } from "@testing-library/react";
-import { useConnect, useAccount, useNetwork, useTransaction } from "./hooks";
+} from '@multiverse-wallet/multiverse';
+import { render, act } from '@testing-library/react';
+import { useConnect, useAccount, useNetwork, useTransaction } from './hooks';
 
-describe("useConnect", () => {
+describe('useConnect', () => {
   let api: PublicAPI;
   let mockTransport: MockTransport;
   beforeEach(() => {
@@ -17,9 +17,9 @@ describe("useConnect", () => {
   });
   const TestComponent = () => {
     const { isConnected } = useConnect({ overrideApi: api });
-    return <div>{isConnected ? "Connected" : "Not Connected"}</div>;
+    return <div>{isConnected ? 'Connected' : 'Not Connected'}</div>;
   };
-  it("should render successfully", async () => {
+  it('should render successfully', async () => {
     let baseElement;
     await act(() => {
       const component = render(<TestComponent />);
@@ -27,7 +27,7 @@ describe("useConnect", () => {
     });
     expect(baseElement).toBeTruthy();
   });
-  it("should render connected", async () => {
+  it('should render connected', async () => {
     let baseElement;
     await act(() => {
       mockTransport.mockResolvedValue(true);
@@ -36,7 +36,7 @@ describe("useConnect", () => {
     });
     expect(baseElement).toMatchSnapshot();
   });
-  it("should render not connected", async () => {
+  it('should render not connected', async () => {
     let baseElement;
     await act(() => {
       mockTransport.mockResolvedValue(false);
@@ -47,7 +47,7 @@ describe("useConnect", () => {
   });
 });
 
-describe("useAccount", () => {
+describe('useAccount', () => {
   let api: PublicAPI;
   let mockTransport: MockTransport;
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe("useAccount", () => {
     }
     return <div>{account?.name}</div>;
   };
-  it("should render successfully", async () => {
+  it('should render successfully', async () => {
     let baseElement;
     await act(() => {
       const component = render(<TestComponent />);
@@ -70,19 +70,19 @@ describe("useAccount", () => {
     });
     expect(baseElement).toBeTruthy();
   });
-  it("should render account", async () => {
+  it('should render account', async () => {
     let baseElement;
     await act(() => {
-      mockTransport.mockResolvedValue({ name: "Test Account" });
+      mockTransport.mockResolvedValue({ name: 'Test Account' });
       const component = render(<TestComponent />);
       baseElement = component.baseElement;
     });
     expect(baseElement).toMatchSnapshot();
   });
-  it("should render error", async () => {
+  it('should render error', async () => {
     let baseElement;
     await act(() => {
-      mockTransport.mockRejectedValue(new Error("an error occurred"));
+      mockTransport.mockRejectedValue(new Error('an error occurred'));
       const component = render(<TestComponent />);
       baseElement = component.baseElement;
     });
@@ -90,7 +90,7 @@ describe("useAccount", () => {
   });
 });
 
-describe("useNetwork", () => {
+describe('useNetwork', () => {
   let api: PublicAPI;
   let mockTransport: MockTransport;
   beforeEach(() => {
@@ -105,7 +105,7 @@ describe("useNetwork", () => {
     }
     return <div>{network?.name}</div>;
   };
-  it("should render successfully", async () => {
+  it('should render successfully', async () => {
     let baseElement;
     await act(() => {
       const component = render(<TestComponent />);
@@ -113,19 +113,19 @@ describe("useNetwork", () => {
     });
     expect(baseElement).toBeTruthy();
   });
-  it("should render network", async () => {
+  it('should render network', async () => {
     let baseElement;
     await act(() => {
-      mockTransport.mockResolvedValue({ name: "Test Network" });
+      mockTransport.mockResolvedValue({ name: 'Test Network' });
       const component = render(<TestComponent />);
       baseElement = component.baseElement;
     });
     expect(baseElement).toMatchSnapshot();
   });
-  it("should render error", async () => {
+  it('should render error', async () => {
     let baseElement;
     await act(() => {
-      mockTransport.mockRejectedValue(new Error("an error occurred"));
+      mockTransport.mockRejectedValue(new Error('an error occurred'));
       const component = render(<TestComponent />);
       baseElement = component.baseElement;
     });
@@ -133,7 +133,7 @@ describe("useNetwork", () => {
   });
 });
 
-describe("useTransaction", () => {
+describe('useTransaction', () => {
   let api: PublicAPI;
   let mockTransport: MockTransport;
   beforeEach(() => {
@@ -141,7 +141,7 @@ describe("useTransaction", () => {
     mockTransport = new MockTransport();
     api.setTransport(mockTransport);
   });
-  const transactionId = "test"
+  const transactionId = 'test';
   const TestComponent = () => {
     const { transaction, error } = useTransaction({
       transactionId,
@@ -152,7 +152,7 @@ describe("useTransaction", () => {
     }
     return <div>{transaction?.id}</div>;
   };
-  it("should render successfully", async () => {
+  it('should render successfully', async () => {
     let baseElement;
     await act(() => {
       const component = render(<TestComponent />);
@@ -160,7 +160,7 @@ describe("useTransaction", () => {
     });
     expect(baseElement).toBeTruthy();
   });
-  it("should render transaction", async () => {
+  it('should render transaction', async () => {
     let baseElement;
     await act(() => {
       mockTransport.mockResolvedValue(
@@ -177,10 +177,10 @@ describe("useTransaction", () => {
     });
     expect(baseElement).toMatchSnapshot();
   });
-  it("should render error", async () => {
+  it('should render error', async () => {
     let baseElement;
     await act(() => {
-      mockTransport.mockRejectedValue(new Error("an error occurred"));
+      mockTransport.mockRejectedValue(new Error('an error occurred'));
       const component = render(<TestComponent />);
       baseElement = component.baseElement;
     });

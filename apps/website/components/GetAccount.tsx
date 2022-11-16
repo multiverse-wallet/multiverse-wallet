@@ -1,5 +1,5 @@
-import React from "react";
-import { useAccount } from "@multiverse-wallet/react";
+import React from 'react';
+import { useAccount } from '@multiverse-wallet/react';
 
 export default function GetAccount() {
   const { account, error } = useAccount();

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import multiverse, {
-  Transaction,
-} from "@multiverse-wallet/multiverse";
+import React, { useEffect, useState } from 'react';
+import multiverse, { Transaction } from '@multiverse-wallet/multiverse';
 
 export default function TransactionStatusChanged() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   useEffect(() => {
-    return multiverse.on("transactionStatusChanged", (tx: Transaction) => {
+    return multiverse.on('transactionStatusChanged', (tx: Transaction) => {
       setTransactions([...transactions, tx]);
     });
   }, []);

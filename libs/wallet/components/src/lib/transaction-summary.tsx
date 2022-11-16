@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from "react";
-import { Transaction } from "@multiverse-wallet/multiverse";
-import { AccountName } from "./account-name";
-import { XRPLAmount } from "./xrpl-amount";
-import { AccountBalance } from "./account-balance";
-import ReactTimeago from "react-timeago";
-import { Tabs } from "./tabs";
+import React, { useCallback, useMemo } from 'react';
+import { Transaction } from '@multiverse-wallet/multiverse';
+import { AccountName } from './account-name';
+import { XRPLAmount } from './xrpl-amount';
+import { AccountBalance } from './account-balance';
+import ReactTimeago from 'react-timeago';
+import { Tabs } from './tabs';
 
 export interface TransactionSummaryProps {
   transaction: Partial<Transaction>;
@@ -17,7 +17,7 @@ export function TransactionSummary({ transaction }: TransactionSummaryProps) {
   const tabs = useMemo(() => {
     const tabs = [
       {
-        name: "Raw JSON",
+        name: 'Raw JSON',
         component: (
           <div className="m-3">
             <pre className="p-3 bg-slate-50 rounded text-xs overflow-x-scroll">
@@ -28,10 +28,10 @@ export function TransactionSummary({ transaction }: TransactionSummaryProps) {
       },
     ];
     switch (transaction?.txJson?.TransactionType?.toLowerCase()) {
-      case "payment":
+      case 'payment':
         return [
           {
-            name: "Send Payment",
+            name: 'Send Payment',
             component: <PaymentTransactionSummary transaction={transaction} />,
           },
           ...tabs,

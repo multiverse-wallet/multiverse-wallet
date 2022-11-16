@@ -1,9 +1,9 @@
-import execa from "execa";
-import { readFileSync, writeFileSync } from "fs";
-import { remove, ensureDir, copy, move } from "fs-extra";
+import execa from 'execa';
+import { readFileSync, writeFileSync } from 'fs';
+import { remove, ensureDir, copy, move } from 'fs-extra';
 
 (async function main() {
-  const walletBuildProcess = build("wallet");
+  const walletBuildProcess = build('wallet');
   if (
     !walletBuildProcess ||
     !walletBuildProcess.stdout ||
@@ -16,29 +16,29 @@ import { remove, ensureDir, copy, move } from "fs-extra";
 
   await Promise.all([walletBuildProcess]);
 
-  await remove("./dist/apps/wallet-unpacked");
+  await remove('./dist/apps/wallet-unpacked');
 
-  await ensureDir("./dist/apps/wallet-unpacked");
+  await ensureDir('./dist/apps/wallet-unpacked');
 
-  await copy("./dist/apps/wallet/", "./dist/apps/wallet-unpacked/");
+  await copy('./dist/apps/wallet/', './dist/apps/wallet-unpacked/');
 
-  await remove("./dist/apps/wallet-unpacked/assets/fonts");
+  await remove('./dist/apps/wallet-unpacked/assets/fonts');
 
   await move(
-    "./dist/apps/wallet-unpacked/assets/shared/manifest.json",
-    "./dist/apps/wallet-unpacked/manifest.json"
+    './dist/apps/wallet-unpacked/assets/shared/manifest.json',
+    './dist/apps/wallet-unpacked/manifest.json'
   );
 
-  addManifestKey("./dist/apps/wallet-unpacked/manifest.json");
+  addManifestKey('./dist/apps/wallet-unpacked/manifest.json');
 
   await move(
-    "./dist/libs/shared/background/main.js",
-    "./dist/apps/wallet-unpacked/background.js"
+    './dist/libs/shared/background/main.js',
+    './dist/apps/wallet-unpacked/background.js'
   );
 
   await move(
-    "./dist/libs/shared/content/main.js",
-    "./dist/apps/wallet-unpacked/content.js"
+    './dist/libs/shared/content/main.js',
+    './dist/apps/wallet-unpacked/content.js'
   );
 
   console.log(
@@ -47,10 +47,10 @@ import { remove, ensureDir, copy, move } from "fs-extra";
 })();
 
 function build(project: string) {
-  return execa("npx", ["nx", "build", project, "--prod", "--skip-nx-cache"], {
+  return execa('npx', ['nx', 'build', project, '--prod', '--skip-nx-cache'], {
     env: {
-      INLINE_RUNTIME_CHUNK: "false",
-      GENERATE_SOURCEMAP: "false",
+      INLINE_RUNTIME_CHUNK: 'false',
+      GENERATE_SOURCEMAP: 'false',
     },
   });
 }
@@ -65,6 +65,6 @@ function addManifestKey(filename: string) {
     key: process.env.MANIFEST_KEY,
   };
   writeFileSync(filename, JSON.stringify(updatedManifestJSON, null, 2), {
-    flag: "w",
+    flag: 'w',
   });
 }

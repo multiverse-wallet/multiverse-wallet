@@ -1,21 +1,21 @@
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { ModalDialog } from "@multiverse-wallet/shared/components/modal-dialog";
-import { OverlayContainer } from "@react-aria/overlays";
-import { useOverlayTriggerState } from "@react-stately/overlays";
-import React from "react";
-import { CopyValue } from "@multiverse-wallet/shared/components/copy-value";
-import { CreateAccountModal } from "./create-account.modal";
-import { ImportAccountModal } from "./import-account.modal";
-import { RenameAccountModal } from "./rename-account.modal";
-import { AccountBalance } from "@xrpl-components/react/components/account-balance";
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
+import { OverlayContainer } from '@react-aria/overlays';
+import { useOverlayTriggerState } from '@react-stately/overlays';
+import React from 'react';
+import { CopyValue } from '@multiverse-wallet/shared/components/copy-value';
+import { CreateAccountModal } from './create-account.modal';
+import { ImportAccountModal } from './import-account.modal';
+import { RenameAccountModal } from './rename-account.modal';
+import { AccountBalance } from '@xrpl-components/react/components/account-balance';
 import {
   CheckIcon,
   ClipboardCopyIcon,
   PencilAltIcon,
   TrashIcon,
-} from "@heroicons/react/outline";
-import { Account } from "@multiverse-wallet/multiverse";
+} from '@heroicons/react/outline';
+import { Account } from '@multiverse-wallet/multiverse';
 
 interface AccountTableRowWithModalProps {
   account: Account;
@@ -40,7 +40,7 @@ function AccountTableRowWithModal({ account }: AccountTableRowWithModalProps) {
         <CopyValue
           valueToCopy={account.address}
           render={(copyState, onCopyClicked) => {
-            if (copyState === "copied") {
+            if (copyState === 'copied') {
               return (
                 <div className="float-right inline cursor-pointer ml-2 text-xs text-teal-500">
                   <CheckIcon className="w-5 h-5 inline mr-0.5 -mt-1" />
@@ -111,7 +111,7 @@ export function ManageAccounts({ accounts }: ManageAccountsProps) {
   const importAccountOverlayState = useOverlayTriggerState({});
 
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">

@@ -1,40 +1,31 @@
 {
+  "name": "multiverse",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/multiverse/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/multiverse",
         "main": "libs/multiverse/src/index.ts",
         "tsConfig": "libs/multiverse/tsconfig.lib.json",
-        "assets": [
-          "libs/multiverse/*.md"
-        ],
+        "assets": ["libs/multiverse/*.md"],
         "updateBuildableProjectDepsInPackageJson": true,
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/multiverse/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/multiverse/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/multiverse"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/libs/multiverse"],
       "options": {
         "jestConfig": "libs/multiverse/jest.config.ts",
         "passWithNoTests": true

@@ -1,13 +1,13 @@
-import React from "react";
-import { PencilAltIcon, PlusIcon, TrashIcon } from "@heroicons/react/outline";
-import { Network } from "@multiverse-wallet/multiverse";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { ModalDialog } from "@multiverse-wallet/shared/components/modal-dialog";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { OverlayContainer } from "@react-aria/overlays";
-import { useOverlayTriggerState } from "@react-stately/overlays";
-import { AddNetworkModal } from "./add-network.modal";
-import { EditNetworkModal } from "./edit-network.modal";
+import React from 'react';
+import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { Network } from '@multiverse-wallet/multiverse';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { OverlayContainer } from '@react-aria/overlays';
+import { useOverlayTriggerState } from '@react-stately/overlays';
+import { AddNetworkModal } from './add-network.modal';
+import { EditNetworkModal } from './edit-network.modal';
 
 export interface NetworksProps {
   networks: Network[];
@@ -64,7 +64,7 @@ export function Networks({ networks }: NetworksProps) {
   const addNetworkOverlayState = useOverlayTriggerState({});
 
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
@@ -157,7 +157,7 @@ export function Networks({ networks }: NetworksProps) {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {networks.map((network, i) => {
-                      return <NetworkTableRowWithModal network={network} />
+                      return <NetworkTableRowWithModal network={network} />;
                     })}
                   </tbody>
                 </table>

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   SelectedAccountActions,
   SelectedAccountActivity,
   SelectedAccountBalance,
   SelectedAccountCurrencies,
   Tabs,
-} from "@multiverse-wallet/wallet/components";
-import { useSupportsNFTokenMethods } from "@multiverse-wallet/wallet/hooks";
+} from '@multiverse-wallet/wallet/components';
+import { useSupportsNFTokenMethods } from '@multiverse-wallet/wallet/hooks';
 
 export function SelectAction() {
   const supportsNFTokenMethods = useSupportsNFTokenMethods();
   const defaultTabs = [
     {
-      name: "Assets",
+      name: 'Assets',
       component: <SelectedAccountCurrencies />,
     },
     {
-      name: "Activity",
+      name: 'Activity',
       component: <SelectedAccountActivity />,
     },
   ];
 
   const nftTabs = [
     {
-      name: "NFTs",
+      name: 'NFTs',
       component: <SelectedAccountActivity />,
     },
   ];
@@ -34,7 +34,7 @@ export function SelectAction() {
     if (supportsNFTokenMethods) {
       setTabs(defaultTabs.concat(nftTabs));
     } else {
-      setTabs(defaultTabs)
+      setTabs(defaultTabs);
     }
   }, [supportsNFTokenMethods]);
 

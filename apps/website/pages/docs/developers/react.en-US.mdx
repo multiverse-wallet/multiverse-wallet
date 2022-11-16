@@ -31,8 +31,8 @@ This hook returns the currently selected network in Multiverse Wallet or undefin
 Any error that occurs whilst fetching the network is returned with the error property. The network can be refreshed using the revalidate method, although, this shouldn't generally be needed as the network is updated on networkChanged events emitted by the Multiverse Wallet.
 
 ```jsx
-import React from "react";
-import { useConnect } from "@multiverse-wallet/react";
+import React from 'react';
+import { useConnect } from '@multiverse-wallet/react';
 
 interface IUseConnect {
   isActive: boolean;
@@ -72,8 +72,8 @@ This hook returns the currently selected account in Multiverse Wallet or undefin
 Any error that occurs whilst fetching the account is returned with the error property. The account can be refreshed using the revalidate method, although, this shouldn't generally be needed as the account is updated on accountChanged events emitted by the Multiverse Wallet.
 
 ```jsx
-import React from "react";
-import { useAccount } from "@multiverse-wallet/react";
+import React from 'react';
+import { useAccount } from '@multiverse-wallet/react';
 
 interface IUseAccount {
   account?: Account;
@@ -97,8 +97,8 @@ This hook returns the currently selected network in Multiverse Wallet or undefin
 Any error that occurs whilst fetching the network is returned with the error property. The network can be refreshed using the revalidate method, although, this shouldn't generally be needed as the network is updated on networkChanged events emitted by the Multiverse Wallet.
 
 ```jsx
-import React from "react";
-import { useNetwork } from "@multiverse-wallet/react";
+import React from 'react';
+import { useNetwork } from '@multiverse-wallet/react';
 
 interface IUseNetwork {
   network?: Network;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { SelectAsset } from "./select-asset";
+import React, { useEffect, useState } from 'react';
+import { SelectAsset } from './select-asset';
 
 export interface AmountInputProps {
   onChange?: (v: {
@@ -71,7 +71,7 @@ function Input({ currency, amount, onChange }: InputProps) {
         className="border shadow-sm text-xl text-right rounded-md p-2 w-full"
         type="number"
         value={amount}
-        defaultValue={"0.00"}
+        defaultValue={'0.00'}
         onChange={(t) => onChange(t.target.value)}
       />
     </div>

@@ -5,13 +5,13 @@
  * In this context the relevant chrome extension storage APIs will not be available,
  * but we can make use of localStorage as a close approximation.
  */
-const IS_RUNNING_IN_CHROME_EXTENSION = !!chrome.storage;
+const IS_RUNNING_IN_CHROME_EXTENSION = Boolean(chrome?.storage);
 
 export async function getFromStorage<T>(key: string): Promise<T> {
   if (!IS_RUNNING_IN_CHROME_EXTENSION) {
     const data = localStorage.getItem(key);
     if (!data) {
-      throw new Error("Not found");
+      throw new Error('Not found');
     }
     return JSON.parse(data);
   }
@@ -19,7 +19,7 @@ export async function getFromStorage<T>(key: string): Promise<T> {
     chrome.storage.local.get(key, (result) => {
       const data = result[key];
       if (!data) {
-        return reject(new Error("Not found"));
+        return reject(new Error('Not found'));
       }
       return resolve(data);
     });
@@ -33,7 +33,7 @@ export async function setInStorage<T>(key: string, value: T): Promise<void> {
   }
   return new Promise((resolve) => {
     chrome.storage.local.set({ [key]: value }, resolve);
-  })
+  });
 }
 
 export async function deleteInStorage(key: string): Promise<void> {
@@ -43,5 +43,5 @@ export async function deleteInStorage(key: string): Promise<void> {
   }
   return new Promise((resolve) => {
     chrome.storage.local.remove(key, resolve);
-  })
+  });
 }

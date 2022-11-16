@@ -6,22 +6,38 @@ on:
       - main
   pull_request:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
+  main:
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.10
+    with:
+      number-of-agents: 3
+      parallel-commands: |
+        yarn nx-cloud record -- yarn nx workspace-lint
+        yarn nx-cloud record -- yarn nx format:check
+      parallel-commands-on-agents: |
+        yarn nx affected --target=lint --parallel=3
+        yarn nx affected --target=test --parallel=3 --ci --code-coverage
+        yarn nx affected --target=build --parallel=3
+
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.10
+    with:
+      number-of-agents: 3
+
   build_and_test_browser_extension:
+    needs: [main]
     runs-on: ubuntu-latest
     name: Build and test the Multiverse Wallet browser extension
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Export Build Date
         run: echo "BUILD=$(date '+%Y-%m-%d')-$(git log -n1 --format="%h")" >> $GITHUB_ENV
 
       - name: Install node and yarn based on the volta config in our package.json
-        uses: volta-cli/action@v1
+        uses: volta-cli/action@v4
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -37,7 +53,7 @@ jobs:
         run: npx ts-node --project=tools/tsconfig.tools.json tools/utils/zip-unpacked-browser-extension.ts
 
       - name: Store the zip file as an artifact for the run
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: multiverse-wallet
           path: ./tmp/multiverse-wallet.zip

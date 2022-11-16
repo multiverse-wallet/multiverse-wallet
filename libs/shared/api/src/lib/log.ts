@@ -1,6 +1,6 @@
-import { APIEvents, RPCRequestMethod } from "@multiverse-wallet/multiverse";
-import { API } from "./api";
-import { State } from "./resource";
+import { APIEvents, RPCRequestMethod } from '@multiverse-wallet/multiverse';
+import { API } from './api';
+import { State } from './resource';
 
 export interface LogState {
   apiLogs: APILogEntry[];
@@ -47,7 +47,7 @@ export class LogResource {
       state.apiLogs = [];
       return state;
     });
-    this.api.emit(APIEvents.update)
+    this.api.emit(APIEvents.update);
     return { result: true };
   }
   async getApiLogs() {

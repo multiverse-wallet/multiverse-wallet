@@ -1,15 +1,15 @@
-import Connect from "../../../components/Connect";
-import Disconnect from "../../../components/Disconnect";
-import IsActive from "../../../components/IsActive";
-import ExampleComponent from "../../../components/ExampleComponent";
-import IsConnected from "../../../components/IsConnected";
-import GetAccount from "../../../components/GetAccount";
-import GetNetwork from "../../../components/GetNetwork";
-import AccountChanged from "../../../components/AccountChanged";
-import NetworkChanged from "../../../components/NetworkChanged";
-import TransactionStatusChanged from "../../../components/TransactionStatusChanged";
-import RequestTransaction from "../../../components/RequestTransaction";
-import Callout from "nextra-theme-docs/callout";
+import Connect from '../../../components/Connect';
+import Disconnect from '../../../components/Disconnect';
+import IsActive from '../../../components/IsActive';
+import ExampleComponent from '../../../components/ExampleComponent';
+import IsConnected from '../../../components/IsConnected';
+import GetAccount from '../../../components/GetAccount';
+import GetNetwork from '../../../components/GetNetwork';
+import AccountChanged from '../../../components/AccountChanged';
+import NetworkChanged from '../../../components/NetworkChanged';
+import TransactionStatusChanged from '../../../components/TransactionStatusChanged';
+import RequestTransaction from '../../../components/RequestTransaction';
+import Callout from 'nextra-theme-docs/callout';
 
 # API Reference
 
@@ -137,10 +137,16 @@ interface NetworkOptions {
 multiverse.requestTransaction(transaction: any): Promise<string>
 ```
 
-Makes a request to Multiverse Wallet to approve, sign and submit a transaction. It returns the transaction ID that can be used to check the status of the transaction using the `getTransaction` method. Alternatively, you can subscribe to the `transactionStatusChanged` event to be notified of changes to the transaction status. 
+Makes a request to Multiverse Wallet to approve, sign and submit a transaction. It returns the transaction ID that can be used to check the status of the transaction using the `getTransaction` method. Alternatively, you can subscribe to the `transactionStatusChanged` event to be notified of changes to the transaction status.
 
 <Callout>
-  **Please note** the transaction approval process is asynchronous. Once a transaction has been requested the user will be prompted to check the details and approve the transaction. As there are a number of potential outcomes, including user cancellation, timeout or an error during submission to the XRPL, it is important that your application can handle the various transaction statuses that may occur. See below for a list of possible transaction status strings.
+  **Please note** the transaction approval process is asynchronous. Once a
+  transaction has been requested the user will be prompted to check the details
+  and approve the transaction. As there are a number of potential outcomes,
+  including user cancellation, timeout or an error during submission to the
+  XRPL, it is important that your application can handle the various transaction
+  statuses that may occur. See below for a list of possible transaction status
+  strings.
 </Callout>
 
 <ExampleComponent>
@@ -171,7 +177,7 @@ interface Transaction {
   id: string;
   txJson: any;
   txHash?: string;
-  status: "pending" | "cancelled" | "submitted" | "failed" | "validated";
+  status: 'pending' | 'cancelled' | 'submitted' | 'failed' | 'validated';
 }
 ```
 
@@ -180,7 +186,7 @@ interface Transaction {
 ### `accountChanged`
 
 ```js
-multiverse.on("accountChanged", (account: Account) => {
+multiverse.on('accountChanged', (account: Account) => {
   // Update the displayed account details etc...
 });
 ```
@@ -192,7 +198,7 @@ multiverse.on("accountChanged", (account: Account) => {
 ### `networkChanged`
 
 ```js
-multiverse.on("networkChanged", (network: Network) => {
+multiverse.on('networkChanged', (network: Network) => {
   // Update the displayed network details etc...
 });
 ```
@@ -204,7 +210,7 @@ multiverse.on("networkChanged", (network: Network) => {
 ### `transactionStatusChanged`
 
 ```js
-multiverse.on("transactionStatusChanged", (transaction: Transaction) => {
+multiverse.on('transactionStatusChanged', (transaction: Transaction) => {
   // Handle update to previously submitted transactions...
 });
 ```

@@ -1,4 +1,5 @@
 {
+  "name": "wallet-popup-feature-connect",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/wallet/popup/feature-connect/src",
   "projectType": "library",
@@ -6,9 +7,7 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "libs/wallet/popup/feature-connect/**/*.{ts,tsx,js,jsx}"
@@ -17,9 +16,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/wallet/popup/feature-connect"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/libs/wallet/popup/feature-connect"],
       "options": {
         "jestConfig": "libs/wallet/popup/feature-connect/jest.config.ts",
         "passWithNoTests": true

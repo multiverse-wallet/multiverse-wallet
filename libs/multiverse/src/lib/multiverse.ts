@@ -1,5 +1,5 @@
-import { EventEmitter } from "events";
-import { ITransport, WindowTransport } from "./transport";
+import { EventEmitter } from 'events';
+import { ITransport, WindowTransport } from './transport';
 import {
   Account,
   APIEvent,
@@ -25,7 +25,7 @@ import {
   SignAndSubmitTransactionRequest,
   Settings,
   CancelTransactionRequest,
-} from "./types";
+} from './types';
 
 export class BaseClient {
   protected transport = new WindowTransport();

@@ -5,8 +5,8 @@ module.exports = function getRollupOptions(options) {
     external: [],
     plugins: [
       ...options.plugins,
-      require("rollup-plugin-node-globals")(),
-      require("rollup-plugin-node-builtins")(),
+      require('rollup-plugin-node-globals')(),
+      require('rollup-plugin-node-builtins')(),
     ],
   };
 };

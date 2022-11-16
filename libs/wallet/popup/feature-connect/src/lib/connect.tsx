@@ -1,9 +1,9 @@
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { ApproveSiteModal } from "@multiverse-wallet/wallet/home/feature-manage-account";
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { ApproveSiteModal } from '@multiverse-wallet/wallet/home/feature-manage-account';
 import {
   useSiteConnectionRequests,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
+} from '@multiverse-wallet/wallet/hooks';
 
 /* eslint-disable-next-line */
 export interface ConnectProps {}
@@ -16,6 +16,7 @@ export function Connect(props: ConnectProps) {
   return (
     <ApproveSiteModal
       connectionRequest={connectionRequests[0]}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       closeModal={() => {}}
       titleProps={{}}
     />

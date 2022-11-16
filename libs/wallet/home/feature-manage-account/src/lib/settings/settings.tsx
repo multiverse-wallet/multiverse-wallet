@@ -1,20 +1,20 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { Checkbox } from "@multiverse-wallet/shared/components/checkbox";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import { useSettings, useWalletState } from "@multiverse-wallet/wallet/hooks";
-import Joi from "joi";
-import React, { Fragment, useState } from "react";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { Checkbox } from '@multiverse-wallet/shared/components/checkbox';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import { useSettings, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import Joi from 'joi';
+import React, { Fragment, useState } from 'react';
 import {
   Controller,
   ControllerRenderProps,
   FieldValues,
   useForm,
-} from "react-hook-form";
-import { Menu, Transition } from "@headlessui/react";
-import * as currencyCodes from "currency-codes";
-import { ArrowDownIcon, ChevronDownIcon } from "@heroicons/react/solid";
+} from 'react-hook-form';
+import { Menu, Transition } from '@headlessui/react';
+import * as currencyCodes from 'currency-codes';
+import { ArrowDownIcon, ChevronDownIcon } from '@heroicons/react/solid';
 
 export function Settings() {
   const { api } = useWalletState();
@@ -70,18 +70,18 @@ export function Settings() {
                     type="text"
                     label="Email Address"
                     placeholder="Enter email address"
-                    aria-invalid={errors["emailAddress"] ? "true" : "false"}
+                    aria-invalid={errors['emailAddress'] ? 'true' : 'false'}
                     aria-describedby="email-address-error"
                     autoFocus={true}
                     isDisabled={isSubmitting}
                     validationState={
-                      errors["emailAddress"] ? "invalid" : undefined
+                      errors['emailAddress'] ? 'invalid' : undefined
                     }
                   />
                 );
               }}
             />
-            {errors["emailAddress"] && (
+            {errors['emailAddress'] && (
               <p className="mt-2 text-sm text-red-600" id="email-address-error">
                 Invalid email address
               </p>
@@ -112,7 +112,7 @@ export function Settings() {
             <Controller
               control={control}
               name="exchangeRateCurrency"
-              defaultValue={settings?.exchangeRateCurrency || "USD"}
+              defaultValue={settings?.exchangeRateCurrency || 'USD'}
               render={({ field }) => {
                 return (
                   <label className="flex-col block text-sm font-medium leading-5 text-gray-500 flex gap-2">
@@ -133,7 +133,7 @@ export function Settings() {
               >
                 {isSubmitting ? (
                   <div className="flex flex-row">
-                    <span style={{ marginTop: "2px" }}>
+                    <span style={{ marginTop: '2px' }}>
                       <Spinner size="small" />
                     </span>
                     <span className="ml-4">Updating...</span>
@@ -151,13 +151,13 @@ export function Settings() {
 }
 
 export interface SelectExchangeRateCurrencyProps {
-  field: ControllerRenderProps<FieldValues, "exchangeRateCurrency">;
+  field: ControllerRenderProps<FieldValues, 'exchangeRateCurrency'>;
 }
 
 export function SelectExchangeRateCurrency({
   field,
 }: SelectExchangeRateCurrencyProps) {
-  const supportedCurrencies = ["USD", "EUR", "GBP"];
+  const supportedCurrencies = ['USD', 'EUR', 'GBP'];
   return (
     <div className="w-56">
       <Menu as="div" className="relative inline-block text-left">
@@ -187,7 +187,7 @@ export function SelectExchangeRateCurrency({
                     <button
                       onClick={() => field.onChange(currency)}
                       className={`${
-                        active ? "bg-slate-50" : ""
+                        active ? 'bg-slate-50' : ''
                       } group flex w-full items-center px-4 py-3 text-sm`}
                     >
                       {currencyCodes.code(currency)?.currency}

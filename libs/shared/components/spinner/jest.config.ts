@@ -1,4 +1,6 @@
+/* eslint-disable */
 module.exports = {
+  displayName: 'shared-components-spinner',
   preset: '../../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': [
@@ -6,7 +8,6 @@ module.exports = {
       { cwd: __dirname, configFile: './babel-jest.config.json' },
     ],
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'html'],
-  coverageDirectory: '../../../../coverage/libs/shared/components/button',
-  displayName: 'shared-components-button',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  coverageDirectory: '../../../../coverage/libs/shared/components/spinner',
 };

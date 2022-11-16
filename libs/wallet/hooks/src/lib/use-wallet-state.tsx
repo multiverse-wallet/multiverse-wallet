@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 import {
   InternalAPI,
   BrowserRuntimeTransport,
@@ -14,10 +14,10 @@ import {
   Site,
   SiteConnectionRequest,
   Settings,
-} from "@multiverse-wallet/multiverse";
-import api from "@multiverse-wallet/multiverse";
-import { Background } from "@multiverse-wallet/shared/api";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
+} from '@multiverse-wallet/multiverse';
+import api from '@multiverse-wallet/multiverse';
+import { Background } from '@multiverse-wallet/shared/api';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 
 if (chrome?.runtime) {
   api.setTransport(new BrowserRuntimeTransport());
@@ -48,7 +48,7 @@ export const WalletStateProvider = ({ children }: any) => {
   }, []);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
   useEffect(() => {
-    return api.on("update", () => setLastUpdate(Date.now()));
+    return api.on('update', () => setLastUpdate(Date.now()));
   }, []);
   return (
     <walletStateContext.Provider value={{ api, lastUpdate }}>

@@ -1,27 +1,26 @@
 {
+  "name": "wallet-home-feature-account-creation",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/wallet/feature-account-creation/src",
+  "sourceRoot": "libs/wallet/home/feature-account-creation/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/wallet/feature-account-creation/**/*.{ts,tsx,js,jsx}"
+          "libs/wallet/home/feature-account-creation/**/*.{ts,tsx,js,jsx}"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/libs/wallet/feature-account-creation"
+        "{workspaceRoot}/coverage/libs/wallet/home/feature-account-creation"
       ],
       "options": {
-        "jestConfig": "libs/wallet/feature-account-creation/jest.config.ts",
+        "jestConfig": "libs/wallet/home/feature-account-creation/jest.config.ts",
         "passWithNoTests": true
       }
     }

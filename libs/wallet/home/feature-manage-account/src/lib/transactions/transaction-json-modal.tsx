@@ -1,11 +1,11 @@
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
   ModalDialogFooter,
   ModalDialogHeader,
   ModalTitleProps,
-} from "@multiverse-wallet/shared/components/modal-dialog";
-import { useMemo } from "react";
+} from '@multiverse-wallet/shared/components/modal-dialog';
+import { useMemo } from 'react';
 
 interface TransactionJSONModalJSONProps {
   title: string;
@@ -27,7 +27,9 @@ export function TransactionJSONModal({
     <>
       <ModalDialogHeader titleProps={titleProps} title={title} />
       <ModalDialogBody>
-        <pre className="bg-gray-50 overflow-y-scroll h-96 rounded-lg p-5">{transactionJson}</pre>
+        <pre className="bg-gray-50 overflow-y-scroll h-96 rounded-lg p-5">
+          {transactionJson}
+        </pre>
       </ModalDialogBody>
       <ModalDialogFooter>
         <Button variant="cancel" size="medium" onPress={closeModal}>

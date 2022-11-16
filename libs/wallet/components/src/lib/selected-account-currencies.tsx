@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   useSelectedAccount,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
-import { useXRPLContext } from "@xrpl-components/react/hooks/xrpl";
-import { AccountBalance } from "@xrpl-components/react/components/account-balance";
-import { ChevronRightIcon } from "@heroicons/react/outline";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
+} from '@multiverse-wallet/wallet/hooks';
+import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
+import { AccountBalance } from '@xrpl-components/react/components/account-balance';
+import { ChevronRightIcon } from '@heroicons/react/outline';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 
 export function SelectedAccountCurrencies() {
   const { selectedAccount } = useSelectedAccount();
@@ -14,7 +14,7 @@ export function SelectedAccountCurrencies() {
   const [balances, setBalances] = useState<any[] | null>(null);
   useEffect(() => {
     selectedAccount &&
-      connectionState == "connected" &&
+      connectionState == 'connected' &&
       client
         ?.getBalances(selectedAccount?.address)
         .then((balances) => setBalances(balances))
@@ -22,7 +22,7 @@ export function SelectedAccountCurrencies() {
           setBalances(null);
         });
   }, [selectedAccount, client, connectionState]);
-  if (connectionState === "connecting") {
+  if (connectionState === 'connecting') {
     return (
       <div className="flex-grow bg-white">
         <div className="h-full flex items-center justify-center">
@@ -39,9 +39,7 @@ export function SelectedAccountCurrencies() {
             <div className="capitalize">
               <AccountBalance.Currency>{currency}</AccountBalance.Currency>
             </div>
-            <div className="text-xs text-slate-400">
-              {issuer}
-            </div>
+            <div className="text-xs text-slate-400">{issuer}</div>
           </div>
           <div>
             <AccountBalance.Value>{value}</AccountBalance.Value>

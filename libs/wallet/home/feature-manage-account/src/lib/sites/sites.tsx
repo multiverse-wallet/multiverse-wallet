@@ -1,13 +1,13 @@
-import { PencilAltIcon, PlusIcon, TrashIcon } from "@heroicons/react/outline";
-import { LinkIcon } from "@heroicons/react/solid";
-import { Site, SiteConnectionRequest } from "@multiverse-wallet/multiverse";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { ModalDialog } from "@multiverse-wallet/shared/components/modal-dialog";
-import { useAccounts, useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { OverlayContainer } from "@react-aria/overlays";
-import { useOverlayTriggerState } from "@react-stately/overlays";
-import React, { useEffect, useMemo, useState } from "react";
-import { ApproveSiteModal } from "./approve-site-modal";
+import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
+import { LinkIcon } from '@heroicons/react/solid';
+import { Site, SiteConnectionRequest } from '@multiverse-wallet/multiverse';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
+import { useAccounts, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { OverlayContainer } from '@react-aria/overlays';
+import { useOverlayTriggerState } from '@react-stately/overlays';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ApproveSiteModal } from './approve-site-modal';
 
 export interface SitesProps {
   sites: Site[];
@@ -30,7 +30,8 @@ function SiteTableRowWithModal({ site }: SiteTableRowWithModalProps) {
         return accounts?.find((a) => a.id === accId);
       })
       .filter(Boolean)
-      .map((acc) => acc?.name).join(", ");
+      .map((acc) => acc?.name)
+      .join(', ');
   }, [site, accounts]);
   return (
     <tr>
@@ -96,7 +97,7 @@ export function SiteConnectionRequestWithModal({ request }: any) {
 
 export function Sites({ sites, connectionRequests }: SitesProps) {
   return (
-    <div >
+    <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">

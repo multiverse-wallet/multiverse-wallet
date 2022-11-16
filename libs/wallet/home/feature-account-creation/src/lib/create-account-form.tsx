@@ -1,13 +1,13 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import Joi from "joi";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { CreateAccountFormConfirm } from "./create-account-form-confirm";
-import { CreateAccountFormSeedPhrase } from "./create-account-form-seed-phrase";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import Joi from 'joi';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { CreateAccountFormConfirm } from './create-account-form-confirm';
+import { CreateAccountFormSeedPhrase } from './create-account-form-seed-phrase';
 
-type StepState = "upcoming" | "active" | "completed";
+type StepState = 'upcoming' | 'active' | 'completed';
 
 interface StepProps {
   stepNumber: string;
@@ -27,26 +27,28 @@ const Step = ({
   return (
     <li
       className={`relative md:flex-1 md:flex ${
-        state === "completed" ? "cursor-pointer" : ""
+        state === 'completed' ? 'cursor-pointer' : ''
       }`}
       onClick={onClick}
     >
       <div
         className={`group flex items-center ${
-          state === "completed" ? "w-full" : ""
+          state === 'completed' ? 'w-full' : ''
         }`}
       >
         <div className="px-6 py-4 flex items-center text-sm leading-5 font-medium space-x-4">
           <div
             className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition ease-in-out duration-150 ${
-              state === "completed" ? "bg-gradient-to-br from-gray-600 to-gray-700 group-hover:bg-purple-700" : ""
+              state === 'completed'
+                ? 'bg-gradient-to-br from-gray-600 to-gray-700 group-hover:bg-purple-700'
+                : ''
             } ${
-              state === "upcoming"
-                ? "border-2 border-gray-300 cursor-not-allowed"
-                : ""
-            } ${state === "active" ? "border-2 border-purple-500" : ""}`}
+              state === 'upcoming'
+                ? 'border-2 border-gray-300 cursor-not-allowed'
+                : ''
+            } ${state === 'active' ? 'border-2 border-purple-500' : ''}`}
           >
-            {state === "completed" && (
+            {state === 'completed' && (
               <svg
                 className="w-6 h-6 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -61,24 +63,24 @@ const Step = ({
               </svg>
             )}
 
-            {state === "upcoming" && (
+            {state === 'upcoming' && (
               <span className="text-gray-500 transition ease-in-out duration-150 cursor-not-allowed">
                 {stepNumber}
               </span>
             )}
 
-            {state === "active" && (
+            {state === 'active' && (
               <p className="text-purple-500">{stepNumber}</p>
             )}
           </div>
           <p
             className={`text-sm leading-5 font-medium ${
-              state === "completed" ? "text-gray-900" : ""
+              state === 'completed' ? 'text-gray-900' : ''
             } ${
-              state === "upcoming"
-                ? "text-gray-500 cursor-not-allowed transition ease-in-out duration-150"
-                : ""
-            } ${state === "active" ? "text-purple-500" : ""}`}
+              state === 'upcoming'
+                ? 'text-gray-500 cursor-not-allowed transition ease-in-out duration-150'
+                : ''
+            } ${state === 'active' ? 'text-purple-500' : ''}`}
           >
             {stepName}
           </p>
@@ -106,7 +108,7 @@ const Step = ({
 };
 
 interface StepConfig {
-  name: "Password" | "Secret Recovery Phrase" | "Confirm";
+  name: 'Password' | 'Secret Recovery Phrase' | 'Confirm';
   state: StepState;
 }
 
@@ -117,28 +119,32 @@ interface CreateAccountFormProps {
 export function CreateAccountForm({
   onNewAccountData,
 }: CreateAccountFormProps) {
-  const [password, setPassword] = useState("");
-  const [mnemonic, setMnemonic] = useState("");
+  const [password, setPassword] = useState('');
+  const [mnemonic, setMnemonic] = useState('');
   const [steps, setSteps] = useState<StepConfig[]>([
     {
-      name: "Password",
-      state: "active",
+      name: 'Password',
+      state: 'active',
     },
     {
-      name: "Secret Recovery Phrase",
-      state: "upcoming",
+      name: 'Secret Recovery Phrase',
+      state: 'upcoming',
     },
     {
-      name: "Confirm",
-      state: "upcoming",
+      name: 'Confirm',
+      state: 'upcoming',
     },
   ]);
 
-  const { handleSubmit, formState: { errors }, control } = useForm({
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
     resolver: joiResolver(
       Joi.object({
         password: Joi.string().required(),
-        confirmPassword: Joi.string().required().valid(Joi.ref("password")),
+        confirmPassword: Joi.string().required().valid(Joi.ref('password')),
       })
     ),
   });
@@ -146,32 +152,33 @@ export function CreateAccountForm({
   function onPasswordFormSubmit({ password }: any) {
     setPassword(password);
     const newSteps = [...steps];
-    newSteps.find((s) => s.name === "Password")!.state = "completed";
-    newSteps.find((s) => s.name === "Secret Recovery Phrase")!.state = "active";
+    newSteps.find((s) => s.name === 'Password')!.state = 'completed';
+    newSteps.find((s) => s.name === 'Secret Recovery Phrase')!.state = 'active';
     setSteps(newSteps);
   }
 
   function onConfirmedMnemonicBackup(newMnemonic: string) {
     setMnemonic(newMnemonic);
     const newSteps = [...steps];
-    newSteps.find((s) => s.name === "Secret Recovery Phrase")!.state = "completed";
-    newSteps.find((s) => s.name === "Confirm")!.state = "active";
+    newSteps.find((s) => s.name === 'Secret Recovery Phrase')!.state =
+      'completed';
+    newSteps.find((s) => s.name === 'Confirm')!.state = 'active';
     setSteps(newSteps);
   }
 
   function onStepClicked(i: number) {
     const newSteps = [...steps];
     const step = newSteps[i];
-    step.state = "active";
+    step.state = 'active';
     for (let j = i + 1; j < newSteps.length; j++) {
-      newSteps[j].state = "upcoming";
+      newSteps[j].state = 'upcoming';
     }
     setSteps(newSteps);
   }
 
   function onSaveStart() {
     const newSteps = [...steps];
-    newSteps.find((s) => s.name === "Confirm")!.state = "completed";
+    newSteps.find((s) => s.name === 'Confirm')!.state = 'completed';
     setSteps(newSteps);
   }
 
@@ -195,7 +202,7 @@ export function CreateAccountForm({
                     isFinalStep={i === steps.length - 1}
                     onClick={() => {
                       // Only allow going "backwards" to already completed states
-                      if (step.state !== "completed") {
+                      if (step.state !== 'completed') {
                         return;
                       }
                       onStepClicked(i);
@@ -206,7 +213,7 @@ export function CreateAccountForm({
             </ul>
           </nav>
 
-          {steps.find((s) => s.name === "Password")!.state === "active" && (
+          {steps.find((s) => s.name === 'Password')!.state === 'active' && (
             <form onSubmit={handleSubmit(onPasswordFormSubmit)}>
               <div className="space-y-8 pb-8">
                 <div className="px-8 pt-8 pb-2">
@@ -233,16 +240,16 @@ export function CreateAccountForm({
                           type="password"
                           placeholder=""
                           autoFocus={true}
-                          aria-invalid={errors["password"] ? "true" : "false"}
+                          aria-invalid={errors['password'] ? 'true' : 'false'}
                           aria-describedby="password-error"
                           validationState={
-                            errors["password"] ? "invalid" : undefined
+                            errors['password'] ? 'invalid' : undefined
                           }
                         />
                       );
                     }}
                   />
-                  {errors["password"] && (
+                  {errors['password'] && (
                     <p
                       className="mt-2 text-sm text-red-600"
                       id="password-error"
@@ -266,25 +273,27 @@ export function CreateAccountForm({
                           type="password"
                           placeholder=""
                           aria-invalid={
-                            errors["confirmPassword"] ? "true" : "false"
+                            errors['confirmPassword'] ? 'true' : 'false'
                           }
                           aria-describedby="confirm-password-error"
                           validationState={
-                            errors["confirmPassword"] ? "invalid" : undefined
+                            errors['confirmPassword'] ? 'invalid' : undefined
                           }
                         />
                       );
                     }}
                   />
-                  {errors["confirmPassword"] && (
+                  {errors['confirmPassword'] && (
                     <p
                       className="mt-2 text-sm text-red-600"
                       id="confirm-password-error"
                     >
-                      {errors["confirmPassword"]["type"] as any === "any.required" &&
-                        "Please confirm the password in order to encrypt the account."}
-                      {errors["confirmPassword"]["type"] as any === "any.only" &&
-                        "This does not currently match your given password."}
+                      {(errors['confirmPassword']['type'] as any) ===
+                        'any.required' &&
+                        'Please confirm the password in order to encrypt the account.'}
+                      {(errors['confirmPassword']['type'] as any) ===
+                        'any.only' &&
+                        'This does not currently match your given password.'}
                     </p>
                   )}
                 </div>
@@ -298,14 +307,15 @@ export function CreateAccountForm({
             </form>
           )}
 
-          {steps.find((s) => s.name === "Secret Recovery Phrase")!.state === "active" && (
+          {steps.find((s) => s.name === 'Secret Recovery Phrase')!.state ===
+            'active' && (
             <CreateAccountFormSeedPhrase
               onConfirmedBackup={onConfirmedMnemonicBackup}
             />
           )}
 
-          {(steps.find((s) => s.name === "Confirm")!.state === "active" ||
-            steps.find((s) => s.name === "Confirm")!.state === "completed") && (
+          {(steps.find((s) => s.name === 'Confirm')!.state === 'active' ||
+            steps.find((s) => s.name === 'Confirm')!.state === 'completed') && (
             <CreateAccountFormConfirm
               mnemonic={mnemonic}
               onSaveStart={onSaveStart}

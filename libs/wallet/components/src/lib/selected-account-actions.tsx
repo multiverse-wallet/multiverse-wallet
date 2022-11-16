@@ -1,12 +1,12 @@
-import { Button } from "@multiverse-wallet/shared/components/button";
-import React from "react";
+import { Button } from '@multiverse-wallet/shared/components/button';
+import React from 'react';
 import {
   ArrowRightIcon,
   SwitchVerticalIcon,
   DownloadIcon,
   ArrowDownIcon,
-} from "@heroicons/react/solid";
-import { Link } from "react-router-dom";
+} from '@heroicons/react/solid';
+import { Link } from 'react-router-dom';
 
 export function SelectedAccountActions() {
   return (

@@ -1,21 +1,17 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import {
-  ChevronDownIcon,
-} from "@heroicons/react/solid";
-import {
-  useSelectedAccountBalances,
-} from "@multiverse-wallet/wallet/hooks";
-import React, { useEffect } from "react";
-import { AccountBalance } from "@xrpl-components/react/components/account-balance";
+import { Fragment, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/solid';
+import { useSelectedAccountBalances } from '@multiverse-wallet/wallet/hooks';
+import React, { useEffect } from 'react';
+import { AccountBalance } from '@xrpl-components/react/components/account-balance';
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export interface SelectAssetProps {
-  align?: "left" | "right";
+  align?: 'left' | 'right';
   onChange?: (asset: {
     value: string;
     currency: string;
@@ -50,7 +46,7 @@ export function SelectAsset({ align, onChange }: SelectAssetProps) {
                 {asset?.currency}
               </AccountBalance.Currency>
               <div className="font-light text-slate-500">
-                Balance:{" "}
+                Balance:{' '}
                 <AccountBalance.Value>{asset?.value}</AccountBalance.Value>
               </div>
             </>
@@ -70,12 +66,12 @@ export function SelectAsset({ align, onChange }: SelectAssetProps) {
       >
         <Menu.Items
           className={`${
-            align === "left"
-              ? "origin-top-left left-0"
-              : "origin-top-right right-0"
+            align === 'left'
+              ? 'origin-top-left left-0'
+              : 'origin-top-right right-0'
           } z-10 w-full absolute mt-2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
-          {" "}
+          {' '}
           <div className="py-1 w-full">
             <div className="max-h-80 overflow-y-scroll">
               {balances?.map((balance, i) => (
@@ -86,8 +82,8 @@ export function SelectAsset({ align, onChange }: SelectAssetProps) {
                         setAsset(balance);
                       }}
                       className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm"
+                        active ? 'bg-gray-100' : '',
+                        'block px-4 py-2 text-sm'
                       )}
                     >
                       <div className="flex w-full gap-4 cursor-pointer items-center">
@@ -97,7 +93,7 @@ export function SelectAsset({ align, onChange }: SelectAssetProps) {
                               {balance.currency}
                             </AccountBalance.Currency>
                             <div className="font-light text-slate-500">
-                              Balance:{" "}
+                              Balance:{' '}
                               <AccountBalance.Value>
                                 {balance.value}
                               </AccountBalance.Value>

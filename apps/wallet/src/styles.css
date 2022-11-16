@@ -8,9 +8,9 @@
 
 @tailwind utilities;
 
-@import "~tether-drop/dist/css/drop-theme-arrows-bounce.css";
+@import '~tether-drop/dist/css/drop-theme-arrows-bounce.css';
 @import 'react-dates/lib/css/_datepicker.css';
-@import "../styles/react_dates_overrides.css";
+@import '../styles/react_dates_overrides.css';
 @import 'react-date-range/dist/styles.css';
 @import 'react-date-range/dist/theme/default.css';
 
@@ -95,59 +95,59 @@ html {
 }
 
 .dark .holder:nth-child(1) .box {
-  background-color: #3F3F46; /* equivalent of bg-gray-700 */
+  background-color: #3f3f46; /* equivalent of bg-gray-700 */
 }
 .dark .holder:nth-child(1) .box:before {
   background-color: #333336; /* equivalent of bg-gray-800 */
 }
 .dark .holder:nth-child(1) .box:after {
-  background-color: #18181B; /* equivalent of bg-gray-900 */
+  background-color: #18181b; /* equivalent of bg-gray-900 */
 }
 .dark .holder:nth-child(2) .box {
-  background-color: #3F3F46; /* equivalent of bg-gray-700 */
+  background-color: #3f3f46; /* equivalent of bg-gray-700 */
 }
 .dark .holder:nth-child(2) .box:before {
   background-color: #333336; /* equivalent of bg-gray-800 */
 }
 .dark .holder:nth-child(2) .box:after {
-  background-color: #18181B; /* equivalent of bg-gray-900 */
+  background-color: #18181b; /* equivalent of bg-gray-900 */
 }
 .dark .holder:nth-child(3) .box {
-  background-color: #3F3F46; /* equivalent of bg-gray-700 */
+  background-color: #3f3f46; /* equivalent of bg-gray-700 */
 }
 .dark .holder:nth-child(3) .box:before {
   background-color: #333336; /* equivalent of bg-gray-800 */
 }
 .dark .holder:nth-child(3) .box:after {
-  background-color: #18181B; /* equivalent of bg-gray-900 */
+  background-color: #18181b; /* equivalent of bg-gray-900 */
 }
 
 .blue .holder:nth-child(1) .box {
-  background-color: #DBEAFE; /* equivalent of bg-blue-100 */
+  background-color: #dbeafe; /* equivalent of bg-blue-100 */
 }
 .blue .holder:nth-child(1) .box:before {
-  background-color: #BFDBFE; /* equivalent of bg-blue-200 */
+  background-color: #bfdbfe; /* equivalent of bg-blue-200 */
 }
 .blue .holder:nth-child(1) .box:after {
-  background-color: #93C5FD; /* equivalent of bg-blue-300 */
+  background-color: #93c5fd; /* equivalent of bg-blue-300 */
 }
 .blue .holder:nth-child(2) .box {
-  background-color: #DBEAFE; /* equivalent of bg-blue-100 */
+  background-color: #dbeafe; /* equivalent of bg-blue-100 */
 }
 .blue .holder:nth-child(2) .box:before {
-  background-color: #BFDBFE; /* equivalent of bg-blue-200 */
+  background-color: #bfdbfe; /* equivalent of bg-blue-200 */
 }
 .blue .holder:nth-child(2) .box:after {
-  background-color: #93C5FD; /* equivalent of bg-blue-300 */
+  background-color: #93c5fd; /* equivalent of bg-blue-300 */
 }
 .blue .holder:nth-child(3) .box {
-  background-color: #DBEAFE; /* equivalent of bg-blue-100 */
+  background-color: #dbeafe; /* equivalent of bg-blue-100 */
 }
 .blue .holder:nth-child(3) .box:before {
-  background-color: #BFDBFE; /* equivalent of bg-blue-200 */
+  background-color: #bfdbfe; /* equivalent of bg-blue-200 */
 }
 .blue .holder:nth-child(3) .box:after {
-  background-color: #93C5FD; /* equivalent of bg-blue-300 */
+  background-color: #93c5fd; /* equivalent of bg-blue-300 */
 }
 
 .box {

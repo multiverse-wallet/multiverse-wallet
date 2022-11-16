@@ -1,19 +1,19 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useWalletState } from "@multiverse-wallet/wallet/hooks";
-import { Button } from "@multiverse-wallet/shared/components/button";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
   ModalDialogFooter,
   ModalDialogHeader,
   ModalTitleProps,
-} from "@multiverse-wallet/shared/components/modal-dialog";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import { TextField } from "@multiverse-wallet/shared/components/text-field";
-import { delay } from "@multiverse-wallet/shared/utils";
-import Joi from "joi";
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Account } from "@multiverse-wallet/multiverse";
+} from '@multiverse-wallet/shared/components/modal-dialog';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
+import { TextField } from '@multiverse-wallet/shared/components/text-field';
+import { delay } from '@multiverse-wallet/shared/utils';
+import Joi from 'joi';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Account } from '@multiverse-wallet/multiverse';
 
 interface RenameAccountModalProps {
   account: Account;
@@ -69,18 +69,18 @@ export function RenameAccountModal({
                   type="text"
                   label="Account Name"
                   placeholder="My Awesome account"
-                  aria-invalid={errors["accountName"] ? "true" : "false"}
+                  aria-invalid={errors['accountName'] ? 'true' : 'false'}
                   aria-describedby="account-name-error"
                   autoFocus={true}
                   isDisabled={isSubmitting}
                   validationState={
-                    errors["accountName"] ? "invalid" : undefined
+                    errors['accountName'] ? 'invalid' : undefined
                   }
                 />
               );
             }}
           />
-          {errors["accountName"] && (
+          {errors['accountName'] && (
             <p className="mt-2 text-sm text-red-600" id="account-name-error">
               You must provide a name for the account
             </p>
@@ -98,7 +98,7 @@ export function RenameAccountModal({
           >
             {isSubmitting ? (
               <div className="flex flex-row">
-                <span style={{ marginTop: "2px" }}>
+                <span style={{ marginTop: '2px' }}>
                   <Spinner size="small" />
                 </span>
                 <span className="ml-4">Updating...</span>

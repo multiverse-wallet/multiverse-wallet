@@ -1,33 +1,34 @@
+import { Button } from '@multiverse-wallet/shared/components/button';
+import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import {
-  Login,
   ContextProvider,
-  TopBar,
+  Login,
   SelectedAccount,
-} from "@multiverse-wallet/wallet/components";
-import { AccountCreation } from "@multiverse-wallet/wallet/home/feature-account-creation";
-import { ManageAccount } from "@multiverse-wallet/wallet/home/feature-manage-account";
+  TopBar,
+} from '@multiverse-wallet/wallet/components';
+import { AccountCreation } from '@multiverse-wallet/wallet/home/feature-account-creation';
+import { ManageAccount } from '@multiverse-wallet/wallet/home/feature-manage-account';
 import {
   useHasCompletedSetup,
   useIsInitialized,
   useIsLocked,
   useWalletState,
-} from "@multiverse-wallet/wallet/hooks";
-import { Spinner } from "@multiverse-wallet/shared/components/spinner";
-import React, { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { Button } from "@multiverse-wallet/shared/components/button";
-import { navigateExtension } from "@multiverse-wallet/wallet/utils";
-import { SelectAction } from "libs/wallet/popup/feature-select-action/src";
-import { Connect } from "libs/wallet/popup/feature-connect/src";
-import { SendPayment } from "@multiverse-wallet/wallet/popup/feature-send-payment";
-import { Transaction } from "@multiverse-wallet/wallet/popup/feature-transaction";
+} from '@multiverse-wallet/wallet/hooks';
+import { navigateExtension } from '@multiverse-wallet/wallet/utils';
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
+import { Connect } from '@multiverse-wallet/wallet/popup/feature-connect';
+import { SelectAction } from '@multiverse-wallet/wallet/popup/feature-select-action';
+import { SendPayment } from '@multiverse-wallet/wallet/popup/feature-send-payment';
+import { Transaction } from '@multiverse-wallet/wallet/popup/feature-transaction';
 
 function LockExtension() {
   const { api } = useWalletState();
   const navigate = useNavigate();
   useEffect(() => {
     api.lock();
-    navigate("/");
+    navigate('/');
   }, []);
   return null;
 }
@@ -39,7 +40,7 @@ const PrivateMessageBar = () => (
         <p className="font-medium text-white text-xs flex flex-row items-center justify-center">
           <svg
             className="w-4 h-4 text-white"
-            style={{ paddingBottom: "1px" }}
+            style={{ paddingBottom: '1px' }}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -81,11 +82,11 @@ export default function App() {
         <Route
           path="/popup/*"
           element={
-            <div className="flex justify-center text-sm" style={{ height: "600px" }}>
-              <div
-                style={{ width: "400px" }}
-                className="flex flex-col"
-              >
+            <div
+              className="flex justify-center text-sm"
+              style={{ height: '600px' }}
+            >
+              <div style={{ width: '400px' }} className="flex flex-col">
                 <Popup />
               </div>
             </div>
@@ -174,7 +175,7 @@ function Popup() {
                       size="medium"
                       variant="primary"
                       onPress={() => {
-                        navigateExtension("/create");
+                        navigateExtension('/create');
                       }}
                     >
                       Create or Import Account
@@ -191,8 +192,8 @@ function Popup() {
             {!isLocked && (
               <>
                 <TopBar />
-                  <SelectedAccount />
-                  <SelectAction />
+                <SelectedAccount />
+                <SelectAction />
               </>
             )}
           </>
