@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { TextField } from '@multiverse-wallet/shared/components/text-field';
 import Joi from 'joi';
 import React, { useState } from 'react';
@@ -11,7 +11,7 @@ interface LoginProps {
 }
 
 export function Login({ hasPrivateMessageBar }: LoginProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     handleSubmit,

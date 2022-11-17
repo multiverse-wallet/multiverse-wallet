@@ -183,6 +183,7 @@ export interface Settings {
   emailAddress?: string;
   feedbackOptIn?: boolean;
   exchangeRateCurrency?: string;
+  ipfsGateway?: string;
 }
 
 export interface CreateCollectionRequest {

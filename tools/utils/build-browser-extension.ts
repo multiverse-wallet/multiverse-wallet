@@ -41,6 +41,8 @@ import { remove, ensureDir, copy, move } from 'fs-extra';
     './dist/apps/wallet-unpacked/content.js'
   );
 
+  await zip('./dist/apps/wallet-unpacked', '../wallet-unpacked.zip');
+
   console.log(
     `Success! Unpacked browser extension is ready for use: dist/apps/wallet-unpacked`
   );
@@ -67,4 +69,8 @@ function addManifestKey(filename: string) {
   writeFileSync(filename, JSON.stringify(updatedManifestJSON, null, 2), {
     flag: 'w',
   });
+}
+
+async function zip(dir: string, out: string) {
+  await execa('zip', ['-r', out, '.'], { cwd: dir });
 }

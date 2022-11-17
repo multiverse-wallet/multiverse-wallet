@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 import {
-  InternalAPI,
   BrowserRuntimeTransport,
   Account,
   Transaction,
@@ -14,35 +13,35 @@ import {
   Site,
   SiteConnectionRequest,
   Settings,
+  InternalAPI,
 } from '@multiverse-wallet/multiverse';
-import api from '@multiverse-wallet/multiverse';
 import { Background } from '@multiverse-wallet/shared/api';
 import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 
-if (chrome?.runtime) {
-  api.setTransport(new BrowserRuntimeTransport());
-} else {
-  // When in a browser context create a background instance locally.
-  new Background();
-}
-
-const walletStateContext = createContext<{
+export interface IWalletAPIContext {
   api: InternalAPI;
   lastUpdate: number;
-}>({} as any);
+}
 
-export function useWalletState() {
-  return useContext(walletStateContext);
+const walletAPIContext = createContext<IWalletAPIContext>(
+  {} as IWalletAPIContext
+);
+
+export function useWalletAPI() {
+  return useContext(walletAPIContext);
+}
+
+const transport = chrome?.runtime ? new BrowserRuntimeTransport() : undefined;
+
+if (!chrome?.runtime) {
+  new Background();
 }
 
 export const WalletStateProvider = ({ children }: any) => {
   const api = useMemo(() => {
     const api = new InternalAPI();
     if (chrome?.runtime) {
-      api.setTransport(new BrowserRuntimeTransport());
-    } else {
-      // When in a browser context create a background instance locally.
-      new Background();
+      api.setTransport(transport as BrowserRuntimeTransport);
     }
     return api;
   }, []);
@@ -51,14 +50,14 @@ export const WalletStateProvider = ({ children }: any) => {
     return api.on('update', () => setLastUpdate(Date.now()));
   }, []);
   return (
-    <walletStateContext.Provider value={{ api, lastUpdate }}>
+    <walletAPIContext.Provider value={{ api, lastUpdate }}>
       {children}
-    </walletStateContext.Provider>
+    </walletAPIContext.Provider>
   );
 };
 
 export function useSelectedAccount() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [selectedAccount, setSelectedAccount] = useState<Account>();
   useEffect(() => {
     api.getSelectedAccount().then((account) => setSelectedAccount(account));
@@ -72,7 +71,7 @@ export function useSelectedAccount() {
 }
 
 export function useAccounts() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   useEffect(() => {
     api.listAccounts().then((accounts) => setAccounts(accounts));
   }, [api, lastUpdate]);
@@ -81,7 +80,7 @@ export function useAccounts() {
 }
 
 export function useSelectedNetwork() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [selectedNetwork, setSelectedNetwork] = useState<Network>();
   useEffect(() => {
     api.getSelectedNetwork().then((network) => setSelectedNetwork(network));
@@ -95,7 +94,7 @@ export function useSelectedNetwork() {
 }
 
 export function useNetworks() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [networks, setNetworks] = useState<Network[]>();
   useEffect(() => {
     api.listNetworks().then((networks) => setNetworks(networks));
@@ -104,7 +103,7 @@ export function useNetworks() {
 }
 
 export function useSites() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [sites, setSites] = useState<Site[]>();
   useEffect(() => {
     api.listSites().then((sites) => setSites(sites));
@@ -113,7 +112,7 @@ export function useSites() {
 }
 
 export function useSiteConnectionRequests() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [connectionRequests, setConnectionRequests] =
     useState<SiteConnectionRequest[]>();
   useEffect(() => {
@@ -125,7 +124,7 @@ export function useSiteConnectionRequests() {
 }
 
 export function useIsLocked() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [isLocked, setIsLocked] = useState<boolean>(true);
   useEffect(() => {
     api.isLocked().then((result) => {
@@ -136,7 +135,7 @@ export function useIsLocked() {
 }
 
 export function useHasCompletedSetup() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [isLoading, setIsLoading] = useState(true);
   const [hasCompletedSetup, setHasCompletedSetup] = useState<boolean>(false);
   useEffect(() => {
@@ -149,7 +148,7 @@ export function useHasCompletedSetup() {
 }
 
 export function useIsInitialized() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   useEffect(() => {
     api.isActive().then((result) => {
@@ -171,7 +170,7 @@ export function useSupportsNFTokenMethods() {
 }
 
 export function useAPILogs() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [apiLogs, setApiLogs] = useState<any[]>();
   useEffect(() => {
     api.getApiLogs().then((apiLogs) => setApiLogs(apiLogs));
@@ -180,7 +179,7 @@ export function useAPILogs() {
 }
 
 export function useTransactions() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [txs, setTxs] = useState<Transaction[]>();
   useEffect(() => {
     api.listTransactions().then((txs) => setTxs(txs));
@@ -189,7 +188,7 @@ export function useTransactions() {
 }
 
 export function useTransaction(transactionId?: string) {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [transaction, setTransaction] = useState<Transaction>();
   const [error, setError] = useState<any>();
   useEffect(() => {
@@ -206,7 +205,7 @@ export function useTransaction(transactionId?: string) {
 }
 
 export function useSettings() {
-  const { api, lastUpdate } = useWalletState();
+  const { api, lastUpdate } = useWalletAPI();
   const [settings, setSettings] = useState<Settings>();
   useEffect(() => {
     api.getSettings().then((settings) => setSettings(settings));
@@ -233,6 +232,34 @@ export function useSelectedAccountBalances() {
       ?.getBalances(selectedAccount?.address)
       .then((balances) => {
         setBalances(balances);
+      })
+      .catch(() => setBalances(undefined));
+  }, [client, selectedAccount]);
+  return balances;
+}
+
+export interface NFToken {
+  Flags: number;
+  Issuer: string;
+  NFTokenID: string;
+  NFTokenTaxon: number;
+  URI?: string;
+  nft_serial: number;
+}
+
+export function useSelectedAccountNFTs() {
+  const { selectedAccount } = useSelectedAccount();
+  const { client } = useXRPLContext();
+  const [balances, setBalances] = useState<NFToken[]>();
+  useEffect(() => {
+    if (!selectedAccount?.address) {
+      setBalances(undefined);
+      return;
+    }
+    client
+      ?.getBalances(selectedAccount?.address)
+      .then((balances) => {
+        setBalances([]);
       })
       .catch(() => setBalances(undefined));
   }, [client, selectedAccount]);

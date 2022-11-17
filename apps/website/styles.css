@@ -31,3 +31,10 @@ body {
 .dark .nextra-container .nextra-sidebar ul li.active > a:hover {
   color: #9a52ff !important;
 }
+
+.bg {
+  background-image: url('/background.svg');
+  background-size: contain;
+  background-position: center;
+  opacity: 0.3;
+}

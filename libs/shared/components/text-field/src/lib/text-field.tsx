@@ -25,6 +25,7 @@ export interface TextFieldProps {
   inputRef?: RefObject<HTMLInputElement>;
   field?: ControllerRenderProps<any, any>;
   autoFocus?: AriaTextFieldOptions<'input'>['autoFocus'];
+  autoComplete?: AriaTextFieldOptions<'input'>['autoComplete'];
   size?: 'small' | 'medium';
   className?: string;
 }

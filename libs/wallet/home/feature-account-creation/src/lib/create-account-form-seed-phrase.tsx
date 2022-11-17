@@ -25,10 +25,6 @@ export function CreateAccountFormSeedPhrase(
 
   const confirmBackup = watch('confirmBackup');
 
-  useEffect(() => {
-    console.log(confirmBackup);
-  }, [confirmBackup]);
-
   function onConfirmedBackup() {
     props.onConfirmedBackup(mnemonic);
   }

@@ -1,10 +1,10 @@
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import React, { useState } from 'react';
 
 export function ExportData() {
-  const auth = useWalletState();
+  const auth = useWalletAPI();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const hiddenAnchorElement = document.createElement('a');
   hiddenAnchorElement.style.display = 'none';

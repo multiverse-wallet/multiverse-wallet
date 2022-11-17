@@ -7,7 +7,7 @@ import {
 } from './types';
 
 export interface RPCRequest<T> {
-  id: string;
+  id?: string;
   method: string;
   data: T;
   origin: string;
@@ -50,7 +50,6 @@ export class WindowTransport extends EventEmitter implements ITransport {
       request.id = request.id || uuid();
       let hasResolved = false;
       const handleResponse = (event: Event) => {
-        console.log('window transport received', event);
         hasResolved = true;
         const { type, result, error } = (event as CustomEvent).detail;
         switch (type) {
@@ -96,7 +95,6 @@ export class BrowserRuntimeTransport
   constructor() {
     super();
     this.port.onMessage.addListener((message: any) => {
-      console.log('browser transport received', message);
       const { type, id, result, error, event } = message;
       switch (type) {
         case MULTIVERSE_EVENT:

@@ -2,7 +2,9 @@ import {
   CodeIcon,
   CogIcon,
   CubeIcon,
+  FolderIcon,
   GlobeAltIcon,
+  LibraryIcon,
   LinkIcon,
   LockClosedIcon,
   ServerIcon,
@@ -11,6 +13,7 @@ import {
 import {
   useAccounts,
   useNetworks,
+  useSelectedNetwork,
   useSiteConnectionRequests,
   useSites,
   useTransactions,
@@ -29,11 +32,13 @@ import { Sites } from './sites/sites';
 import { APILogs } from './api-logs/api-logs';
 import { Transactions } from './transactions/transactions';
 import { TrustLines } from './trust-lines/trust-lines';
+import { NFTs } from './nfts/nfts';
 
 interface NavItemProps {
   linkTo: string;
   title: string;
   icon: JSX.Element;
+  hide?: boolean;
 }
 
 function NavItem({ linkTo, title, icon }: NavItemProps) {
@@ -60,11 +65,11 @@ export function ManageAccount() {
   const accounts = useAccounts();
   const sites = useSites();
   const siteConnectionRequests = useSiteConnectionRequests();
+  const { selectedNetwork } = useSelectedNetwork();
   const networks = useNetworks();
   const transactions = useTransactions();
   const topBarHeight = '64px';
   const privateMessageBarHeight = '42px';
-
   const navItems: NavItemProps[] = [
     {
       title: 'Accounts',
@@ -80,6 +85,11 @@ export function ManageAccount() {
       title: 'Connected Sites',
       linkTo: '/admin/sites',
       icon: <GlobeAltIcon className="w-5 h-5" />,
+    },
+    {
+      title: 'NFT Collections',
+      linkTo: '/admin/nfts',
+      icon: <FolderIcon className="w-5 h-5" />,
     },
     {
       title: 'Trust Lines',
@@ -106,7 +116,7 @@ export function ManageAccount() {
       linkTo: '/admin/api-logs',
       icon: <CodeIcon className="w-5 h-5" />,
     },
-  ];
+  ].filter((e: NavItemProps) => !e.hide);
 
   return (
     <div
@@ -119,11 +129,6 @@ export function ManageAccount() {
         <div className="mx-auto px-2">
           <div className="flex justify-between h-16">
             <div className="flex-grow flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <img src="/assets/logo.svg" width={100} />
-              </div>
-            </div>
-            <div className="flex items-center mx-2">
               <SelectNetwork />
             </div>
             <div className="flex items-center mx-2">
@@ -199,6 +204,7 @@ export function ManageAccount() {
                   />
                 }
               />
+              <Route path="/admin/nfts" element={<NFTs />} />
               <Route path="/admin/trust-lines" element={<TrustLines />} />
               <Route path="/admin/settings" element={<Settings />} />
               <Route path="/admin/security" element={<Security />} />

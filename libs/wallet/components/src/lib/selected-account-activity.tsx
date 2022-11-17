@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useSelectedAccount,
-  useWalletState,
-} from '@multiverse-wallet/wallet/hooks';
+import { useSelectedAccount } from '@multiverse-wallet/wallet/hooks';
 import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
-import {
-  AccountTxRequest,
-  Payment,
-  Transaction,
-  TransactionMetadata,
-} from 'xrpl';
-import { BaseTransaction } from 'xrpl/dist/npm/models/transactions/common';
+import { AccountTxRequest, Transaction, TransactionMetadata } from 'xrpl';
 import { Amount } from 'xrpl/dist/npm/models/common';
-import { IssuedCurrencyAmount } from './xrpl-amount';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/outline';
 
 interface AccountTransaction {

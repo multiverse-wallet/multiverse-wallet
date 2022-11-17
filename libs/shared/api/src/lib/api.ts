@@ -23,6 +23,7 @@ export const EXTENSION_ORIGIN = `chrome-extension://${
 }`;
 
 export class API extends EventEmitter {
+  public requestIdCache = new Set();
   public rpcMethodRegistry = new Map<
     string,
     (req: RPCRequest<any>) => Promise<RPCResponse<any>>
@@ -57,34 +58,45 @@ export class API extends EventEmitter {
     return true;
   }
 
-  async call(req: RPCRequest<any>): Promise<RPCResponse<any>> {
+  async call(req: RPCRequest<unknown>): Promise<RPCResponse<unknown>> {
+    if (this.requestIdCache.has(req.id)) {
+      return { error: `duplicate request id received` };
+    }
+    this.requestIdCache.add(req.id);
     const rpcMethod = this.rpcMethodRegistry.get(req.method);
     if (!rpcMethod) {
-      return {
+      const response = {
         error: `method ${req.method} not implemented`,
       };
+      await this.log.pushApiLogs(req, response);
+      return response;
     }
     if (
       chrome.runtime &&
       req.origin !== EXTENSION_ORIGIN &&
       !isPublicMethod(req.method)
     ) {
-      return {
+      const response = {
         error: `method ${req.method} not public`,
       };
+      await this.log.pushApiLogs(req, response);
+      return response;
     }
     if (isWhitelistedMethod(req.method)) {
-      return rpcMethod(req);
+      const res = await rpcMethod(req);
+      await this.log.pushApiLogs(req, res);
+      return res;
     }
     if (!(await this.checkPermissions(req))) {
-      return {
+      const response = {
         error: `site with origin ${req.origin} calling ${req.method} has insufficient permissions, please reconnect and request further permissions (id:${req.id})`,
       };
+      await this.log.pushApiLogs(req, response);
+      return response;
     }
-    if (req.origin !== EXTENSION_ORIGIN) {
-      await this.log.pushApiLogs(req.method, req.origin);
-    }
-    return rpcMethod(req);
+    const res = await rpcMethod(req);
+    await this.log.pushApiLogs(req, res);
+    return res;
   }
 
   @PublicMethod()

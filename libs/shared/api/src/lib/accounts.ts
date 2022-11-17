@@ -76,8 +76,8 @@ export class AccountsResource {
     return { result: accounts };
   }
   async getSelectedAccount(req: RPCRequest<void>) {
-    const { selectedAccount } = await this.state.fetch();
-    return { result: selectedAccount };
+    const { selectedAccount, accounts } = await this.state.fetch();
+    return { result: accounts.find((a) => a.id === selectedAccount?.id) };
   }
   async selectAccount(req: RPCRequest<SelectAccountRequest>) {
     await this.state.fetchAndUpdate(async (state) => {
@@ -86,10 +86,10 @@ export class AccountsResource {
       );
       return state;
     });
-    const { selectedAccount } = await this.state.fetch();
+    const { selectedAccount, accounts } = await this.state.fetch();
     this.api.emit(APIEvents.update);
     this.api.emit(APIEvents.accountChanged, selectedAccount);
-    return { result: selectedAccount };
+    return { result: accounts.find((a) => a.id === selectedAccount?.id) };
   }
   async createAccount(req: RPCRequest<CreateAccountRequest>) {
     const { decryptedSecretRecoveryPhrase } = this.vault;

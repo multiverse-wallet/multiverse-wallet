@@ -1,6 +1,6 @@
 import { CodeIcon, CubeIcon } from '@heroicons/react/solid';
 import { Button } from '@multiverse-wallet/shared/components/button';
-import { useAPILogs, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useAPILogs, useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import React from 'react';
 
 interface APILogsTableRowWithModalProps {
@@ -8,17 +8,21 @@ interface APILogsTableRowWithModalProps {
 }
 
 function APILogsTableRowWithModal({ apiLog }: APILogsTableRowWithModalProps) {
-  const date = new Date(apiLog.date).toLocaleString();
+  const date = new Date(apiLog?.date).toLocaleString();
+  const isError = !!apiLog?.response?.error;
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
         {date}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
-        {apiLog.method}
+        {apiLog?.request?.method}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
-        {apiLog.origin}
+        {apiLog?.request?.origin}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
+        {isError ? 'Error' : 'OK'}
       </td>
     </tr>
   );
@@ -26,7 +30,7 @@ function APILogsTableRowWithModal({ apiLog }: APILogsTableRowWithModalProps) {
 
 export function APILogs() {
   const apiLogs = useAPILogs();
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   return (
     <div>
       <header className="mt-4 mb-12">
@@ -85,6 +89,9 @@ export function APILogs() {
                       </th>
                       <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Origin
+                      </th>
+                      <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Status
                       </th>
                     </tr>
                   </thead>

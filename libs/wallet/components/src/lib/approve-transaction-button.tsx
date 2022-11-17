@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { Transaction } from '@multiverse-wallet/multiverse';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import ReactTimeago from 'react-timeago';
@@ -15,7 +15,7 @@ export interface ApproveTransactionButtonProps {
 export function ApproveTransactionButton({
   transaction,
 }: ApproveTransactionButtonProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const navigate = useNavigate();
   const expiresAt = useMemo(() => {
     return (transaction.createdAt || Date.now()) + 60_000;

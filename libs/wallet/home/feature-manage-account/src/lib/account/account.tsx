@@ -1,4 +1,4 @@
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
 import { OverlayContainer } from '@react-aria/overlays';
@@ -23,7 +23,7 @@ interface AccountTableRowWithModalProps {
 
 function AccountTableRowWithModal({ account }: AccountTableRowWithModalProps) {
   const renameAccountOverlayState = useOverlayTriggerState({});
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   return (
     <tr>
       <td>

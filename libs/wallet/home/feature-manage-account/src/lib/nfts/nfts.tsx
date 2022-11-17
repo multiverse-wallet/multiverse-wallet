@@ -3,55 +3,47 @@ import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import { Network } from '@multiverse-wallet/multiverse';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
-import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
+import {
+  NFToken,
+  useSelectedAccountBalances,
+  useSelectedAccountNFTs,
+  useWalletAPI,
+} from '@multiverse-wallet/wallet/hooks';
 import { OverlayContainer } from '@react-aria/overlays';
 import { useOverlayTriggerState } from '@react-stately/overlays';
-import { AddNetworkModal } from './add-network.modal';
-import { EditNetworkModal } from './edit-network.modal';
 
-export interface NetworksProps {
-  networks: Network[];
+interface NFTTableRowWithModalProps {
+  nft: NFToken;
 }
 
-interface NetworkTableRowWithModalProps {
-  network: Network;
-}
-
-function NetworkTableRowWithModal({ network }: NetworkTableRowWithModalProps) {
-  const editNetworkOverlayState = useOverlayTriggerState({});
-  const { api } = useWalletAPI();
+function NFTTableRowWithModal({ nft }: NFTTableRowWithModalProps) {
+  const addNFTCollectionOverlayState = useOverlayTriggerState({});
   return (
     <tr>
       <td>
         <PencilAltIcon
-          onClick={() => editNetworkOverlayState.open()}
+          onClick={() => addNFTCollectionOverlayState.open()}
           className="mx-5 w-5 h-5 text-teal-600 inline cursor-pointer"
         />
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 truncate">
-        {network.name}
+        {nft.NFTokenID}
       </td>
-      <td className="px-6 py-4 text-sm leading-5 text-gray-500">
-        {network.server}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-right text-sm leading-5 font-medium">
-        <TrashIcon
-          onClick={() => api.deleteNetwork(network.id)}
-          className="mx-5 w-5 h-5 text-teal-600 inline cursor-pointer"
-        />
-      </td>
-      {editNetworkOverlayState.isOpen && (
+      <td className="px-6 py-4 text-sm leading-5 text-gray-500">{nft.URI}</td>
+      {addNFTCollectionOverlayState.isOpen && (
         <OverlayContainer>
           <ModalDialog
             isOpen
-            onClose={editNetworkOverlayState.close}
+            onClose={addNFTCollectionOverlayState.close}
             isDismissable
             render={(titleProps) => (
-              <EditNetworkModal
+              <>
+                {/* <EditNetworkModal
                 network={network}
                 titleProps={titleProps}
-                closeModal={editNetworkOverlayState.close}
-              />
+                closeModal={addNFTCollectionOverlayState.close}
+              /> */}
+              </>
             )}
           />
         </OverlayContainer>
@@ -60,19 +52,19 @@ function NetworkTableRowWithModal({ network }: NetworkTableRowWithModalProps) {
   );
 }
 
-export function Networks({ networks }: NetworksProps) {
-  const addNetworkOverlayState = useOverlayTriggerState({});
-
+export function NFTs() {
+  const createNFTOverlayState = useOverlayTriggerState({});
+  const nfts = useSelectedAccountNFTs();
   return (
     <div>
       <header className="mt-4 mb-12">
         <div className="mx-auto">
           <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
-            Networks
+            NFT Collections
           </h1>
 
           <p className="mt-4 mx-auto text-lg leading-6 text-gray-500">
-            Manage your networks.
+            Create and manage your nft collections.
           </p>
         </div>
       </header>
@@ -86,27 +78,29 @@ export function Networks({ networks }: NetworksProps) {
           <Button
             variant="dark"
             size="small"
-            onPress={() => addNetworkOverlayState.open()}
+            onPress={() => createNFTOverlayState.open()}
           >
             <>
               <PlusIcon className="w-5 h-5 mr-1" />
-              Add Network
+              Create Collection
             </>
           </Button>
         </div>
       </div>
 
-      {addNetworkOverlayState.isOpen && (
+      {createNFTOverlayState.isOpen && (
         <OverlayContainer>
           <ModalDialog
             isOpen
-            onClose={addNetworkOverlayState.close}
+            onClose={createNFTOverlayState.close}
             isDismissable
             render={(titleProps) => (
-              <AddNetworkModal
+              <>
+                {/* <AddNetworkModal
                 titleProps={titleProps}
-                closeModal={addNetworkOverlayState.close}
-              />
+                closeModal={createNFTOverlayState.close}
+              /> */}
+              </>
             )}
           />
         </OverlayContainer>
@@ -116,7 +110,7 @@ export function Networks({ networks }: NetworksProps) {
         <div>
           <div>
             <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              {networks?.length < 1 && (
+              {!nfts && (
                 <div className="bg-white divide-y divide-gray-200 h-96">
                   <div className="flex flex-col items-center justify-center h-full">
                     <svg
@@ -135,13 +129,13 @@ export function Networks({ networks }: NetworksProps) {
                     </svg>
 
                     <p className="mt-4 text-gray-300">
-                      You don't have any existing Accounts stored.
+                      You don't have any existing NFTs.
                     </p>
                   </div>
                 </div>
               )}
 
-              {networks?.length > 0 && (
+              {!!nfts && (
                 <table className="table w-full min-w-full divide-y divide-gray-200">
                   <thead>
                     <tr>
@@ -156,8 +150,8 @@ export function Networks({ networks }: NetworksProps) {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {networks.map((network, i) => {
-                      return <NetworkTableRowWithModal network={network} />;
+                    {nfts.map((nft, i) => {
+                      return <NFTTableRowWithModal nft={nft} />;
                     })}
                   </tbody>
                 </table>

@@ -12,19 +12,18 @@ import {
   useHasCompletedSetup,
   useIsInitialized,
   useIsLocked,
-  useWalletState,
+  useWalletAPI,
 } from '@multiverse-wallet/wallet/hooks';
-import { navigateExtension } from '@multiverse-wallet/wallet/utils';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-
-import { Connect } from '@multiverse-wallet/wallet/popup/feature-connect';
+import { navigateExtension } from '@multiverse-wallet/wallet/utils';
 import { SelectAction } from '@multiverse-wallet/wallet/popup/feature-select-action';
+import { Connect } from '@multiverse-wallet/wallet/popup/feature-connect';
 import { SendPayment } from '@multiverse-wallet/wallet/popup/feature-send-payment';
 import { Transaction } from '@multiverse-wallet/wallet/popup/feature-transaction';
 
 function LockExtension() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const navigate = useNavigate();
   useEffect(() => {
     api.lock();

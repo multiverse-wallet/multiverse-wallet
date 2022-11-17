@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { TextField } from '@multiverse-wallet/shared/components/text-field';
 import Joi from 'joi';
@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { MnemonicViewer } from '@multiverse-wallet/wallet/components';
 
 export function RevealMnemonic() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [decryptedMnemonic, setDecryptedMnemonic] = useState('');
   const [progressUntilRehiddenState, setProgressUntilRehiddenState] = useState({
     elapsedSeconds: 0,

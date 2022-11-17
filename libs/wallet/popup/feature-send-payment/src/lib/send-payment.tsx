@@ -7,18 +7,16 @@ import {
 } from '@multiverse-wallet/wallet/components';
 import {
   useSelectedAccount,
-  useWalletState,
+  useWalletAPI,
 } from '@multiverse-wallet/wallet/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import TransferAccount from './transfer-account';
 
 /* eslint-disable-next-line */
 export interface SendPaymentProps {}
 
 export function SendPayment(props: SendPaymentProps) {
-  const [isTransfer, setIsTransfer] = useState(false);
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [address, setAddress] = useState<string>();
   const [tag, setTag] = useState<number>();
   const { selectedAccount } = useSelectedAccount();

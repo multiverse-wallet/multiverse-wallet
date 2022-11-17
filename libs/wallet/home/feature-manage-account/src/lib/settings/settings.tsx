@@ -3,7 +3,7 @@ import { Button } from '@multiverse-wallet/shared/components/button';
 import { Checkbox } from '@multiverse-wallet/shared/components/checkbox';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import { TextField } from '@multiverse-wallet/shared/components/text-field';
-import { useSettings, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useSettings, useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import Joi from 'joi';
 import React, { Fragment, useState } from 'react';
 import {
@@ -17,7 +17,7 @@ import * as currencyCodes from 'currency-codes';
 import { ArrowDownIcon, ChevronDownIcon } from '@heroicons/react/solid';
 
 export function Settings() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const settings = useSettings();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -32,6 +32,7 @@ export function Settings() {
           .optional(),
         feedbackOptIn: Joi.boolean().default(false).required(),
         exchangeRateCurrency: Joi.string().required(),
+        ipfsGateway: Joi.string().hostname().optional(),
       })
     ),
   });
@@ -123,6 +124,40 @@ export function Settings() {
               }}
             />
           </div>
+          <div className="mt-4">
+            <Controller
+              control={control}
+              name="ipfsGateway"
+              defaultValue={settings?.ipfsGateway}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    className="mb-2"
+                    field={field}
+                    type="text"
+                    label="IPFS Gateway"
+                    placeholder="Enter gateway hostname"
+                    aria-invalid={errors['ipfsGateway'] ? 'true' : 'false'}
+                    aria-describedby="email-address-error"
+                    autoFocus={true}
+                    isDisabled={isSubmitting}
+                    validationState={
+                      errors['ipfsGateway'] ? 'invalid' : undefined
+                    }
+                  />
+                );
+              }}
+            />
+            <p className="text-xs text-gray-400">
+              Set the gateway to use for accessing IPFS, used to store NFT
+              resources and metadata.
+            </p>
+            {errors['ipfsGateway'] && (
+              <p className="mt-2 text-sm text-red-600" id="email-address-error">
+                Invalid gateway
+              </p>
+            )}
+          </div>
           <div className="mt-8">
             <div>
               <Button
@@ -179,7 +214,7 @@ export function SelectExchangeRateCurrency({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute z-10 left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div>
               {supportedCurrencies.map((currency) => (
                 <Menu.Item>

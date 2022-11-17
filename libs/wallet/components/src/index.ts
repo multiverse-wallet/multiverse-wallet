@@ -8,6 +8,7 @@ export * from './lib/selected-account';
 export * from './lib/selected-account-balance';
 export * from './lib/selected-account-currencies';
 export * from './lib/selected-account-activity';
+export * from './lib/selected-account-nfts';
 export * from './lib/selected-account-actions';
 export * from './lib/tabs';
 export * from './lib/address-input';
