@@ -14,6 +14,11 @@ export interface Opts {
   overrideApi?: PublicAPI;
 }
 
+export function useAPI({ overrideApi }: Opts = {}) {
+  const api = useMemo(() => overrideApi || defaultApi, [overrideApi]);
+  return api;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface UseConnectOpts extends Opts {}
 
@@ -115,6 +120,11 @@ export function useAccount({ overrideApi }: UseAccountOpts = {}): IUseAccount {
       revalidate();
     });
   }, [api, revalidate]);
+  useEffect(() => {
+    return api?.on('connectionChanged', () => {
+      revalidate();
+    });
+  }, [api, revalidate]);
   return {
     account,
     error,
@@ -147,6 +157,11 @@ export function useNetwork({ overrideApi }: UseNetworkOpts = {}): IUseNetwork {
   useEffect(() => {
     revalidate();
     return api?.on('networkChanged', () => {
+      revalidate();
+    });
+  }, [api, revalidate]);
+  useEffect(() => {
+    return api?.on('connectionChanged', () => {
       revalidate();
     });
   }, [api, revalidate]);

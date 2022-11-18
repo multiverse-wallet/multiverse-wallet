@@ -85,14 +85,13 @@ const theme = {
     }
   },
   footerText: ({ locale }) => {
+    const year = new Date().getFullYear();
     switch (locale) {
       default:
         return (
-          <div className="grid grid-cols-3">
+          <div className="relative z-10 grid grid-cols-3">
             <div>
-              <span>
-                &copy; 2022 Decentralised Advertising Ltd. All rights reserved.
-              </span>
+              <span>&copy; {year} Multiverse Wallet. All rights reserved.</span>
             </div>
             <div></div>
             <div>

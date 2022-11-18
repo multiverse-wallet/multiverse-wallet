@@ -5,12 +5,13 @@ import Logo from './Logo';
 export default function Hero() {
   return (
     <div className="">
+      <div className="bg -z-50 absolute top-0 bottom-0 left-0 right-0"></div>
       <div className="relative overflow-hidden">
         <div className="relative pt-6 pb-16 sm:pb-14">
           <div className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24 sm:px-6">
             <div className="text-center">
               <p className="mb-12">
-                <span className="rounded bg-blue-500 text-blue-50 px-2.5 py-1 text-xs font-semibold tracking-wide uppercase">
+                <span className="rounded bg-black text-blue-50 px-2.5 py-1 text-xs font-semibold tracking-wide uppercase">
                   Early Alpha Release
                 </span>
               </p>
@@ -35,10 +36,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex relative rounded-xl">
+        <div className="flex flex-col md:flex-row relative rounded-xl">
           <div className="p-5">
             <img
-              className="relative rounded-lg shadow-lg mx-auto border border-slate-50"
+              className="relative w-3/4 md:w-auto rounded-lg shadow-lg mx-auto border border-slate-50"
               src="/screenshot.png"
               alt="Component"
             />
@@ -58,7 +59,10 @@ export default function Hero() {
                 </div>
                 <div>
                   Designed with web app developers in mind, integration is easy.
-                  See our <Link href="/docs/developers/introduction">docs</Link>{' '}
+                  See our{' '}
+                  <Link href="/docs/developers/introduction">
+                    <a>docs</a>
+                  </Link>{' '}
                   for more information.
                 </div>
               </li>
@@ -66,24 +70,18 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <div className="bg-white dark:bg-dark">
-        <div className="max-w-7xl mx-auto pb-24 px-4 pt-12 sm:px-6 lg:px-8">
-          <h2 className="text-center text-gray-400 !text-sm font-semibold uppercase tracking-wide">
+      <div className="relative rounded-xl z-10 flex items-center justify-center">
+        <div className="m-8 flex flex-col">
+          <p className="text-center !text-sm font-semibold uppercase tracking-wide">
             Proudly supported by:
-          </h2>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div
-              className="col-span-2 flex justify-center items-center font-extrabold italic text-4xl"
-              style={{ fontFamily: "'Work Sans', sans-serif" }}
-            >
-              <a
-                target="__blank"
-                className="text-slate-700"
-                href="https://xrplgrants.org/"
-              >
-                XRPL Grants
-              </a>
-            </div>
+          </p>
+          <div
+            className="text-center font-extrabold italic text-4xl"
+            style={{ fontFamily: "'Work Sans', sans-serif" }}
+          >
+            <a target="__blank" href="https://xrplgrants.org/">
+              XRPL Grants
+            </a>
           </div>
         </div>
       </div>

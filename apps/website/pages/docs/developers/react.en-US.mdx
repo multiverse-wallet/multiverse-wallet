@@ -24,11 +24,23 @@ import { ... } from "@multiverse-wallet/react";
 
 ## Hooks
 
+### `useAPI()`
+
+Returns an instance of the multiverse browser API.
+
+```jsx
+import React from "react";
+import { useAPI } from "@multiverse-wallet/react";
+
+export function MyComponent() {
+  const api = useAPI();
+  ...
+}
+```
+
 ### `useConnect()`
 
-This hook returns the currently selected network in Multiverse Wallet or undefined if the network is not connected or unavailable for some reason.
-
-Any error that occurs whilst fetching the network is returned with the error property. The network can be refreshed using the revalidate method, although, this shouldn't generally be needed as the network is updated on networkChanged events emitted by the Multiverse Wallet.
+This hook returns the status of the connection and methods for connecting/disconnecting the current site.
 
 ```jsx
 import React from 'react';
