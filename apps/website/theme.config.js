@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { ExternalLinkIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 import Logo from './components/Logo';
 
@@ -89,11 +90,20 @@ const theme = {
     switch (locale) {
       default:
         return (
-          <div className="relative z-10 grid grid-cols-3">
+          <div className="relative z-10 grid grid-cols-4">
             <div>
-              <span>&copy; {year} Multiverse Wallet. All rights reserved.</span>
+              <div>&copy; {year} Multiverse Wallet.</div>
+              <div>All rights reserved.</div>
             </div>
             <div></div>
+            <div>
+              <div>
+                <a target="__blank" href="https://discord.gg/zBF7nKhn">
+                  <ExternalLinkIcon className="inline w-4 h-4 mr-1" />
+                  Discord
+                </a>
+              </div>
+            </div>
             <div>
               <div>
                 <a href="/privacy-policy">Privacy Policy</a>
