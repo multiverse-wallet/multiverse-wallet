@@ -1,1 +1,40 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1366 768"><defs><style>.cls-1{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{fill:#a259d9;}.cls-4{fill:#ff7bac;}</style><clipPath id="clip-path"><path class="cls-1" d="M-163-147V915H1492V-147ZM1448,452.38,1042.78,792,1448,526.42V830L931,841l233.82-224.84L869,854H734l308.74-484.64L662.25,854H464.81L642,652,386.28,854H233.72L626,484,135,869.5H9L525,428-69,849V613.92L397,320-69,555.58V438.91L594,60.43-69,387V266.16L173,132-69,225.77V-54.68L445-59,229,51,485-55l74,3L332,105,620-50l179-5,98.5.32L630.58,226.17,983.08-70H1059L637.57,408,1173.79-70h114.43L1124,127,1385.5-70h46.31V151.73L961,699l487-417Z"/></clipPath></defs><g class="cls-2"><rect class="cls-3" x="-47" y="-43" width="1456" height="849"/><polyline class="cls-4" points="-10.5 627.5 177.5 825.5 -10.5 552.21 668.5 782.5 -10.5 287.93 402.5 798.5 584.5 796.5 309.14 -56.5 -19.5 64.5 1086.5 500.5 179.5 -81.5 790.5 486.5 474.5 -119.5 1118.5 789.5 818.5 -78.5 1235.5 -15.5 804.5 809.5 1376.5 548.5 997.5 845.5 1302.5 -51.5 690.5 -28.5 1315.5 809.5 1331.46 -119.5"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1"
+	 id="svg8" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 640 480"
+	 style="enable-background:new 0 0 640 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.315;fill:#00D1B2;enable-background:new    ;}
+	.st1{opacity:0.63;fill:#3FA3D9;enable-background:new    ;}
+	.st2{opacity:0.63;fill:#FFBF00;enable-background:new    ;}
+	.st3{opacity:0.63;fill:#B86BFF;enable-background:new    ;}
+	.st4{opacity:0.63;fill:#00D2B2;fill-opacity:0.3137;enable-background:new    ;}
+	.st5{opacity:0.63;fill:#3FA3D9;fill-opacity:0.6314;enable-background:new    ;}
+	.st6{opacity:0.315;fill:#FFC000;fill-opacity:0.6314;enable-background:new    ;}
+	.st7{fill:none;stroke:#000000;stroke-miterlimit:10;}
+</style>
+<g id="layer1" transform="translate(0,-169.99998)">
+	<path id="path823" class="st0" d="M28.3,531.3c46.4,33.9,92.9,67.9,139.3,101.8l79.8-164.5C174.3,489.5,101.3,510.4,28.3,531.3z"/>
+	<path id="path817_00000033357575951006185800000008144197133852135090_" class="st1" d="M549.2,189.3c-87,15.7-174,31.3-261.1,47
+		c45.9,17.2,91.9,34.4,137.8,51.6"/>
+	<circle id="path819" class="st2" cx="210.4" cy="450" r="109.6"/>
+	<circle id="circle821" class="st3" cx="274.9" cy="304.2" r="36.2"/>
+	<circle id="circle825" class="st4" cx="468.5" cy="349.2" r="4.4"/>
+	<circle id="circle827" class="st3" cx="393.2" cy="318.4" r="16.5"/>
+	<circle id="circle829" class="st5" cx="433.1" cy="344.2" r="14.5"/>
+	<path id="path831" class="st6" d="M615.8,431.7L615.8,431.7l-204.5,10.3l9.6,191.2C485.8,566,550.8,498.8,615.8,431.7z"/>
+	<path class="st7" d="M711,268"/>
+	<circle id="circle827_00000121245064329931944850000003357627121387644079_" class="st3" cx="51.2" cy="212.9" r="16.5"/>
+	<circle id="circle829_00000103245259696064915880000016969387375971110790_" class="st5" cx="91.1" cy="238.6" r="14.5"/>
+	<circle id="path819_00000008126642463370280770000004698257337330513570_" class="st2" cx="555.8" cy="231.4" r="54.8"/>
+	<path id="path831_00000155862576219352141880000013311676414139088038_" class="st6" d="M247.3,203.5L247.3,203.5L42.8,213.7
+		l9.6,191.2C117.4,337.8,182.4,270.6,247.3,203.5z"/>
+	<circle id="circle821_00000169541662082524932820000012604540843764458626_" class="st3" cx="537.2" cy="550.9" r="36.2"/>
+	<circle id="circle829_00000088105611341272006850000013392578013006854050_" class="st5" cx="418.6" cy="450" r="44.2"/>
+	<path id="path823_00000025415058113386599030000002163507703453893021_" class="st0" d="M530.9,335.6c2.8,17.9,5.6,35.9,8.4,53.8
+		l54.5-18.9C572.9,358.9,551.9,347.3,530.9,335.6z"/>
+	<path id="path817_00000151544085034199455320000014806777367946643378_" class="st1" d="M355.7,570.3c-29.7,5.3-59.4,10.7-89.1,16
+		c15.7,5.9,31.4,11.7,47,17.6"/>
+</g>
+</svg>
