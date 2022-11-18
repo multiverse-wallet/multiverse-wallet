@@ -17,7 +17,6 @@ class Content {
         }
         switch (event?.data?.type) {
           case MULTIVERSE_RPC_REQUEST:
-            console.log('content.js received rpc request', event?.data);
             if (!this.port) {
               this.connectPort();
             }
@@ -37,7 +36,6 @@ class Content {
     this.port.onMessage.addListener((message: any) => {
       switch (message?.type) {
         case MULTIVERSE_RPC_RESPONSE:
-          console.log('content.js sent rpc response', message);
           window.dispatchEvent(
             new CustomEvent(message?.id || message?.type, {
               detail: message,
@@ -45,7 +43,6 @@ class Content {
           );
           break;
         case MULTIVERSE_EVENT:
-          console.log('content.js sent event', message, window.origin);
           if (!message?.event?.allowedOrigins?.includes(window.origin)) {
             message.event.data = undefined;
           }

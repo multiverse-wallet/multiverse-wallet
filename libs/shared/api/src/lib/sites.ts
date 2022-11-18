@@ -100,6 +100,7 @@ export class SitesResource {
       );
       return state;
     });
+    this.api.emit(APIEvents.connectionChanged);
     this.api.emit(APIEvents.update);
     return { result: true };
   }
@@ -109,6 +110,7 @@ export class SitesResource {
         state.sites.filter((site) => site.origin !== req.data.origin) || [];
       return state;
     });
+    this.api.emit(APIEvents.connectionChanged);
     this.api.emit(APIEvents.update);
     return { result: true };
   }
@@ -120,6 +122,7 @@ export class SitesResource {
         ) || [];
       return state;
     });
+    this.api.emit(APIEvents.connectionChanged);
     this.api.emit(APIEvents.update);
     return { result: true };
   }
