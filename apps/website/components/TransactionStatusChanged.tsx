@@ -11,7 +11,7 @@ export default function TransactionStatusChanged() {
   return (
     <div>
       {transactions.map((tx: Transaction) => (
-        <pre className="text-xs" key={tx.txHash}>
+        <pre className="text-xs" key={tx?.txHash}>
           {JSON.stringify(tx, null, 2)}
         </pre>
       ))}
