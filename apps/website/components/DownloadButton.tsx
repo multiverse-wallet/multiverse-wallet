@@ -92,14 +92,15 @@ export function DownloadButton() {
     </svg>
   );
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (window?.chrome) {
-        setBrowser('chrome');
-      }
-      if ((navigator as any)?.brave?.isBrave) {
-        setBrowser('brave');
-      }
+    if (window?.chrome) {
+      setBrowser('chrome');
+      return;
     }
+    if ((navigator as any)?.brave?.isBrave) {
+      setBrowser('brave');
+      return;
+    }
+    setBrowser('unsupported');
   }, []);
   switch (browser) {
     case 'brave':
@@ -124,7 +125,7 @@ export function DownloadButton() {
           <ChromeLogo />
         </a>
       );
-    default:
+    case 'unsupported':
       return (
         <div className="flex flex-col items-center rounded-xl p-3 px-6 bg-red-100 text-red-400">
           <div className="text-xl font-bold">
@@ -137,5 +138,7 @@ export function DownloadButton() {
           </div>
         </div>
       );
+    default:
+      return <></>;
   }
 }
