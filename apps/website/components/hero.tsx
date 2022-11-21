@@ -1,5 +1,5 @@
-import { DownloadIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
+import { DownloadButton } from './DownloadButton';
 import Logo from './Logo';
 
 export default function Hero() {
@@ -24,14 +24,9 @@ export default function Hero() {
               <p className="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-300 sm:!text-lg md:mt-5 md:!text-2xl md:max-w-3xl">
                 An open-source wallet for the XRPL that lives in the browser.
               </p>
-              <p>
-                <Link href="/docs/getting-started" className="no-underline">
-                  <span className="inline-flex bg-gradient-to-br from-gray-600 to-gray-700 transition-all duration-500 px-5 py-2 rounded-full items-center text-2xl shadow hover:shadow-2xl font-medium text-white font-extrabold space-x-1">
-                    <span>Download</span>
-                    <DownloadIcon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </Link>
-              </p>
+              <div className="mt-6 flex justify-center items-center">
+                <DownloadButton />
+              </div>
             </div>
           </div>
         </div>
