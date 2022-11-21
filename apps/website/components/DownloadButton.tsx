@@ -94,10 +94,9 @@ export function DownloadButton() {
   useEffect(() => {
     if (window?.chrome) {
       setBrowser('chrome');
-      return;
-    }
-    if ((navigator as any)?.brave?.isBrave) {
-      setBrowser('brave');
+      if ((navigator as any)?.brave?.isBrave) {
+        setBrowser('brave');
+      }
       return;
     }
     setBrowser('unsupported');
