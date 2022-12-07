@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events';
 import { ITransport, WindowTransport } from './transport';
 import {
   Account,

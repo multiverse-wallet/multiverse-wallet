@@ -9,7 +9,8 @@
           "build-content",
           "build-background",
           "lint",
-          "test"
+          "test",
+          "e2e"
         ],
         "accessToken": "Njc3YTU2ODEtMzc4NS00MTQ4LWE4MTctY2JjYmEzOTNlYzYyfHJlYWQtd3JpdGU="
       }

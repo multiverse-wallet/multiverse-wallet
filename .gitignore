@@ -108,3 +108,8 @@ dist
 
 # Temporary files
 tmp/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
