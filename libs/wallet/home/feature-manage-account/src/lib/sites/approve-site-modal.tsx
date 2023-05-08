@@ -1,4 +1,4 @@
-import { useAccounts, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useAccounts, useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
@@ -22,7 +22,7 @@ export function ApproveSiteModal({
   titleProps,
   closeModal,
 }: ApproveSiteModalProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const accounts = useAccounts();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -46,7 +46,6 @@ export function ApproveSiteModal({
       await api.closePopup();
       closeModal();
     } catch (e) {
-      console.log(e);
       setError('account', {
         type: 'required',
       });

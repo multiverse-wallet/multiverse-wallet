@@ -16,21 +16,9 @@ export class Background {
       chrome?.runtime?.onConnect?.addListener((port: chrome.runtime.Port) => {
         port.onMessage.addListener(
           (req: RPCRequest<any>, port: chrome.runtime.Port) => {
-            console.log(
-              `background received rpc request from ${port.sender?.origin}`,
-              req
-            );
             req.origin = port.sender?.origin as string;
             try {
               this.api.call(req).then(({ result, error }) => {
-                console.log(
-                  `background sent rpc response to ${port.sender?.origin}`,
-                  {
-                    id: req.id,
-                    result,
-                    error,
-                  }
-                );
                 port.postMessage({
                   type: MULTIVERSE_RPC_RESPONSE,
                   id: req.id,
@@ -64,14 +52,9 @@ export class Background {
             return;
           }
           if (event?.data?.type === MULTIVERSE_RPC_REQUEST) {
-            console.log(`received rpc request from window`, event);
             event.data.request.origin = EXTENSION_ORIGIN;
             try {
               this.api.call(event?.data?.request).then((response) => {
-                console.log(`sent rpc response to window`, {
-                  id: event?.data?.request?.id,
-                  response,
-                });
                 window.dispatchEvent(
                   new CustomEvent(event?.data?.request?.id, {
                     detail: response,

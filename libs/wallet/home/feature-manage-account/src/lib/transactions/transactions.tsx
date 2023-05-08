@@ -3,7 +3,7 @@ import { CubeIcon } from '@heroicons/react/solid';
 import { Transaction } from '@multiverse-wallet/multiverse';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { OverlayContainer } from '@react-aria/overlays';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { TransactionJSONModal } from './transaction-json-modal';
@@ -96,7 +96,7 @@ function TransactionsTableRowWithModal({
   );
 }
 export function Transactions({ transactions }: TransactionsProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   return (
     <div>
       <header className="mt-4 mb-12">

@@ -3,7 +3,7 @@ import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import { Network } from '@multiverse-wallet/multiverse';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { OverlayContainer } from '@react-aria/overlays';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { AddNetworkModal } from './add-network.modal';
@@ -19,7 +19,7 @@ interface NetworkTableRowWithModalProps {
 
 function NetworkTableRowWithModal({ network }: NetworkTableRowWithModalProps) {
   const editNetworkOverlayState = useOverlayTriggerState({});
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   return (
     <tr>
       <td>

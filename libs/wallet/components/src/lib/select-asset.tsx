@@ -25,6 +25,7 @@ export function SelectAsset({ align, onChange }: SelectAssetProps) {
     value: string;
     currency: string;
     issuer?: string | undefined;
+    reserve?: string;
   }>();
   useEffect(() => {
     if (!asset && balances) {

@@ -31,9 +31,9 @@ export enum RPCRequestMethod {
   cancelTransaction = 'cancelTransaction',
   listTransactions = 'listTransactions',
   clearTransactionHistory = 'clearTransactionHistory',
-  listCollections = 'listCollections',
-  createCollection = 'createCollection',
   createNFToken = 'createNFToken',
+  deleteNFToken = 'deleteNFToken',
+  listNFTokens = 'listNFTokens',
 }
 
 export enum PublicRPCRequestMethod {
@@ -183,8 +183,25 @@ export interface Settings {
   emailAddress?: string;
   feedbackOptIn?: boolean;
   exchangeRateCurrency?: string;
+  ipfsGateway?: string;
 }
 
-export interface CreateCollectionRequest {
+export interface CreateNFTokenRequest {
   name: string;
+  description: string;
+  nfTokenTaxon: number;
+  uri: string;
+}
+
+export interface DeleteNFTokenRequest {
+  id: string;
+}
+
+export interface NFT {
+  id: string;
+  name: string;
+  description: string;
+  minted: boolean;
+  nfTokenTaxon: number;
+  uri: string;
 }

@@ -1,5 +1,10 @@
-import { APIEvents, RPCRequestMethod } from '@multiverse-wallet/multiverse';
-import { API } from './api';
+import {
+  APIEvents,
+  RPCRequest,
+  RPCRequestMethod,
+  RPCResponse,
+} from '@multiverse-wallet/multiverse';
+import { API, EXTENSION_ORIGIN } from './api';
 import { State } from './resource';
 
 export interface LogState {
@@ -8,8 +13,8 @@ export interface LogState {
 
 export interface APILogEntry {
   date: number;
-  method: string;
-  origin: string;
+  request: RPCRequest<unknown>;
+  response: RPCResponse<unknown>;
 }
 
 export class LogResource {
@@ -24,13 +29,19 @@ export class LogResource {
       this.getApiLogs()
     );
   }
-  async pushApiLogs(method: string, origin: string) {
+  async pushApiLogs(
+    request: RPCRequest<unknown>,
+    response: RPCResponse<unknown>
+  ) {
+    if (request.origin === EXTENSION_ORIGIN) {
+      return;
+    }
     await this.state.fetchAndUpdate(async (state) => {
       // Push the new entry
-      state.apiLogs.unshift({ date: Date.now(), method, origin });
+      state.apiLogs.unshift({ date: Date.now(), request, response });
       // Expire old entries
       state.apiLogs =
-        state!.apiLogs.filter((entry) => {
+        state.apiLogs.filter((entry) => {
           if (Date.now() > entry.date + 30 * 86_400_000) {
             // Filter out entries older than 30 days.
             return false;

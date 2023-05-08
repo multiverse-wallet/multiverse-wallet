@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
@@ -23,7 +23,7 @@ export function CreateAccountModal({
   titleProps,
   closeModal,
 }: CreateAccountModalProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     handleSubmit,

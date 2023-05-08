@@ -58,7 +58,11 @@ export const ModalDialogBody: FunctionComponent<ModalDialogBodyProps & any> = ({
 }) => {
   hasPadding = hasPadding ?? true;
   return (
-    <div className={`bg-white ${hasPadding ? 'py-7 px-8' : '-m-1'}`}>
+    <div
+      className={`bg-white max-h-[60vh] overflow-auto ${
+        hasPadding ? 'py-7 px-8' : '-m-1'
+      }`}
+    >
       {children}
     </div>
   );

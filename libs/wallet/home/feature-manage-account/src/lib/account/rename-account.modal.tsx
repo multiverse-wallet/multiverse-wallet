@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import {
   ModalDialogBody,
@@ -26,7 +26,7 @@ export function RenameAccountModal({
   titleProps,
   closeModal,
 }: RenameAccountModalProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     handleSubmit,
@@ -42,7 +42,6 @@ export function RenameAccountModal({
 
   async function onSubmit({ accountName }: any) {
     setIsSubmitting(true);
-    console.log(accountName);
     await api.updateAccount(account.id, { name: accountName });
     setIsSubmitting(false);
     closeModal();

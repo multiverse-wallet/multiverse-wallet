@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import { TextField } from '@multiverse-wallet/shared/components/text-field';
@@ -8,9 +8,10 @@ import Joi from 'joi';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { validateMnemonic } from 'bip39';
 
 export function ImportAccountForm() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const {
@@ -22,8 +23,17 @@ export function ImportAccountForm() {
   } = useForm({
     resolver: joiResolver(
       Joi.object({
-        mnemonic: Joi.string().required(),
-        password: Joi.string().required(),
+        mnemonic: Joi.string()
+          .required()
+          .custom((value, helper) => {
+            if (validateMnemonic(value)) {
+              return value;
+            }
+            return helper.message({
+              custom: 'secret recovery phrase must be a valid bip39 mnemonic',
+            });
+          }),
+        password: Joi.string().min(8).required(),
         confirmPassword: Joi.string().required().valid(Joi.ref('password')),
       })
     ),
@@ -33,36 +43,16 @@ export function ImportAccountForm() {
     try {
       clearErrors();
       setIsSubmitting(true);
-      await api
-        .setupRecoveryPhrase({ password, secretRecoveryPhrase: mnemonic })
-        .catch((e) => setError('mnemonic', e));
-      navigate('/');
-      /**
-       * User has provided an encrypted mnemonic, but the data
-       * cannot be decrypted
-       */
-      // if (
-      //   existingEncryptedData &&
-      //   !api.isValid(
-      //     existingEncryptedData,
-      //     mnemonic
-      //   )
-      // ) {
-      //   setIsSubmitting(false);
-      //   setError('existingEncryptedData', {
-      //     type: 'failedDecryption',
-      //   });
-      //   return;
-      // }
-
-      // await importExistingEncryptedState(
-      //   mnemonic,
-      //   password,
-      //   existingEncryptedData
-      // );
-
+      try {
+        await api.setupRecoveryPhrase({
+          password,
+          secretRecoveryPhrase: mnemonic,
+        });
+        navigate('/');
+      } catch (e: unknown) {
+        setError('mnemonic', e as Error);
+      }
       await delay(1000);
-
       setIsSubmitting(false);
     } catch {
       setIsSubmitting(false);
@@ -95,9 +85,10 @@ export function ImportAccountForm() {
                       return (
                         <TextField
                           field={field}
-                          label="Mnemonic Seed Phrase"
+                          label="Secret Recovery Phrase (BIP 39 Mnemonic)"
                           type="text"
                           placeholder=""
+                          autoComplete="off"
                           autoFocus={true}
                           aria-invalid={errors['mnemonic'] ? 'true' : 'false'}
                           aria-describedby="mnemonic-error"
@@ -113,8 +104,7 @@ export function ImportAccountForm() {
                       className="mt-2 text-sm text-red-600"
                       id="mnemonic-error"
                     >
-                      You must create a password in order to encrypt the
-                      account.
+                      Secret recovery phrase must be a valid bip39 mnemonic
                     </p>
                   )}
                 </div>
@@ -131,6 +121,7 @@ export function ImportAccountForm() {
                           type="password"
                           placeholder=""
                           autoFocus={false}
+                          autoComplete="off"
                           aria-invalid={errors['password'] ? 'true' : 'false'}
                           aria-describedby="password-error"
                           validationState={
@@ -145,8 +136,8 @@ export function ImportAccountForm() {
                       className="mt-2 text-sm text-red-600"
                       id="password-error"
                     >
-                      You must create a password in order to encrypt the
-                      account.
+                      Please provide a valid password of greater than 8
+                      characters.
                     </p>
                   )}
                 </div>
@@ -166,6 +157,7 @@ export function ImportAccountForm() {
                           aria-invalid={
                             errors['confirmPassword'] ? 'true' : 'false'
                           }
+                          autoComplete="off"
                           aria-describedby="confirm-password-error"
                           validationState={
                             errors['confirmPassword'] ? 'invalid' : undefined

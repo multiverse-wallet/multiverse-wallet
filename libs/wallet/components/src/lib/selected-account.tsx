@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import {
-  useSelectedAccount,
-  useWalletState,
-} from '@multiverse-wallet/wallet/hooks';
+import { useSelectedAccount } from '@multiverse-wallet/wallet/hooks';
 import { CopyValue } from '@multiverse-wallet/shared/components/copy-value';
 import {
   DuplicateIcon,

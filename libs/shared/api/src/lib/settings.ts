@@ -1,4 +1,5 @@
 import {
+  APIEvents,
   PublicRPCRequestMethod,
   RPCRequest,
   RPCResponse,
@@ -7,8 +8,12 @@ import {
 import { API } from './api';
 import { State } from './resource';
 
+const defaultIpfsGateway = 'http://127.0.0.1:5001';
+
 export class SettingsResource {
-  public state = new State<Settings>(SettingsResource.name, {});
+  public state = new State<Settings>(SettingsResource.name, {
+    ipfsGateway: defaultIpfsGateway,
+  });
   constructor(private api: API) {
     api.rpcMethodRegistry.set(PublicRPCRequestMethod.getSettings, (r) =>
       this.getSettings()
@@ -30,6 +35,7 @@ export class SettingsResource {
         ...req.data,
       };
     });
+    this.api.emit(APIEvents.update);
     return { result: settings };
   }
 }
