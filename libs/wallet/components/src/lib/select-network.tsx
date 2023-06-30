@@ -11,7 +11,7 @@ import {
 import {
   useNetworks,
   useSelectedNetwork,
-  useWalletState,
+  useWalletAPI,
 } from '@multiverse-wallet/wallet/hooks';
 import React, { useEffect } from 'react';
 import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
@@ -33,25 +33,22 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
   return (
     <Menu as="div" className="relative">
       <div>
-        <Menu.Button className="inline-flex justify-center w-full rounded-md bg-white shadow px-4 py-2 text-sm font-medium focus:outline-none">
-          <div className="truncate w-20">{selectedNetwork?.name}</div>
+        <Menu.Button className="flex items-center rounded-md py-2 text-sm font-medium focus:outline-none">
+          <img
+            className="mx-auto mr-2"
+            src="/assets/logo.png"
+            width="70"
+            alt="Multiverse Wallet"
+          />
+          <div className="truncate">{selectedNetwork?.name}</div>
           {connectionState === 'connected' && (
-            <CheckCircleIcon
-              className="-mr-1 ml-2 h-5 w-5 text-green-400"
-              aria-hidden="true"
-            />
+            <div className="-mr-1 ml-1 h-2 w-2 bg-green-400 rounded-full" />
           )}
-          {connectionState === 'connecting' && (
-            <QuestionMarkCircleIcon
-              className="-mr-1 ml-2 h-5 w-5 text-indigo-400"
-              aria-hidden="true"
-            />
+          {connectionState === 'connecting' && !error && (
+            <div className="-mr-1 ml-1 h-2 w-2 bg-indigo-400 rounded-full" />
           )}
           {error && (
-            <ExclamationCircleIcon
-              className="-mr-1 ml-2 h-5 w-5 text-red-400"
-              aria-hidden="true"
-            />
+            <div className="-mr-1 ml-1 h-2 w-2 bg-red-400 rounded-full" />
           )}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
@@ -67,18 +64,14 @@ export function SelectNetwork({ align }: SelectNetworkProps) {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className={`${
-            align === 'left'
-              ? 'origin-top-left left-0'
-              : 'origin-top-right right-0'
-          } z-10 max-w-md absolute mt-2 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+          className={`origin-top-left left-0  z-10 absolute mt-2 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           {' '}
           <div className="py-3">
             <div className="block px-4 pb-3 text-xs border-b font-semibold">
               Switch Network
             </div>
-            <div className="max-h-80 overflow-y-scroll">
+            <div className="max-h-64 overflow-y-auto">
               {networks?.map((network, i) => (
                 <Menu.Item key={network.name}>
                   {({ active }) => (

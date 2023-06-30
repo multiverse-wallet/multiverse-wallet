@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useSelectedAccount,
-  useWalletState,
-} from '@multiverse-wallet/wallet/hooks';
+import { useSelectedAccount } from '@multiverse-wallet/wallet/hooks';
 import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 import { AccountBalance } from '@xrpl-components/react/components/account-balance';
-import { ChevronRightIcon } from '@heroicons/react/outline';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 
 export function SelectedAccountCurrencies() {
@@ -14,7 +10,7 @@ export function SelectedAccountCurrencies() {
   const [balances, setBalances] = useState<any[] | null>(null);
   useEffect(() => {
     selectedAccount &&
-      connectionState == 'connected' &&
+      connectionState === 'connected' &&
       client
         ?.getBalances(selectedAccount?.address)
         .then((balances) => setBalances(balances))

@@ -1,11 +1,11 @@
 import { Button } from '@multiverse-wallet/shared/components/button';
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { CreateAccountForm } from './create-account-form';
 import { ImportAccountForm } from './import-account-form';
 
 export function AccountCreation() {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const navigate = useNavigate();
   async function onNewAccountData(
     secretRecoveryPhrase: string,

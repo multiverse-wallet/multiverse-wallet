@@ -25,6 +25,9 @@ import {
   SignAndSubmitTransactionRequest,
   Settings,
   CancelTransactionRequest,
+  NFT,
+  CreateNFTokenRequest,
+  DeleteNFTokenRequest,
 } from './types';
 
 export class BaseClient {
@@ -288,6 +291,23 @@ export class InternalAPI extends PublicAPI {
   async closePopup() {
     return this.transport.makeRPC<void, void>({
       method: RPCRequestMethod.closePopup,
+    });
+  }
+  async createNFToken(data: CreateNFTokenRequest) {
+    return this.transport.makeRPC<CreateNFTokenRequest, NFT>({
+      method: RPCRequestMethod.createNFToken,
+      data,
+    });
+  }
+  async listNFTokens() {
+    return this.transport.makeRPC<void, NFT[]>({
+      method: RPCRequestMethod.listNFTokens,
+    });
+  }
+  async deleteNFToken(id: string) {
+    return this.transport.makeRPC<DeleteNFTokenRequest, void>({
+      method: RPCRequestMethod.deleteNFToken,
+      data: { id },
     });
   }
 }

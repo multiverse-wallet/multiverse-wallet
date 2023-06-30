@@ -1,13 +1,9 @@
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
-import { Button } from '@multiverse-wallet/shared/components/button';
 import React from 'react';
 import { SelectNetwork } from './select-network';
 import { SelectAccount } from './select-account';
-import { LockClosedIcon } from '@heroicons/react/solid';
 import { useXRPLContext } from '@xrpl-components/react/hooks/xrpl';
 
 export function TopBar() {
-  const { api } = useWalletState();
   const { error, reconnect } = useXRPLContext();
   return (
     <div>
@@ -22,19 +18,12 @@ export function TopBar() {
           </button>
         </div>
       )}
-      <div className="p-4 w-full z-10">
-        <div className="grid grid-cols-3 items-center space-x-2">
-          <div>
-            <SelectNetwork align="left" />
+      <div className="w-full z-10">
+        <div className="flex items-center space-x-2 h-16 px-2">
+          <div className="flex">
+            <SelectNetwork />
           </div>
-          <div className="flex justify-center">
-            <img
-              className="mx-auto"
-              src="/assets/logo.png"
-              width="70"
-              alt="Multiverse Wallet"
-            />
-          </div>
+          <div className="flex-grow"></div>
           <div className="">
             <div className="float-right">
               <SelectAccount showIcon={true} />

@@ -3,7 +3,7 @@ import { LinkIcon } from '@heroicons/react/solid';
 import { Site, SiteConnectionRequest } from '@multiverse-wallet/multiverse';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { ModalDialog } from '@multiverse-wallet/shared/components/modal-dialog';
-import { useAccounts, useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useAccounts, useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { OverlayContainer } from '@react-aria/overlays';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -19,7 +19,7 @@ interface SiteTableRowWithModalProps {
 }
 
 function SiteTableRowWithModal({ site }: SiteTableRowWithModalProps) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const accounts = useAccounts();
   const allowedAccounts = useMemo(() => {
     if (!site.allowedAccounts) {
@@ -52,7 +52,7 @@ function SiteTableRowWithModal({ site }: SiteTableRowWithModalProps) {
 }
 
 export function SiteConnectionRequestWithModal({ request }: any) {
-  const { api } = useWalletState();
+  const { api } = useWalletAPI();
   const siteConnectionOverlayState = useOverlayTriggerState({});
   return (
     <div className="flex gap-2 text-sm bg-purple-500 text-white rounded-md shadow items-center mb-1 p-3">

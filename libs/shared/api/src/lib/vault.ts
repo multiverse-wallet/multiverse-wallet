@@ -1,4 +1,4 @@
-import { encrypt, decrypt } from '@metamask/browser-passworder';
+import { encrypt, decrypt, generateSalt } from '@metamask/browser-passworder';
 import {
   APIEvents,
   RevealRecoveryPhraseRequest,
@@ -9,16 +9,19 @@ import {
 import { API } from './api';
 import { State } from './resource';
 import * as bip39 from 'bip39';
+import { randomBytes } from 'crypto';
 
 const SESSION_TIMEOUT = 3_600_000;
 const DEFAULT_ACCOUNT_NAME = 'Account 1';
 
 interface VaultState {
+  salt: string;
   encryptedSecretRecoveryPhrase?: any;
 }
 
 export class Vault {
   public state = new State<VaultState>(Vault.name, {
+    salt: generateRandomSalt(),
     encryptedSecretRecoveryPhrase: undefined,
   });
   public decryptedSecretRecoveryPhrase?: string;
@@ -46,12 +49,19 @@ export class Vault {
       this.revealRecoveryPhrase(r)
     );
   }
+  async salt(value: string): Promise<string> {
+    const { salt } = await this.state.fetch();
+    if (salt) {
+      return salt + value;
+    }
+    return value;
+  }
   async unlock(password: string) {
     try {
       await this.state.fetchAndUpdate(async (state) => {
         const { encryptedSecretRecoveryPhrase } = state;
         const decryptedSecretRecoveryPhrase = await decrypt<string>(
-          password,
+          await this.salt(password),
           encryptedSecretRecoveryPhrase
         );
         this.decryptedSecretRecoveryPhrase = decryptedSecretRecoveryPhrase;
@@ -81,13 +91,17 @@ export class Vault {
   }
 
   async setupRecoveryPhrase(request: RPCRequest<SetupRecoveryPhraseRequest>) {
+    const { encryptedSecretRecoveryPhrase } = await this.state.fetch();
+    if (encryptedSecretRecoveryPhrase) {
+      return { error: 'recovery phrase already set' };
+    }
     if (!bip39.validateMnemonic(request.data.secretRecoveryPhrase)) {
       return { error: 'invalid mnemonic' };
     }
     try {
       await this.state.fetchAndUpdate(async (state) => {
         const encryptedSecretRecoveryPhrase = await encrypt(
-          request.data.password,
+          await this.salt(request.data.password),
           request.data.secretRecoveryPhrase
         );
         state.encryptedSecretRecoveryPhrase = encryptedSecretRecoveryPhrase;
@@ -96,13 +110,11 @@ export class Vault {
       });
       const { result: accountId } = await this.api.accounts.createAccount({
         method: RPCRequestMethod.createAccount,
-        id: '',
         data: { name: DEFAULT_ACCOUNT_NAME },
         origin: 'self',
       });
       await this.api.accounts.selectAccount({
         method: RPCRequestMethod.selectAccount,
-        id: '',
         data: { id: accountId },
         origin: 'self',
       });
@@ -128,12 +140,22 @@ export class Vault {
     if (!this.decryptedSecretRecoveryPhrase) {
       return Promise.reject('failed to encrypt value, vault is locked');
     }
-    return await encrypt(this.decryptedSecretRecoveryPhrase, value);
+    return await encrypt(
+      await this.salt(this.decryptedSecretRecoveryPhrase),
+      value
+    );
   }
   async decryptSecret(value: string): Promise<string> {
     if (!this.decryptedSecretRecoveryPhrase) {
       return Promise.reject('failed to decrypt value, vault is locked');
     }
-    return await decrypt(this.decryptedSecretRecoveryPhrase, value);
+    return await decrypt(
+      await this.salt(this.decryptedSecretRecoveryPhrase),
+      value
+    );
   }
+}
+
+function generateRandomSalt(): string {
+  return randomBytes(64).toString('hex');
 }

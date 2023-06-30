@@ -17,6 +17,7 @@ module.exports = (config) => {
     net: false,
     tls: false,
     url: false,
+    path: require.resolve('path-browserify'),
   };
 
   // Remove the non-English word-lists from the bip39 library used for mnemonic generation
@@ -30,6 +31,15 @@ module.exports = (config) => {
   config.plugins.push(
     new ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
+    })
+  );
+
+  config.plugins.push(
+    new ProvidePlugin({
+      // Make a global `process` variable that points to the `process` package,
+      // because the `util` package expects there to be a global variable named `process`.
+      // Thanks to https://stackoverflow.com/a/65018686/14239942
+      process: 'process/browser',
     })
   );
 

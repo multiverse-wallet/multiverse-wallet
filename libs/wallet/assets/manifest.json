@@ -1,6 +1,6 @@
 {
   "name": "Multiverse Wallet",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 3,
   "description": "Multiverse Wallet",
   "icons": {
@@ -24,5 +24,5 @@
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
-  "permissions": ["storage", "unlimitedStorage", "clipboardWrite"]
+  "permissions": ["storage", "unlimitedStorage"]
 }

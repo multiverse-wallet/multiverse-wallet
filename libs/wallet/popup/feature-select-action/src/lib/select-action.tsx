@@ -4,6 +4,7 @@ import {
   SelectedAccountActivity,
   SelectedAccountBalance,
   SelectedAccountCurrencies,
+  SelectedAccountNFTs,
   Tabs,
 } from '@multiverse-wallet/wallet/components';
 import { useSupportsNFTokenMethods } from '@multiverse-wallet/wallet/hooks';
@@ -12,19 +13,19 @@ export function SelectAction() {
   const supportsNFTokenMethods = useSupportsNFTokenMethods();
   const defaultTabs = [
     {
-      name: 'Assets',
-      component: <SelectedAccountCurrencies />,
-    },
-    {
       name: 'Activity',
       component: <SelectedAccountActivity />,
+    },
+    {
+      name: 'Assets',
+      component: <SelectedAccountCurrencies />,
     },
   ];
 
   const nftTabs = [
     {
       name: 'NFTs',
-      component: <SelectedAccountActivity />,
+      component: <SelectedAccountNFTs />,
     },
   ];
 

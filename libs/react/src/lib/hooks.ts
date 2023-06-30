@@ -196,9 +196,11 @@ export function useTransaction({
   const [error, setError] = useState<Error>();
   const requestTransaction = useCallback(
     (transaction: unknown) => {
+      console.log('requesting transaction', api);
       return api
         ?.requestTransaction(transaction)
         .then((id) => {
+          console.log(id);
           setError(undefined);
           setTransactionId(id);
         })

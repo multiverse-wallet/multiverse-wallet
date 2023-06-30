@@ -1,11 +1,11 @@
-import { useWalletState } from '@multiverse-wallet/wallet/hooks';
+import { useWalletAPI } from '@multiverse-wallet/wallet/hooks';
 import { Button } from '@multiverse-wallet/shared/components/button';
 import { Spinner } from '@multiverse-wallet/shared/components/spinner';
 import { delay } from '@multiverse-wallet/shared/utils';
 import React, { useState } from 'react';
 
 export function ImportData() {
-  const auth = useWalletState();
+  const auth = useWalletAPI();
   const [encryptedAccountData, setEncryptedAccountData] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
