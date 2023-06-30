@@ -85,11 +85,11 @@ export function ManageAccount() {
       linkTo: '/admin/sites',
       icon: <GlobeAltIcon className="w-5 h-5" />,
     },
-    {
-      title: 'NFTs',
-      linkTo: '/admin/nfts',
-      icon: <FolderIcon className="w-5 h-5" />,
-    },
+    // {
+    //   title: 'NFTs',
+    //   linkTo: '/admin/nfts',
+    //   icon: <FolderIcon className="w-5 h-5" />,
+    // },
     {
       title: 'Settings',
       linkTo: '/admin/settings',

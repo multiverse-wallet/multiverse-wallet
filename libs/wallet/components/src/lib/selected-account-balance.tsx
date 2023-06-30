@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   useSelectedAccount,
   useXRPLAccountReserve,
@@ -31,13 +31,29 @@ export function SelectedAccountBalance() {
                 </div>
               )}
               <div className="text-sm font-normal text-slate-500">
-                (<AccountBalance.Value>{+value - reserve}</AccountBalance.Value>{' '}
-                available)
+                <AvailableBalance value={+value} reserve={reserve} />
               </div>
             </div>
           );
         }}
       </AccountBalance>
     </div>
+  );
+}
+
+export interface AvailableBalanceProps {
+  value: number;
+  reserve: number;
+}
+
+function AvailableBalance({ value, reserve }: AvailableBalanceProps) {
+  if (value === 0) {
+    return <>Account not initialized</>;
+  }
+  return (
+    <>
+      (<AccountBalance.Value>{+value - reserve}</AccountBalance.Value>{' '}
+      available)
+    </>
   );
 }
